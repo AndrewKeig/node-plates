@@ -1,127 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html class="ui-mobile min-width-320px min-width-480px min-width-768px min-width-1024px landscape">
 	<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1"> 
-	<title>node.jquery,mobile.js</title>
-	<link rel="stylesheet"  href="public/js/jquery.mobile-1.0.1.min.css" />
-	<link rel="stylesheet" href="public/css/jqm-docs.css"/>
-	<script src="public/js/jquery.js"></script>
-	<script src="public/js/jquery.mobile-1.0.1.min.js"></script>
-</head> 
-<body>
-	<div data-role="page" class="type-interior" data-theme="a">
-		<div data-role="header">
-		<h1>node.jquery,mobile.js</h1>
-		<a href="../../" data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right jqm-home">Home</a>
-	</div>
-	<div data-role="content">
-            <div class="content-primary">
-			<ul data-role="controlgroup" data-type="horizontal" class="localnav">
-				<li><a href="../pages-themes.html" data-role="button" data-transition="fade">Theme Overview</a></li>
-				<li><a href="theme-a.html" data-role="button" data-transition="fade" class="ui-btn-active">A&nbsp;</a></li>
-				<li><a href="theme-b.html" data-role="button" data-transition="fade">B&nbsp;</a></li>
-				<li><a href="theme-c.html" data-role="button" data-transition="fade">C&nbsp;</a></li>
-				<li><a href="theme-d.html" data-role="button" data-transition="fade">D&nbsp;</a></li>
-				<li><a href="theme-e.html" data-role="button" data-transition="fade">E&nbsp;</a></li>
-			</ul>
-			
-			<h2>Theme A Sample Page</h2>
-	
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+		<meta charset="utf-8"> 
+		<title>node.jquery.mobile - channels</title> 		
+		<link rel="stylesheet" href="http://jquerymobile.com/demos/1.0a2/docs/pages/_assets/css/jqm-docs.css">
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
+		<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+		<script type="text/javascript" src="./public/js/app.js"></script>
+	</head> 
+	<body class="ui-mobile-viewport"> 
 
-			<div data-role="fieldcontain">
-	         <label for="name-a">Text Input:</label>
-	         <input type="text" name="name" id="name-a" value=""  />
+		<!-- first page -->
+		<div data-role="page" id="channels" class="ui-page ui-body-c ui-page-active">
+
+			<div data-role="header" class="ui-bar-a ui-header" role="banner">
+				<a href="index.html"  data-ajax="false" class="ui-btn-left ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-a" data-icon="arrow-l" data-theme="a">
+				<span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Back</span><span class="ui-icon ui-icon-arrow-l ui-icon-shadow"></span></span></a>
+				<h1 class="ui-title" tabindex="0" role="heading" aria-level="1">node.jquery.mobile - channels</h1>
 			</div>
-
-			<div data-role="fieldcontain">
-				<label for="switch-a">Flip switch:</label>
-				<select name="switch-a" id="switch-a" data-role="slider">
-					<option value="off">Off</option>
-					<option value="on">On</option>
-				</select> 
+			<div data-role="content" class="ui-content" role="main">	
+				<h2>node.jquery.mobile - channels</h2>
+				
+				<ul data-role="listview" data-inset="true" data-filter="true">
+					<li><a href="#">Acura</a></li>
+					<li><a href="#">Audi</a></li>
+					<li><a href="#">BMW</a></li>
+					<li><a href="#">Cadillac</a></li>
+					<li><a href="#">Ferrari</a></li>
+				</ul>		
+			</div>		
+			<div data-role="footer" class="ui-bar-a ui-footer" role="contentinfo">
+				<h4 class="ui-title" tabindex="0" role="heading" aria-level="1">@2011 node.jquery.mobile</h4>
 			</div>
-
-			<div data-role="fieldcontain">
-				<label for="slider-a">Slider:</label>
-			 	<input type="range" name="slider" id="slider-a" value="0" min="0" max="100"  />
-			</div>
-
-			<div data-role="fieldcontain">
-			<fieldset data-role="controlgroup" data-type="horizontal">
-		    	<legend>Font styling:</legend>
-		    	<input type="checkbox" name="checkbox-6a" id="checkbox-6a" class="custom" />
-				<label for="checkbox-6a">b</label>
-
-				<input type="checkbox" name="checkbox-7a" id="checkbox-7a" class="custom" />
-				<label for="checkbox-7a"><em>i</em></label>
-
-				<input type="checkbox" name="checkbox-8a" id="checkbox-8a" class="custom" />
-				<label for="checkbox-8a">u</label>    
-		    </fieldset>
-			</div>
-
-			<div data-role="fieldcontain">
-			    <fieldset data-role="controlgroup">
-			    	<legend>Choose a pet:</legend>
-			         	<input type="radio" name="radio-choice-1" id="radio-choice-1a" value="choice-1" />
-			         	<label for="radio-choice-1a">Cat</label>
-
-			         	<input type="radio" name="radio-choice-1" id="radio-choice-2a" value="choice-2"  />
-			         	<label for="radio-choice-2a">Dog</label>
-
-			         	<input type="radio" name="radio-choice-1" id="radio-choice-3a" value="choice-3"  />
-			         	<label for="radio-choice-3a">Hamster</label>
-
-			         	<input type="radio" name="radio-choice-1" id="radio-choice-4a" value="choice-4"  />
-			         	<label for="radio-choice-4a">Lizard</label>
-			    </fieldset>
-			</div>
-
-			<div data-role="fieldcontain">
-				<label for="select-choice-a" class="select">Choose shipping method:</label>
-				<select name="select-choice-a" id="select-choice-a">
-					<option value="standard">Standard: 7 day</option>
-					<option value="rush">Rush: 3 days</option>
-					<option value="express">Express: next day</option>
-					<option value="overnight">Overnight</option>
-				</select>
-			</div>
-			
-			<h2>Collapsible Sets</h2>		
-			<div data-role="collapsible-set">
-				<div data-role="collapsible" data-collapsed="false">
-					<h3>Section 1</h3>
-					<p>I'm the collapsible content in a set so this feels like an accordion. I'm visible by default because I have the <code>data-collapsed="false"</code> attribute; to collapse me, either click my header or expand another header in my set.</p>
-				</div>
-				<div data-role="collapsible">
-					<h3>Section 2</h3>
-					<p>I'm the collapsible content in a set so this feels like an accordion. I'm hidden by default because I have the "collapsed" state; you need to expand the header to see me.</p>
-
-				</div>
-				<div data-role="collapsible">
-					<h3>Section 3</h3>
-					<p>I'm the collapsible content in a set so this feels like an accordion. I'm hidden by default because I have the "collapsed" state; you need to expand the header to see me.</p>
-
-				</div>
-			</div>
-			
-			<h2>Inset List</h2>
-			<ul data-role="listview" data-inset="true">
-				<li><a href="index.html">Inbox <span class="ui-li-count" >12</span></a></li>
-				<li><a href="index.html">Outbox <span class="ui-li-count">0</span></a></li>
-				<li><a href="index.html">Drafts <span class="ui-li-count">4</span></a></li>
-				<li><a href="index.html">Sent <span class="ui-li-count">328</span></a></li>
-				<li><a href="index.html">Trash <span class="ui-li-count">62</span></a></li>
-			</ul>
-
-			</div><!-- /content -->
-
-			<div data-role="footer" class="footer-docs">
-					<p>&copy; 2011-2012 node.plates project</p>
-			</div>
-
-			</div><!-- /page -->
-
-			</body>
-			</html>
+		</div>
+	</body>
+</html>

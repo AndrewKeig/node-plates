@@ -1,0 +1,1 @@
+# node.plates - a node.js boilerplate; using express, socket.io & mongoose
