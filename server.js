@@ -22,7 +22,10 @@ app.configure(function () {
     app.set('view engine', express_cfg.view_engine);
     app.use(express.favicon());
     app.use(express.bodyParser());
-    app.use(express.cookieParser());
+    app.use(express.cookieParser('stoom, this is top secret'));
+    app.use(express.session({
+        secret: 'secret',
+        key: 'express.sid'}));
     app.use(express.methodOverride());
     app.use(app.router);
 });
@@ -46,6 +49,8 @@ app.get('/contact', routes.contact.index);
 app.get('/github', routes.github.index);
 app.get('/login', routes.login.get_login);
 app.post('/login', routes.login.post_login);
+app.get('/channels', lib.middleware.is_user_authenticated, routes.channels.index);
+app.get('/logout', routes.login.logout);
 
 //errors
 app.get('/404', lib.errors.not_found);
@@ -55,4 +60,4 @@ app.error(lib.errors.error_handler);
 //express listen
 app.listen(express_cfg.port);
 
-console.log('- box hop express on port %d in %s mode', app.address().port, app.settings.env);
+console.log('- express on port %d in %s mode', app.address().port, app.settings.env);

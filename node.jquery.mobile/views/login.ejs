@@ -7,7 +7,7 @@
     <div data-role="content" class="ui-content" role="main">
         <h2><%=title%> - login</h2>
         <p>complete the below to login/register</p>
-        <form method="POST" action="/login" enctype="application/x-www-form-urlencoded" id="login_form" name="login_form">
+        <form method="POST" action="/login" data-ajax="false"  enctype="application/x-www-form-urlencoded">
             <div data-role="fieldcontain">
                 <label for="name">username:</label>
                 <input type="text" name="user[username]" id="user[username]" size="25" class="username textbox" placeholder="enter a username"  required/>
@@ -16,7 +16,7 @@
                 <label for="name">password:</label>
                 <input type="password" name="user[password]" id="user[password]" size="25" class="password textbox" placeholder="enter a password" required/>
             </div>
-            <a href="#" data-role="button" data-icon="star">login</a>
+            <input type="submit" data-role="button" data-icon="star" value="login">
         </form>
     </div>
     <div data-role="footer" class="ui-bar-a ui-footer" role="contentinfo">

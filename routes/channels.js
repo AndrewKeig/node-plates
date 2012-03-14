@@ -2,5 +2,5 @@ var konphyg = require('konphyg')('./config');
 var content_cfg = konphyg('content');
 
 exports.index = function(req, res){
-    res.render('index', { title: content_cfg.title});
+    res.render('channels', { title: content_cfg.title });
 };
