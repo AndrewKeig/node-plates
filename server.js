@@ -34,6 +34,9 @@ app.configure('development', function () {
     //app.use(express.logger());
     //app.use(express.errorHandler({ dumpExceptions: false, showStack: false }));
     app.use(express.static(__dirname + express_cfg.public_path));
+    app.use(lib.errors.invalid_password_handler);
+    app.use(lib.errors.user_not_found_handler);
+    app.use(lib.errors.user_not_authenticated_handler);
 });
 
 app.configure('production', function () {
@@ -53,9 +56,9 @@ app.get('/channels', lib.middleware.is_user_authenticated, routes.channels.index
 app.get('/logout', routes.login.logout);
 
 //errors
-app.get('/404', lib.errors.not_found);
-app.get('/500', lib.errors.internal_error);
-app.error(lib.errors.error_handler);
+app.get('/404', lib.errors.page_not_found_handler);
+app.get('/500', lib.errors.internal_error_handler);
+app.get('/*', lib.errors.page_not_found_handler);
 
 //express listen
 app.listen(express_cfg.port);
