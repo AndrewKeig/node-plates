@@ -3,5 +3,5 @@ exports.about = require('../routes/about');
 exports.contact = require('../routes/contact');
 exports.github = require('../routes/github');
 exports.login = require('../routes/login');
-exports.channels = require('../routes/channels');
+exports.account = require('../routes/account');
 exports.errors = require('../routes/errors');

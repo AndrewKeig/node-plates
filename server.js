@@ -52,7 +52,7 @@ app.get('/contact', routes.contact.index);
 app.get('/github', routes.github.index);
 app.get('/login', routes.login.get_login);
 app.post('/login', routes.login.post_login);
-app.get('/channels', lib.middleware.is_user_authenticated, routes.channels.index);
+app.get('/account', lib.middleware.is_user_authenticated, routes.account.index);
 app.get('/logout', routes.login.logout);
 
 //errors

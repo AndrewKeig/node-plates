@@ -1,13 +1,16 @@
-<!-- home page -->
-<div data-role="page" id="index" class="ui-page ui-body-c ui-page-active" data-dom-cache="true">
+<!-- account page -->
+<div data-role="page" id="account" class="ui-page ui-body-c " data-dom-cache="true">
     <div data-role="header" class="ui-bar-a ui-header" role="banner">
         <a href="/" class="ui-btn-left ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-a" data-icon="arrow-l" data-theme="a">
-            <span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Back</span><span class="ui-icon ui-icon-arrow-l ui-icon-shadow"></span></span></a>
-        <h1 class="ui-title" tabindex="0" role="heading" aria-level="1"><%=title%> - home</h1>
+        <span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Back</span><span class="ui-icon ui-icon-arrow-l ui-icon-shadow"></span></span></a>
+        <h1 class="ui-title" tabindex="0" role="heading" aria-level="1"><%=title%> - account</h1>
     </div>
     <div data-role="content" class="ui-content" role="main">
-        <h2><%=title%> - home</h2>
-        <p>welcome to node.jquery.mobile; a node.js boiler plate application</p>
+        <h2><%=title%> - account</h2>
+
+        My Account <a href="logout">logout</a>
+
+
         <ul data-role="listview" data-inset="true">
             <li><a href="/" data-ajax="false">home</a></li>
             <li><a href="/about" data-ajax="false">about</a></li>
@@ -17,7 +20,6 @@
             <li><a href="/account" data-ajax="false">account</a></li>
         </ul>
     </div>
-
     <div data-role="footer" class="ui-bar-a ui-footer" role="contentinfo">
         <h4 class="ui-title" tabindex="0" role="heading" aria-level="1">@2012 <%=title%></h4>
     </div>

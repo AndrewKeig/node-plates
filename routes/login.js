@@ -3,7 +3,11 @@ var content_cfg = konphyg('content');
 var lib = require('../lib');
 
 exports.get_login = function(req, res){
-    res.render('login', { title: content_cfg.title});
+    //if (!lib.middleware.is_user_authenticated) {
+      res.render('login', { title: content_cfg.title});
+    //}// else {
+       // res.redirect('/');
+    //}
 };
 
 exports.post_login = function(req, res){
@@ -12,7 +16,7 @@ exports.post_login = function(req, res){
         if (user) {
             req.session.regenerate(function(){
                 req.session.user = user;
-                res.redirect('/channels');
+                res.redirect('/account');
             });
         } else {
             req.session.error = 'Authentication failed';
