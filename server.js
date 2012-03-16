@@ -9,12 +9,11 @@ var routes = require(__dirname + '/routes');
 var express = require('express');
 var app = express.createServer();
 
-//handle uncaught exceptions
-process.title = content_cfg.welcome;
-process.addListener('uncaughtException', function (err, stack) {
-    console.log('Caught exception: ' + err);
-    console.log(err.stack.split('\n'));
-});
+var MemoryStore = express.session.MemoryStore;
+var store = new MemoryStore();
+var Session = require('connect').middleware.session.Session;
+
+
 
 //configure express
 app.configure(function () {
@@ -23,26 +22,25 @@ app.configure(function () {
     app.use(express.favicon());
     app.use(express.bodyParser());
     app.use(express.cookieParser('stoom, this is top secret'));
-    app.use(express.session({
-        secret: 'secret',
-        key: 'express.sid'}));
+    app.use(express.session({store: store, secret: 'secret', key: 'express.sid'}));
     app.use(express.methodOverride());
+    app.use(express.static(__dirname + express_cfg.public_path));
     app.use(app.router);
+
 });
 
 app.configure('development', function () {
     //app.use(express.logger());
     //app.use(express.errorHandler({ dumpExceptions: false, showStack: false }));
-    app.use(express.static(__dirname + express_cfg.public_path));
     app.use(lib.errors.invalid_password_handler);
     app.use(lib.errors.user_not_found_handler);
     app.use(lib.errors.user_not_authenticated_handler);
+
 });
 
 app.configure('production', function () {
     app.use(express.logger());
     app.use(express.errorHandler());
-    app.use(express.static(__dirname + express_cfg.public_path, { maxAge: 31557600000 }));
 });
 
 //routes
@@ -53,14 +51,25 @@ app.get('/github', routes.github.index);
 app.get('/login', routes.login.get_login);
 app.post('/login', routes.login.post_login);
 app.get('/account', lib.middleware.is_user_authenticated, routes.account.index);
-app.get('/logout', routes.login.logout);
+app.get('/logout', lib.middleware.is_user_authenticated, routes.login.logout);
 
 //errors
 app.get('/404', lib.errors.page_not_found_handler);
 app.get('/500', lib.errors.internal_error_handler);
 app.get('/*', lib.errors.page_not_found_handler);
 
+//handle uncaught exceptions
+process.title = content_cfg.welcome;
+process.addListener('uncaughtException', function (err, stack) {
+    console.log('Caught exception: ' + err);
+    console.log(err.stack.split('\n'));
+});
+
+
 //express listen
 app.listen(express_cfg.port);
+
+//socket.io setup
+var socketIo = new require(__dirname + '/lib/socket_handler')(app, store);
 
 console.log('- express on port %d in %s mode', app.address().port, app.settings.env);

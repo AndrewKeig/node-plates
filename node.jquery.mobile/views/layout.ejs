@@ -6,10 +6,25 @@
 		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
 		<meta charset="utf-8"> 
 		<title><%=title%></title>
-		<link rel="stylesheet" href="http://jquerymobile.com/demos/1.0a2/docs/pages/_assets/css/jqm-docs.css">
+
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
 		<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+		<script src="/javascripts/socket.io.js"></script>
+        <script src="/javascripts/node.plates.js"></script>
+        <script>
+        $(document).ready(function(){
+        var socket = io.connect('127.0.0.1',{ port: 3000 });
+
+        //socket.on('inChannel', function( channel ){
+          //var find = '#nav #' + channel;
+          //$(find).attr('class', 'select')
+        //});
+
+        socket.emit('ready', { true:true });
+        });
+        </script>
+
 	</head> 
 	<body class="ui-mobile-viewport">
         <%-body%>
