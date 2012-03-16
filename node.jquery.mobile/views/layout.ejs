@@ -16,10 +16,9 @@
         $(document).ready(function(){
         var socket = io.connect('127.0.0.1',{ port: 3000 });
 
-        //socket.on('inChannel', function( channel ){
-          //var find = '#nav #' + channel;
-          //$(find).attr('class', 'select')
-        //});
+        socket.on('hello', function( ){
+          alert('socket.io is at you service');
+        });
 
         socket.emit('ready', { true:true });
         });

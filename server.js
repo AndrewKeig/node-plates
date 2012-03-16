@@ -18,12 +18,11 @@ app.configure(function () {
     app.set('view engine', express_cfg.view_engine);
     app.use(express.favicon());
     app.use(express.bodyParser());
-    app.use(express.cookieParser('stoom, this is top secret'));
-    app.use(express.session({store: store, secret: 'secret', key: 'express.sid'}));
+    app.use(express.cookieParser('10001010101, this is top secret'));
+    app.use(express.session({store: store, secret: '01010101010', key: express_cfg.sessionkey}));
     app.use(express.methodOverride());
     app.use(express.static(__dirname + express_cfg.public_path));
     app.use(app.router);
-
 });
 
 app.configure('development', function () {
@@ -32,7 +31,6 @@ app.configure('development', function () {
     app.use(lib.errors.invalid_password_handler);
     app.use(lib.errors.user_not_found_handler);
     app.use(lib.errors.user_not_authenticated_handler);
-
 });
 
 app.configure('production', function () {
@@ -56,17 +54,12 @@ app.get('/500', lib.errors.internal_error_handler);
 app.get('/*', lib.errors.page_not_found_handler);
 
 //handle uncaught exceptions
-process.title = content_cfg.welcome;
-process.addListener('uncaughtException', function (err, stack) {
-    console.log('Caught exception: ' + err);
-    console.log(err.stack.split('\n'));
-});
-
+process.addListener('uncaughtException', lib.errors.uncaught_exception);
 
 //express listen
 app.listen(express_cfg.port);
 
 //socket.io setup
-var socketIo = new require(__dirname + '/lib/socket_handler')(app, store);
+var socketIo = new require(__dirname + '/lib/socket_handler')(app, store, express_cfg.sessionkey);
 
-console.log('- express on port %d in %s mode', app.address().port, app.settings.env);
+console.log(content_cfg.welcome + ' - express on port %d in %s mode', app.address().port, app.settings.env);

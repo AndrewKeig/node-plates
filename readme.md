@@ -1,11 +1,9 @@
 node.plates - a node.js boilerplate; using express, socket.io & mongoose
 =========
 
-
 ### Introduction
 
-node.plates is a boilerplate mobile/web application.  Our aim is to build a simple application
-using the above tech in a
+node.plates is a boilerplate mobile/web application.
 
 ### More here
 
@@ -32,9 +30,10 @@ http://airasoul.blogspot.com
 ### TODO
 
 <ul>
-<li>Session management mongodb configuration</li>
+<li>Session management with connect-mongo</li>
 <li>Cluster support; multi core</li>
 <li>Mongoose examples</li>
+<li>Asset Management</li>
 <li>HTML 5 Boilerplate support</li>
 </ul>
 
