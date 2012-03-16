@@ -8,12 +8,9 @@ var lib = require(__dirname + '/lib');
 var routes = require(__dirname + '/routes');
 var express = require('express');
 var app = express.createServer();
-
 var MemoryStore = express.session.MemoryStore;
 var store = new MemoryStore();
 var Session = require('connect').middleware.session.Session;
-
-
 
 //configure express
 app.configure(function () {
