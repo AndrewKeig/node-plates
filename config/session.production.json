@@ -1,0 +1,14 @@
+{
+    "db": {
+        "db": "nodeplates",
+        "host": "127.0.0.1",
+        "port": "27017",
+        "username": "admin",
+        "password": "secret",
+        "collection": "sessions",
+        "clear_interval": "10"
+    },
+    "secret": "010100101010001010",
+    "session_type": "mongo"
+}
+

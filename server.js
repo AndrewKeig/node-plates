@@ -4,13 +4,14 @@ var util = require('util');
 var konphyg = require('konphyg')(__dirname + '/config');
 var express_cfg = konphyg('express');
 var content_cfg = konphyg('content');
+var session_cfg = konphyg('session');
 var lib = require(__dirname + '/lib');
 var routes = require(__dirname + '/routes');
 var express = require('express');
 var app = express.createServer();
-var MemoryStore = express.session.MemoryStore;
-var store = new MemoryStore();
-var Session = require('connect').middleware.session.Session;
+
+//get session store either 'in_memory' or 'mongo'
+var store = lib.session_store.get(session_cfg);
 
 //configure express
 app.configure(function () {
@@ -19,23 +20,30 @@ app.configure(function () {
     app.use(express.favicon());
     app.use(express.bodyParser());
     app.use(express.cookieParser('10001010101, this is top secret'));
-    app.use(express.session({store: store, secret: '01010101010', key: express_cfg.sessionkey}));
+    app.use(express.session({store: store,
+        maxAge: new Date(Date.now() + 3600000),
+        secret: session_cfg.secret, key: express_cfg.sessionkey}));
     app.use(express.methodOverride());
     app.use(express.static(__dirname + express_cfg.public_path));
-    app.use(app.router);
-});
 
-app.configure('development', function () {
-    //app.use(express.logger());
-    //app.use(express.errorHandler({ dumpExceptions: false, showStack: false }));
+    app.use(app.router);
     app.use(lib.errors.invalid_password_handler);
     app.use(lib.errors.user_not_found_handler);
     app.use(lib.errors.user_not_authenticated_handler);
 });
 
+app.configure('development', function () {
+    //app.use(express.logger());
+    //app.use(express.errorHandler({ dumpExceptions: false, showStack: false }));
+});
+
 app.configure('production', function () {
     app.use(express.logger());
     app.use(express.errorHandler());
+    //app.use(express.static(__dirname + express_cfg.public_path, { maxAge: oneYear }));
+    app.use('/static', connectGzip.staticGzip(__dirname + express_cfg.public_path,
+        {maxAge: 365 * 24 * 60 * 60 * 1000}));
+
 });
 
 //routes
