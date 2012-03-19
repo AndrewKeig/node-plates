@@ -22,7 +22,7 @@ http://airasoul.blogspot.com
 <li>Session management in memory configuration</li>
 <li>Session management with monngo-connect</li>
 <li>Socket.io</li>
-<li>Socket.io handshake with express using in memory sessions</li>
+<li>Socket.io handshake with express using in memory/mongo sessions</li>
 <li>Socket.io production configuration</li>
 <li>Express production configuration</li>
 <li>JQuery.Mobile support</li>
