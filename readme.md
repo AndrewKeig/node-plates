@@ -20,6 +20,7 @@ http://airasoul.blogspot.com
 <li>route middleware</li>
 </ul>
 <li>Session management in memory configuration</li>
+<li>Session management with monngo-connect</li>
 <li>Socket.io</li>
 <li>Socket.io handshake with express using in memory sessions</li>
 <li>Socket.io production configuration</li>
@@ -30,7 +31,6 @@ http://airasoul.blogspot.com
 ### TODO
 
 <ul>
-<li>Session management with connect-mongo</li>
 <li>Cluster support; multi core</li>
 <li>Mongoose examples</li>
 <li>Asset Management</li>
