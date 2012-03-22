@@ -1,9 +1,9 @@
-node.plates - a node.js boilerplate; using express, socket.io & mongoose
+node-plates - node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5
 =========
 
 ### Introduction
 
-node.plates is a boilerplate mobile/web application.
+node-plates - node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5 mobile/web application.
 
 ### More here
 
@@ -36,4 +36,3 @@ http://airasoul.blogspot.com
 <li>Asset Management</li>
 <li>HTML 5 Boilerplate support</li>
 </ul>
-

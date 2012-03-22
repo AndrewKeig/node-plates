@@ -1,7 +1,11 @@
 {
-    "name": "application-name"
-  , "version": "0.0.1"
-  , "private": true
+    "name": "node-plates"
+  , "version": "0.0.5"
+  , "description": "node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5"
+  , "keywords": ["node.js", "boilerplate"]
+  , "author": "Andrew Keig <andrew.keig@gmail.com>"
+  , "repository": { "type": "git", "url": "git@github.com:AndrewKeig/node-plates.git" }
+  , "main": "./server.js"
   , "dependencies": {
       "express": "2.4.3",
       "ejs": ">= 0.4.3",
