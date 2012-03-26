@@ -9,7 +9,8 @@ var http = require('http')
     , routes = require(__dirname + '/routes')
     , express = require('express')
     , app = express.createServer()
-    , store = lib.session_store.load(session_cfg);
+    , session_store = lib.session_store.load(session_cfg)
+    , connect_session = lib.session_store.connect_session(session_store, session_cfg);
 
 //configure express
 app.configure(function () {
@@ -18,11 +19,11 @@ app.configure(function () {
     app.use(express.favicon());
     app.use(express.bodyParser());
     app.use(express.cookieParser('10001010101, this is top secret'));
-    app.use(express.session(store));
+    app.use(express.session(connect_session));
     app.use(express.methodOverride());
     app.use(express.static(__dirname + express_cfg.public_path));
-    app.use(express.vhost('m.node-plates.com', require(express_cfg.mobile).app));
-    app.use(express.vhost('www.node-plates.com', require(express_cfg.www).app));
+    //app.use(express.vhost('m.node-plates.com', require(express_cfg.mobile).app));
+    //app.use(express.vhost('www.node-plates.com', require(express_cfg.www).app));
     app.use(app.router);
     app.use(lib.errors.invalid_password_handler);
     app.use(lib.errors.user_not_found_handler);
@@ -65,6 +66,6 @@ process.addListener('uncaughtException', lib.errors.uncaught_exception);
 app.listen(express_cfg.port);
 
 //socket.io setup
-var socketIo = new require(__dirname + '/lib/socket_handler')(app, store, express_cfg.sessionkey);
+var socketIo = new require(__dirname + '/lib/socket_handler')(app, session_store, session_cfg.sessionkey);
 
 console.log(content_cfg.welcome + ' - express on port %d in %s mode', app.address().port, app.settings.env);
