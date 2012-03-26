@@ -2,6 +2,5 @@
     "view_engine": "ejs",
     "view_path": "/node.jquery.mobile/views",
     "public_path": "/node.jquery.mobile/public",
-    "port": "8000",
-    "sessionkey" : "connect.sid"
+    "port": "8000"
 }

@@ -1,5 +1,7 @@
 {
     "secret": "010100101010001010",
-    "session_type": "in_memory"
+    "session_type": "memory",
+    "sessionkey" : "express.sid",
+    "maxAge" : "3600000",
+    "reapInterval" :  "6000000"
 }
-

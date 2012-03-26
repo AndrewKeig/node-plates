@@ -9,6 +9,8 @@
         "clear_interval": "10"
     },
     "secret": "010100101010001010",
-    "session_type": "mongo"
+    "session_type": "mongo",
+    "sessionkey" : "connect.sid",
+    "maxAge" : "3600000"
 }
 

@@ -1,17 +1,15 @@
-var http = require('http');
-var events = require("events");
-var util = require('util');
-var konphyg = require('konphyg')(__dirname + '/config');
-var express_cfg = konphyg('express');
-var content_cfg = konphyg('content');
-var session_cfg = konphyg('session');
-var lib = require(__dirname + '/lib');
-var routes = require(__dirname + '/routes');
-var express = require('express');
-var app = express.createServer();
-
-//get session store either 'in_memory' or 'mongo'
-var store = lib.session_store.get(session_cfg);
+var http = require('http')
+    , events = require("events")
+    , util = require('util')
+    , konphyg = require('konphyg')(__dirname + '/config')
+    , express_cfg = konphyg('express')
+    , content_cfg = konphyg('content')
+    , session_cfg = konphyg('session')
+    , lib = require(__dirname + '/lib')
+    , routes = require(__dirname + '/routes')
+    , express = require('express')
+    , app = express.createServer()
+    , store = lib.session_store.load(session_cfg);
 
 //configure express
 app.configure(function () {
@@ -20,12 +18,11 @@ app.configure(function () {
     app.use(express.favicon());
     app.use(express.bodyParser());
     app.use(express.cookieParser('10001010101, this is top secret'));
-    app.use(express.session({store: store,
-        maxAge: new Date(Date.now() + 3600000),
-        secret: session_cfg.secret, key: express_cfg.sessionkey}));
+    app.use(express.session(store));
     app.use(express.methodOverride());
     app.use(express.static(__dirname + express_cfg.public_path));
-
+    app.use(express.vhost('m.node-plates.com', require(express_cfg.mobile).app));
+    app.use(express.vhost('www.node-plates.com', require(express_cfg.www).app));
     app.use(app.router);
     app.use(lib.errors.invalid_password_handler);
     app.use(lib.errors.user_not_found_handler);
