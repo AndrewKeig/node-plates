@@ -1,3 +1,10 @@
+0.0.6 / 2012-03-27
+==================
+
+  * added session support couch/memcached
+  * created module connect-session
+
+
 0.0.5 / 2012-03-15
 ==================
 
