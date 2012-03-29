@@ -418,8 +418,8 @@ if (typeof window != 'undefined'){
    * messages we need to decode them using the the Socket.IO message
    * protocol: <https://github.com/learnboost/socket.io-node/>.
    *
-   * When a message is received we check if a session id has been set,
-   * if the session id is missing we can assume that the received message
+   * When a message is received we check if a session-konphyg id has been set,
+   * if the session-konphyg id is missing we can assume that the received message
    * contains the sessionid of the connection.
    
    * When a message is prefixed with `~h~` we dispatch it our heartbeat

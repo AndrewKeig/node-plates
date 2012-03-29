@@ -1,14 +1,14 @@
 {
+    "session_type": "mongo",
+    "secret": "010100101010001010",
+    "sessionkey" : "connect.sid",
+    "maxAge" : 3600000,
     "db": {
         "db": "nodeplates",
         "host": "127.0.0.1",
         "port": 27017,
         "collection": "sessions",
-        "clear_interval": 10,
+        "clear_interval": 1000,
         "auto_reconnect": false
-    },
-    "secret": "010100101010001010",
-    "session_type": "mongo",
-    "sessionkey" : "connect.sid",
-    "maxAge" : 3600000
+    }
 }

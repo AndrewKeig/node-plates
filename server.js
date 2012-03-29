@@ -1,6 +1,4 @@
 var http = require('http')
-    , events = require("events")
-    , util = require('util')
     , konphyg = require('konphyg')(__dirname + '/config')
     , express_cfg = konphyg('express')
     , content_cfg = konphyg('content')
@@ -9,40 +7,42 @@ var http = require('http')
     , routes = require(__dirname + '/routes')
     , express = require('express')
     , app = express.createServer()
-    , connect_store = lib.connect_sessionstore.configure_store(session_cfg)
-    , connect_session = lib.connect_sessionstore.configure_session(connect_store, session_cfg);
+    , session = require(__dirname + '/session-konphyg')
+    , connect_store = session.createStore(session_cfg)
+    , connect_session = session.createSession();
 
-//configure express
-app.configure(function () {
-    app.set('views', __dirname + express_cfg.view_path);
-    app.set('view engine', express_cfg.view_engine);
-    app.use(express.favicon());
-    app.use(express.bodyParser());
-    app.use(express.cookieParser('10001010101, this is top secret'));
-    app.use(express.session(connect_session));
-    app.use(express.methodOverride());
-    app.use(express.static(__dirname + express_cfg.public_path));
-    //app.use(express.vhost('m.node-plates.com', require(express_cfg.mobile).app));
-    //app.use(express.vhost('www.node-plates.com', require(express_cfg.www).app));
-    app.use(app.router);
-    app.use(lib.errors.invalid_password_handler);
-    app.use(lib.errors.user_not_found_handler);
-    app.use(lib.errors.user_not_authenticated_handler);
-});
+app.set('views', __dirname + express_cfg.view_path);
+app.set('view engine', express_cfg.view_engine);
+app.set('view options',{layout:true});
+app.use(express.favicon());
+app.use(express.bodyParser());
+app.use(express.cookieParser('10001010101, this is top secret'));
+app.use(express.session(connect_session));
+app.use(express.methodOverride());
+app.use(express.static(__dirname + express_cfg.public_path));
+//app.use(express.vhost('127.0.0.1:3000', require(express_cfg.mobile).app));
+//app.use(express.vhost('127.0.0.1:8000', require(express_cfg.www).app));
+app.use(app.router);
+app.use(lib.errors.invalid_password_handler);
+app.use(lib.errors.user_not_found_handler);
+app.use(lib.errors.user_not_authenticated_handler);
 
-app.configure('development', function () {
-    //app.use(express.logger());
-    //app.use(express.errorHandler({ dumpExceptions: false, showStack: false }));
-});
-
-app.configure('production', function () {
+//production settings
+if (process.env.NODE_ENV == 'production') {
     app.use(express.logger());
     app.use(express.errorHandler());
     //app.use(express.static(__dirname + express_cfg.public_path, { maxAge: oneYear }));
-    app.use('/static', connectGzip.staticGzip(__dirname + express_cfg.public_path,
-        {maxAge: 365 * 24 * 60 * 60 * 1000}));
+    app.use('/static', connectGzip.staticGzip(__dirname + express_cfg.public_path,  {maxAge: 365 * 24 * 60 * 60 * 1000}));
 
-});
+    // private key and certificate for https server
+    //var credentials = {
+    //    key: fs.readFileSync(__dirname + '/keys/localhost.key'),
+    //    cert: fs.readFileSync(__dirname + '/keys/localhost.crt')
+    //};
+
+    // https server
+    //var app = module.exports = express.createServer(credentials);
+}
 
 //routes
 app.get('/', routes.home.index);
