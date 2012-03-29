@@ -2,7 +2,7 @@
 ==================
 
   * added session support couch/memcached
-  * added module connect-sessionstore; generic session store;
+  * added module session-konphyg; generic session store;
 
 
 0.0.5 / 2012-03-15

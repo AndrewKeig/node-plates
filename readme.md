@@ -20,7 +20,7 @@ http://airasoul.blogspot.com
 <li>route middleware</li>
 </ul>
 <li>Session management in memory configuration</li>
-<li>Session management with monngo-connect</li>
+<li>Session management with monngo, redis, couch, memcache</li>
 <li>Socket.io</li>
 <li>Socket.io handshake with express using in memory/mongo sessions</li>
 <li>Socket.io production configuration</li>
