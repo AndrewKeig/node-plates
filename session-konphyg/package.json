@@ -1,0 +1,17 @@
+{ "name" : "session-konphyg"
+, "description" : "configuring session stores"
+, "tags" : ["configuration", "session"]
+, "version" : "0.0.1"
+, "author" : "Andrew Keig <andrew.keig@gmail.com>"
+, "repository" :
+  { "type" : "git"
+  , "url" : "https://github.com/AndrewKeig/session-konphyg.git"
+  }
+, "bugs" :
+  { "url" : "https://github.com/AndrewKeig/session-konphyg/issues" }
+, "engines" : ["node >= 0.4.0"]
+, "devDependencies": {
+    "konphyg": "1.0.5"
+}
+, "main" : "./index"
+}
