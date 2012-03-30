@@ -12,7 +12,7 @@ Create a JSON based session configuration files, terminated by ".json".
 
 # Examples
 
-production configuration using mongo
+session.production.json - configuration using mongo
 
     "session_type": "mongo",
     "secret": "010100101010001010",
@@ -28,7 +28,7 @@ production configuration using mongo
     }
 
 
-dev configuration using in memory
+session.json - configuration using in memory
 
     "session_type": "memory",
     "secret": "010100101010001010",
@@ -49,6 +49,6 @@ The below example creates the session store for express
 
         app.use(express.session(connect_session));
 
-If you want to launch a node process using the 'production' environment you should then do something like:
+If you want to launch the application in production environment:
 
     $ NODE_ENV=production node app.js
