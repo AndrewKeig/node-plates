@@ -13,7 +13,7 @@ Create a JSON based session configuration files, terminated by ".json".
 # Examples
 
 production configuration using mongo
-{
+
     "session_type": "mongo",
     "secret": "010100101010001010",
     "sessionkey" : "connect.sid",
@@ -26,16 +26,16 @@ production configuration using mongo
         "clear_interval": 1000,
         "auto_reconnect": false
     }
-}
+
 
 dev configuration using in memory
-{
+
     "session_type": "memory",
     "secret": "010100101010001010",
     "sessionkey" : "express.sid",
     "maxAge" : 3600000,
     "reapInterval" :  "6000000"
-}
+
 
 Place your configuration files inside a directory called "config".
 
