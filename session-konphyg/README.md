@@ -89,7 +89,8 @@ method called get, this accepts a session_konphyg file and export it; e.g.
         return new NewStore(_session_konphyg.db);
     }
 
-We are simply using naming conventions for this to work; so in your config file, e.g.
+We are simply using naming conventions for this to work; so name the file 'new', store it in the 'stores' folder
+and in your config file, e.g.
 
     {
     "session_type": "new",
@@ -104,4 +105,3 @@ We are simply using naming conventions for this to work; so in your config file,
         "clear_interval": 1000,
         "auto_reconnect": false
     }
-}
