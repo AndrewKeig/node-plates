@@ -7,7 +7,6 @@ var http = require('http')
     , express = require('express')
     , app = express.createServer()
     , session = require(__dirname + '/session-konphyg')
-    , connect_store = session.createStore()
     , connect_session = session.createSession();
 
 app.set('views', __dirname + express_cfg.view_path);
@@ -65,6 +64,6 @@ process.addListener('uncaughtException', lib.errors.uncaught_exception);
 app.listen(express_cfg.port);
 
 //socket.io setup
-var socketIo = new require(__dirname + '/lib/socket_handler')(app, connect_store, session.options.sessionkey);
+var socketIo = new require(__dirname + '/lib/socket_handler')(app, session.store(), session.options().sessionkey);
 
 console.log(content_cfg.welcome + ' - express on port %d in %s mode', app.address().port, app.settings.env);

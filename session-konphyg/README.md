@@ -8,7 +8,7 @@ Configuring session stores for express
 
 # Usage
 
-Create a JSON based session configuration files, terminated by ".json".
+Create a JSON based session configuration file, terminated by ".json".
 
 # Examples
 
@@ -39,15 +39,39 @@ session.json - configuration using in memory
 
 Place your configuration files inside a directory called "config".
 
+
+#createSession
+
 The below example creates the session store for express
 
     var express = require('express')
         , app = express.createServer()
         , session = require(__dirname + '/session-konphyg')
-        , connect_store = session.createStore()
         , connect_session = session.createSession();
 
         app.use(express.session(connect_session));
+
+
+#store
+
+The below example allows you to access the store created by createSession
+
+    var session = require(__dirname + '/session-konphyg')
+        , connect_session = session.createSession();
+
+    var store = session.store();
+
+#options
+
+The below example allows you to access the options used to create the session
+
+    var session = require(__dirname + '/session-konphyg')
+        , connect_session = session.createSession();
+
+    var options = session.options()
+
+
+#Environments
 
 If you want to launch the application in production environment:
 
