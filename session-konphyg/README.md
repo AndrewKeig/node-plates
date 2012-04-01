@@ -80,7 +80,7 @@ If you want to launch the application in production environment:
 
 #Extending
 
-In order to extend session-konphyg and add another session store simply create a single
+To extend session-konphyg and add another session store simply create a file with a single
 method called get, this accepts a session_konphyg file and export it; e.g.
 
     exports.get = function (_session_konphyg) {
@@ -89,8 +89,8 @@ method called get, this accepts a session_konphyg file and export it; e.g.
         return new NewStore(_session_konphyg.db);
     }
 
-We are simply using naming conventions for this to work; so name the file 'new', store it in the 'stores' folder
-and in your config file, e.g.
+We are simply using naming conventions for this all to work; so name the file 'new', add it
+to the 'stores' folder; in your new config file, e.g.
 
     {
     "session_type": "new",
