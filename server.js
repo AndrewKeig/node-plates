@@ -6,6 +6,7 @@ var http = require('http')
     , lib = require(path.join(__dirname, '/lib'))
     , routes = require(path.join(__dirname, '/routes'))
     , express = require('express')
+    , assetManager = require('connect-assetmanager')
     , app = express.createServer()
     , session = require('session-konphyg')
     , connect_session = session.createSession();
@@ -27,9 +28,18 @@ app.use(lib.errors.user_not_found_handler);
 app.use(lib.errors.user_not_authenticated_handler);
 
 //production settings
-if (process.env.NODE_ENV == 'production') {
+app.configure('production', function() {
     app.use(express.logger());
     app.use(express.errorHandler());
+    app.use(express.gzip());
+    app.use(assetManager({
+        js: {
+            route: /\/javascripts\.js/,
+            path: path.join(__dirname, express_cfg.public_path, 'javascripts'),
+            dataType: 'javascript',
+            files: ['*']
+            }}
+    ));
     //app.use(express.static(path.join(__dirname,  express_cfg.public_path), { maxAge: oneYear }));
     //app.use('/static', connectGzip.staticGzip(path.join(__dirname, express_cfg.public_path),  {maxAge: 365 * 24 * 60 * 60 * 1000}));
 
@@ -41,7 +51,7 @@ if (process.env.NODE_ENV == 'production') {
 
     // https server
     //var app = module.exports = express.createServer(credentials);
-}
+});
 
 //routes
 app.get('/', routes.home.index);
