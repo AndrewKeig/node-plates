@@ -76,3 +76,32 @@ The below example allows you to access the options used to create the session
 If you want to launch the application in production environment:
 
     $ NODE_ENV=production node app.js
+
+
+#Extending
+
+In order to extend session-konphyg and add another session store simply create a single
+method called get, this accepts a session_konphyg file and export it; e.g.
+
+    exports.get = function (_session_konphyg) {
+        var express = require('express');
+        var NewStore = require('connect-new')(express);
+        return new NewStore(_session_konphyg.db);
+    }
+
+We are simply using naming conventions for this to work; so in your config file, e.g.
+
+    {
+    "session_type": "new",
+    "secret": "010100101010001010",
+    "sessionkey" : "connect.sid",
+    "maxAge" : 3600000,
+    "db": {
+        "db": "nodeplates",
+        "host": "192.168.0.1",
+        "port": 27017,
+        "collection": "sessions",
+        "clear_interval": 1000,
+        "auto_reconnect": false
+    }
+}

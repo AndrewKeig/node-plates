@@ -1,15 +1,16 @@
 var http = require('http')
-    , konphyg = require('konphyg')(__dirname + '/config')
+    , path = require('path')
+    , konphyg = require('konphyg')(path.join(__dirname, '/config'))
     , express_cfg = konphyg('express')
     , content_cfg = konphyg('content')
-    , lib = require(__dirname + '/lib')
-    , routes = require(__dirname + '/routes')
+    , lib = require(path.join(__dirname, '/lib'))
+    , routes = require(path.join(__dirname, '/routes'))
     , express = require('express')
     , app = express.createServer()
-    , session = require(__dirname + '/session-konphyg')
+    , session = require(path.join(__dirname, '/session-konphyg'))
     , connect_session = session.createSession();
 
-app.set('views', __dirname + express_cfg.view_path);
+app.set('views', path.join(__dirname, express_cfg.view_path));
 app.set('view engine', express_cfg.view_engine);
 app.set('view options',{layout:true});
 app.use(express.favicon());
@@ -17,7 +18,7 @@ app.use(express.bodyParser());
 app.use(express.cookieParser('10001010101, this is top secret'));
 app.use(express.session(connect_session));
 app.use(express.methodOverride());
-app.use(express.static(__dirname + express_cfg.public_path));
+app.use(express.static(path.join(__dirname, express_cfg.public_path)));
 //app.use(express.vhost('127.0.0.1:3000', require(express_cfg.mobile).app));
 //app.use(express.vhost('127.0.0.1:8000', require(express_cfg.www).app));
 app.use(app.router);
@@ -29,13 +30,13 @@ app.use(lib.errors.user_not_authenticated_handler);
 if (process.env.NODE_ENV == 'production') {
     app.use(express.logger());
     app.use(express.errorHandler());
-    //app.use(express.static(__dirname + express_cfg.public_path, { maxAge: oneYear }));
-    app.use('/static', connectGzip.staticGzip(__dirname + express_cfg.public_path,  {maxAge: 365 * 24 * 60 * 60 * 1000}));
+    //app.use(express.static(path.join(__dirname,  express_cfg.public_path), { maxAge: oneYear }));
+    app.use('/static', connectGzip.staticGzip(path.join(__dirname, express_cfg.public_path),  {maxAge: 365 * 24 * 60 * 60 * 1000}));
 
     // private key and certificate for https server
     //var credentials = {
-    //    key: fs.readFileSync(__dirname + '/keys/localhost.key'),
-    //    cert: fs.readFileSync(__dirname + '/keys/localhost.crt')
+    //    key: fs.readFileSync(path.join(__dirname, '/keys/localhost.key')),
+    //    cert: fs.readFileSync(path.join(__dirname, '/keys/localhost.crt'))
     //};
 
     // https server
@@ -64,6 +65,6 @@ process.addListener('uncaughtException', lib.errors.uncaught_exception);
 app.listen(express_cfg.port);
 
 //socket.io setup
-var socketIo = new require(__dirname + '/lib/socket_handler')(app, session.store(), session.options().sessionkey);
+var socketIo = new require(path.join(__dirname, '/lib/socket_handler'))(app, session.store(), session.options().sessionkey);
 
 console.log(content_cfg.welcome + ' - express on port %d in %s mode', app.address().port, app.settings.env);
