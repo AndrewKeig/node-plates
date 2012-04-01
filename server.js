@@ -7,7 +7,7 @@ var http = require('http')
     , routes = require(path.join(__dirname, '/routes'))
     , express = require('express')
     , app = express.createServer()
-    , session = require(path.join(__dirname, '/session-konphyg'))
+    , session = require('session-konphyg')
     , connect_session = session.createSession();
 
 app.set('views', path.join(__dirname, express_cfg.view_path));
@@ -31,7 +31,7 @@ if (process.env.NODE_ENV == 'production') {
     app.use(express.logger());
     app.use(express.errorHandler());
     //app.use(express.static(path.join(__dirname,  express_cfg.public_path), { maxAge: oneYear }));
-    app.use('/static', connectGzip.staticGzip(path.join(__dirname, express_cfg.public_path),  {maxAge: 365 * 24 * 60 * 60 * 1000}));
+    //app.use('/static', connectGzip.staticGzip(path.join(__dirname, express_cfg.public_path),  {maxAge: 365 * 24 * 60 * 60 * 1000}));
 
     // private key and certificate for https server
     //var credentials = {

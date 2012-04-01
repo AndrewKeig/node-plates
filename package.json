@@ -1,6 +1,6 @@
 {
     "name": "node-plates"
-  , "version": "0.0.5"
+  , "version": "0.0.6"
   , "description": "node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5"
   , "keywords": ["node.js", "boilerplate"]
   , "author": "Andrew Keig <andrew.keig@gmail.com>"
@@ -11,6 +11,7 @@
       "ejs": ">= 0.4.3",
       "mongoose": ">= 2.4.1",
       "socket.io": ">=0.7.7",
-      "konphyg": ">=1.0.4"
+      "konphyg": ">=1.0.4",
+      "session-konphyg": ">=0.0.1"
   }
 }
