@@ -92,7 +92,6 @@ method called get, this accepts a session_konphyg file and export it; e.g.
 We are simply using naming conventions for this all to work; so name the file 'new', add it
 to the 'stores' folder; in your new config file, e.g.
 
-    {
     "session_type": "new",
     "secret": "010100101010001010",
     "sessionkey" : "connect.sid",
@@ -104,4 +103,3 @@ to the 'stores' folder; in your new config file, e.g.
         "collection": "sessions",
         "clear_interval": 1000,
         "auto_reconnect": false
-    }
