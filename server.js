@@ -5,8 +5,8 @@ var http = require('http')
     , content_cfg = konphyg('content')
     , lib = require(path.join(__dirname, '/lib'))
     , routes = require(path.join(__dirname, '/routes'))
+   // , connect = require('connect')
     , express = require('express')
-    , assetManager = require('connect-assetmanager')
     , app = express.createServer()
     , session = require('session-konphyg')
     , connect_session = session.createSession();
@@ -20,6 +20,7 @@ app.use(express.cookieParser('10001010101, this is top secret'));
 app.use(express.session(connect_session));
 app.use(express.methodOverride());
 app.use(express.static(path.join(__dirname, express_cfg.public_path)));
+//app.use(connect.compress());
 //app.use(express.vhost('127.0.0.1:3000', require(express_cfg.mobile).app));
 //app.use(express.vhost('127.0.0.1:8000', require(express_cfg.www).app));
 app.use(app.router);
@@ -31,15 +32,7 @@ app.use(lib.errors.user_not_authenticated_handler);
 app.configure('production', function() {
     app.use(express.logger());
     app.use(express.errorHandler());
-    app.use(express.gzip());
-    app.use(assetManager({
-        js: {
-            route: /\/javascripts\.js/,
-            path: path.join(__dirname, express_cfg.public_path, 'javascripts'),
-            dataType: 'javascript',
-            files: ['*']
-            }}
-    ));
+
     //app.use(express.static(path.join(__dirname,  express_cfg.public_path), { maxAge: oneYear }));
     //app.use('/static', connectGzip.staticGzip(path.join(__dirname, express_cfg.public_path),  {maxAge: 365 * 24 * 60 * 60 * 1000}));
 

@@ -12,6 +12,7 @@
       "mongoose": ">= 2.4.1",
       "socket.io": ">=0.7.7",
       "konphyg": ">=1.0.4",
+      "connect" : "2.x",
       "session-konphyg": ">=0.0.1"
   }
 }
