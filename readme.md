@@ -1,4 +1,4 @@
-node-plates - node.js boilerplate
+node-plates a node.js boilerplate
 =========
 
 ### Introduction
