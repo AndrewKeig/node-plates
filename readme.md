@@ -31,7 +31,7 @@ http://airasoul.blogspot.co.uk/search/label/node.plates
 
 <li>Socket.io</li>
 <ul>
-<li>Socket.io handshake with express using in memory/mongo sessions</li>
+<li>Socket.io handshake with express using configurable sessions</li>
 <li>Socket.io production configuration</li>
 </ul>
 
