@@ -1,4 +1,4 @@
-node-plates - node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5 mobile/web application.
+node-plates - node.js boilerplate
 =========
 
 ### Introduction
