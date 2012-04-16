@@ -1,4 +1,4 @@
-node-plates - node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5
+node-plates - node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5 mobile/web application.
 =========
 
 ### Introduction
@@ -7,7 +7,7 @@ node-plates is a node.js boilerplate using express, socket.io, mongooose, jquery
 
 ### More here
 
-http://airasoul.blogspot.com
+http://airasoul.blogspot.co.uk/search/label/node.plates
 
 ### Current setup includes
 
@@ -15,24 +15,26 @@ http://airasoul.blogspot.com
 <li>Environment cascading configuration files using konphyg</li>
 <li>Express; with some best practices in place such as: </li>
 <ul>
-<li>error handling with error middleware</li>
-<li>routes seperated into modules and exported</li>
-<li>route middleware</li>
+<li>Error handling with error middleware</li>
+<li>Routes seperated into modules and exported</li>
+<li>Route middleware</li>
 <li>Express production configuration</li>
 </ul>
-<li>configuring session stores using konphyg; configured for:
+<li>Configuring session stores using konphyg; configured for:
 <ul>
-  <li>in memory configuration<li>
-  <li>mongo</li>
-  <li>redis</li>
-  <li>couch</li>
-  <li>memcache</li>
+  <li>In memory configuration<li>
+  <li>Mongo</li>
+  <li>Redis</li>
+  <li>Couch</li>
+  <li>Memcache</li>
 <ul>
 <li>Socket.io</li>
 <ul>
 <li>Socket.io handshake with express using in memory/mongo sessions</li>
 <li>Socket.io production configuration</li>
 </ul>
+
+<li>Supporting multiple view engines using consolidate.js</li>
 <li>JQuery.Mobile support</li>
 </ul>
 
