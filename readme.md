@@ -3,7 +3,7 @@ node-plates - node.js boilerplate using express, socket.io, mongooose, jquery.mo
 
 ### Introduction
 
-node-plates - node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5 mobile/web application.
+node-plates is a node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5 mobile/web application.
 
 ### More here
 
@@ -16,23 +16,17 @@ http://airasoul.blogspot.com
 <li>Express; with some best practices in place such as: </li>
 <ul>
 <li>error handling with error middleware</li>
-<li>exporting routes</li>
+<li>routes exported to </li>
 <li>route middleware</li>
+<li>Express production configuration</li>
 </ul>
-<li>Session management in memory configuration</li>
-<li>Session management with monngo, redis, couch, memcache</li>
+<li>Session management in memory configuration;  mongo, redis, couch, memcache</li>
+
 <li>Socket.io</li>
+<ul>
 <li>Socket.io handshake with express using in memory/mongo sessions</li>
 <li>Socket.io production configuration</li>
-<li>Express production configuration</li>
+</ul>
 <li>JQuery.Mobile support</li>
 </ul>
 
-### TODO
-
-<ul>
-<li>Cluster support; multi core</li>
-<li>Mongoose examples</li>
-<li>Asset Management</li>
-<li>HTML 5 Boilerplate support</li>
-</ul>
