@@ -28,7 +28,7 @@ http://airasoul.blogspot.co.uk/search/label/node.plates
   <li>Couch</li>
   <li>Memcache</li>
 </ul>
-<ul>
+
 <li>Socket.io</li>
 <ul>
 <li>Socket.io handshake with express using in memory/mongo sessions</li>
