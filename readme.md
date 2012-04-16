@@ -22,11 +22,12 @@ http://airasoul.blogspot.co.uk/search/label/node.plates
 </ul>
 <li>Configuring session stores using konphyg; configured for:
 <ul>
-  <li>In memory configuration<li>
+  <li>In memory configuration</li>
   <li>Mongo</li>
   <li>Redis</li>
   <li>Couch</li>
   <li>Memcache</li>
+</ul>
 <ul>
 <li>Socket.io</li>
 <ul>
