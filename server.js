@@ -5,15 +5,18 @@ var http = require('http')
     , content_cfg = konphyg('content')
     , lib = require(path.join(__dirname, '/lib'))
     , routes = require(path.join(__dirname, '/routes'))
-   // , connect = require('connect')
+    , consolidate = require('consolidate')
     , express = require('express')
     , app = express.createServer()
     , session = require('session-konphyg')
     , connect_session = session.createSession();
 
+
+app.engine('html', consolidate.handlebars);
+app.set('view engine', 'html');
 app.set('views', path.join(__dirname, express_cfg.view_path));
-app.set('view engine', express_cfg.view_engine);
-app.set('view options',{layout:true});
+
+//app.set('view options',{layout:true});
 app.use(express.favicon());
 app.use(express.bodyParser());
 app.use(express.cookieParser('10001010101, this is top secret'));
@@ -70,4 +73,4 @@ app.listen(express_cfg.port);
 //socket.io setup
 var socketIo = new require(path.join(__dirname, '/lib/socket_handler'))(app, session.store(), session.options().sessionkey);
 
-console.log(content_cfg.welcome + ' - express on port %d in %s mode', app.address().port, app.settings.env);
+console.log(content_cfg.welcome + ' - express on port %d in %s mode', app.port, app.settings.env);

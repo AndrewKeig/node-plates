@@ -3,11 +3,7 @@ var content_cfg = konphyg('content');
 var lib = require('../lib');
 
 exports.get_login = function(req, res){
-    //if (!lib.middleware.is_user_authenticated) {
-      res.render('login', { title: content_cfg.title});
-    //}// else {
-       // res.redirect('/');
-    //}
+      res.render('login');
 };
 
 exports.post_login = function(req, res){
