@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
     <meta charset="utf-8">
     <title>{{title}}</title>
-
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
     <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
@@ -23,10 +22,8 @@
             socket.emit('ready', { true:true });
         });
     </script>
-
 </head>
 <body class="ui-mobile-viewport">
-
 <div data-role="page" id="index" login="ui-page ui-body-c ui-page-active">
     <div data-role="header" class="ui-bar-a ui-header" role="banner">
         <a href="/"  data-ajax="false" class="ui-btn-left ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-a" data-icon="arrow-l" data-theme="a">
@@ -52,6 +49,5 @@
         <h4 class="ui-title" tabindex="0" role="heading" aria-level="1">@2012 {{title}}</h4>
     </div>
 </div>
-
 </body>
 </html>

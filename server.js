@@ -62,15 +62,15 @@ app.get('/logout', lib.middleware.is_user_authenticated, routes.login.logout);
 //errors
 app.get('/404', lib.errors.page_not_found_handler);
 app.get('/500', lib.errors.internal_error_handler);
-app.get('/*', lib.errors.page_not_found_handler);
+//app.get('/*', lib.errors.page_not_found_handler);
 
 //handle uncaught exceptions
 process.addListener('uncaughtException', lib.errors.uncaught_exception);
 
 //express listen
-app.listen(express_cfg.port);
+var server = app.listen(express_cfg.port);
 
 //socket.io setup
-var socketIo = new require(path.join(__dirname, '/lib/socket_handler'))(app, session.store(), session.options().sessionkey);
+var socketIo = new require(path.join(__dirname, '/lib/socket_handler'))(server, session.store(), session.options().sessionkey);
 
-console.log(content_cfg.welcome + ' - express on port %d in %s mode', app.port, app.settings.env);
+console.log(content_cfg.welcome + ' - express on port %d in %s mode using session', express_cfg.port, app.settings.env, session.options().session_type);

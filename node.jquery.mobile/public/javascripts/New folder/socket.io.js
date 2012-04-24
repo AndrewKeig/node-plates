@@ -1,4 +1,4 @@
-/*! Socket.IO.js build:0.9.3, development. Copyright(c) 2011 LearnBoost <dev@learnboost.com> MIT Licensed */
+/*! Socket.IO.js build:0.7.4, development. Copyright(c) 2011 LearnBoost <dev@learnboost.com> MIT Licensed */
 
 /**
  * socket.io
@@ -6,7 +6,7 @@
  * MIT Licensed
  */
 
-(function (exports, global) {
+(function (exports) {
 
   /**
    * IO namespace.
@@ -22,7 +22,7 @@
    * @api public
    */
 
-  io.version = '0.9.3';
+  io.version = '0.7.4';
 
   /**
    * Protocol implemented.
@@ -69,22 +69,19 @@
       , uuri
       , socket;
 
-    if (global && global.location) {
-      uri.protocol = uri.protocol || global.location.protocol.slice(0, -1);
-      uri.host = uri.host || (global.document
-        ? global.document.domain : global.location.hostname);
-      uri.port = uri.port || global.location.port;
+    if ('undefined' != typeof document) {
+      uri.protocol = uri.protocol || document.location.protocol.slice(0, -1);
+      uri.host = uri.host || document.domain;
+      uri.port = uri.port || document.location.port;
     }
 
     uuri = io.util.uniqueUri(uri);
 
     var options = {
         host: uri.host
-      , secure: 'https' == uri.protocol
-      , port: uri.port || ('https' == uri.protocol ? 443 : 80)
-      , query: uri.query || ''
+      , secure: uri.protocol == 'https'
+      , port: uri.port || 80
     };
-
     io.util.merge(options, details);
 
     if (options['force new connection'] || !io.sockets[uuri]) {
@@ -101,14 +98,15 @@
     return socket.of(uri.path.length > 1 ? uri.path : '');
   };
 
-})('object' === typeof module ? module.exports : (this.io = {}), this);
+})('object' === typeof module ? module.exports : (window.io = {}));
+
 /**
  * socket.io
  * Copyright(c) 2011 LearnBoost <dev@learnboost.com>
  * MIT Licensed
  */
 
-(function (exports, global) {
+(function (exports) {
 
   /**
    * Utilities namespace.
@@ -155,7 +153,7 @@
       , host = uri.host
       , port = uri.port;
 
-    if ('document' in global) {
+    if ('undefined' != typeof document) {
       host = host || document.domain;
       port = port || (protocol == 'https'
         && document.location.protocol !== 'https:' ? 443 : document.location.port);
@@ -171,52 +169,6 @@
   };
 
   /**
-   * Mergest 2 query strings in to once unique query string
-   *
-   * @param {String} base
-   * @param {String} addition
-   * @api public
-   */
-
-  util.query = function (base, addition) {
-    var query = util.chunkQuery(base || '')
-      , components = [];
-
-    util.merge(query, util.chunkQuery(addition || ''));
-    for (var part in query) {
-      if (query.hasOwnProperty(part)) {
-        components.push(part + '=' + query[part]);
-      }
-    }
-
-    return components.length ? '?' + components.join('&') : '';
-  };
-
-  /**
-   * Transforms a querystring in to an object
-   *
-   * @param {String} qs
-   * @api public
-   */
-
-  util.chunkQuery = function (qs) {
-    var query = {}
-      , params = qs.split('&')
-      , i = 0
-      , l = params.length
-      , kv;
-
-    for (; i < l; ++i) {
-      kv = params[i].split('=');
-      if (kv[0]) {
-        query[kv[0]] = kv[1];
-      }
-    }
-
-    return query;
-  };
-
-  /**
    * Executes the given function when the page is loaded.
    *
    *     io.util.load(function () { console.log('page loaded'); });
@@ -228,11 +180,11 @@
   var pageLoaded = false;
 
   util.load = function (fn) {
-    if ('document' in global && document.readyState === 'complete' || pageLoaded) {
+    if (document.readyState === 'complete' || pageLoaded) {
       return fn();
     }
 
-    util.on(global, 'load', fn, false);
+    util.on(window, 'load', fn, false);
   };
 
   /**
@@ -244,7 +196,7 @@
   util.on = function (element, event, fn, capture) {
     if (element.attachEvent) {
       element.attachEvent('on' + event, fn);
-    } else if (element.addEventListener) {
+    } else {
       element.addEventListener(event, fn, capture);
     }
   };
@@ -258,19 +210,20 @@
    */
 
   util.request = function (xdomain) {
+    if ('undefined' != typeof window) {
+      if (xdomain && window.XDomainRequest) {
+        return new XDomainRequest();
+      };
 
-    if (xdomain && 'undefined' != typeof XDomainRequest) {
-      return new XDomainRequest();
-    }
+      if (window.XMLHttpRequest && (!xdomain || util.ua.hasCORS)) {
+        return new XMLHttpRequest();
+      };
 
-    if ('undefined' != typeof XMLHttpRequest && (!xdomain || util.ua.hasCORS)) {
-      return new XMLHttpRequest();
-    }
-
-    if (!xdomain) {
-      try {
-        return new window[(['Active'].concat('Object').join('X'))]('Microsoft.XMLHTTP');
-      } catch(e) { }
+      if (!xdomain) {
+        try {
+          return new window.ActiveXObject('Microsoft.XMLHTTP');
+        } catch(e) { }
+      }
     }
 
     return null;
@@ -301,7 +254,7 @@
    */
 
   util.defer = function (fn) {
-    if (!util.ua.webkit || 'undefined' != typeof importScripts) {
+    if (!util.ua.webkit) {
       return fn();
     }
 
@@ -352,9 +305,8 @@
    */
 
   util.inherit = function (ctor, ctor2) {
-    function f() {};
-    f.prototype = ctor2.prototype;
-    ctor.prototype = new f;
+    ctor.prototype = new ctor2;
+    util.merge(ctor, ctor2);
   };
 
   /**
@@ -380,7 +332,7 @@
   util.intersect = function (arr, arr2) {
     var ret = []
       , longest = arr.length > arr2.length ? arr : arr2
-      , shortest = arr.length > arr2.length ? arr2 : arr;
+      , shortest = arr.length > arr2.length ? arr2 : arr
 
     for (var i = 0, l = shortest.length; i < l; i++) {
       if (~util.indexOf(longest, shortest[i]))
@@ -398,9 +350,12 @@
    */
 
   util.indexOf = function (arr, o, i) {
-    
-    for (var j = arr.length, i = i < 0 ? i + j < 0 ? 0 : i + j : i || 0; 
-         i < j && arr[i] !== o; i++) {}
+    if (Array.prototype.indexOf) {
+      return Array.prototype.indexOf.call(arr, o, i);
+    }
+
+    for (var j = arr.length, i = i < 0 ? i + j < 0 ? 0 : i + j : i || 0
+        ; i < j && arr[i] !== o; i++);
 
     return j <= i ? -1 : i;
   };
@@ -434,7 +389,8 @@
    * @api public
    */
 
-  util.ua.hasCORS = 'undefined' != typeof XMLHttpRequest && (function () {
+  util.ua.hasCORS = 'undefined' != typeof window && window.XMLHttpRequest &&
+  (function () {
     try {
       var a = new XMLHttpRequest();
     } catch (e) {
@@ -453,7 +409,7 @@
   util.ua.webkit = 'undefined' != typeof navigator
     && /webkit/i.test(navigator.userAgent);
 
-})('undefined' != typeof io ? io : module.exports, this);
+})('undefined' != typeof window ? io : module.exports);
 
 /**
  * socket.io
@@ -1034,10 +990,10 @@
     switch (packet.type) {
       case 'error':
         var reason = packet.reason ? indexOf(reasons, packet.reason) : ''
-          , adv = packet.advice ? indexOf(advice, packet.advice) : '';
+          , adv = packet.advice ? indexOf(advice, packet.advice) : ''
 
         if (reason !== '' || adv !== '')
-          data = reason + (adv !== '' ? ('+' + adv) : '');
+          data = reason + (adv !== '' ? ('+' + adv) : '')
 
         break;
 
@@ -1101,7 +1057,7 @@
 
     for (var i = 0, l = packets.length; i < l; i++) {
       var packet = packets[i];
-      decoded += '\ufffd' + packet.length + '\ufffd' + packets[i];
+      decoded += '\ufffd' + packet.length + '\ufffd' + packets[i]
     }
 
     return decoded;
@@ -1113,7 +1069,7 @@
    * @api private
    */
 
-  var regexp = /([^:]+):([0-9]+)?(\+)?:([^:]+)?:?([\s\S]*)?/;
+  var regexp = /^([^:]+):([0-9]+)?(\+)?:([^:]+)?:?(.*)?$/;
 
   parser.decodePacket = function (data) {
     var pieces = data.match(regexp);
@@ -1222,6 +1178,7 @@
     'undefined' != typeof io ? io : module.exports
   , 'undefined' != typeof io ? io : module.parent.exports
 );
+
 /**
  * socket.io
  * Copyright(c) 2011 LearnBoost <dev@learnboost.com>
@@ -1265,13 +1222,7 @@
 
   Transport.prototype.onData = function (data) {
     this.clearCloseTimeout();
-    
-    // If the connection in currently open (or in a reopening state) reset the close 
-    // timeout since we have just received data. This check is necessary so
-    // that we don't reset the timeout on an explicitly disconnected connection.
-    if (this.socket.connected || this.socket.connecting || this.socket.reconnecting) {
-      this.setCloseTimeout();
-    }
+    this.setCloseTimeout();
 
     if (data !== '') {
       // todo: we should only do decodePayload for xhr transports
@@ -1294,8 +1245,6 @@
    */
 
   Transport.prototype.onPacket = function (packet) {
-    this.socket.setHeartbeatTimeout();
-
     if (packet.type == 'heartbeat') {
       return this.onHeartbeat();
     }
@@ -1332,7 +1281,7 @@
    */
 
   Transport.prototype.onDisconnect = function () {
-    if (this.close && this.open) this.close();
+    if (this.close) this.close();
     this.clearTimeouts();
     this.socket.onDisconnect();
     return this;
@@ -1427,8 +1376,8 @@
     }, this.socket.options['reopen delay']);*/
 
     this.open = false;
+    this.setCloseTimeout();
     this.socket.onClose();
-    this.onDisconnect();
   };
 
   /**
@@ -1447,29 +1396,18 @@
       + options.resource + '/' + io.protocol
       + '/' + this.name + '/' + this.sessid;
   };
-
-  /**
-   * Checks if the transport is ready to start a connection.
-   *
-   * @param {Socket} socket The socket instance that needs a transport
-   * @param {Function} fn The callback
-   * @api private
-   */
-
-  Transport.prototype.ready = function (socket, fn) {
-    fn.call(this);
-  };
 })(
     'undefined' != typeof io ? io : module.exports
   , 'undefined' != typeof io ? io : module.parent.exports
 );
+
 /**
  * socket.io
  * Copyright(c) 2011 LearnBoost <dev@learnboost.com>
  * MIT Licensed
  */
 
-(function (exports, io, global) {
+(function (exports, io) {
 
   /**
    * Expose constructor.
@@ -1478,7 +1416,7 @@
   exports.Socket = Socket;
 
   /**
-   * Create a new `Socket.IO client` which can establish a persistent
+   * Create a new `Socket.IO client` which can establish a persisent
    * connection with a Socket.IO enabled server.
    *
    * @api public
@@ -1488,19 +1426,17 @@
     this.options = {
         port: 80
       , secure: false
-      , document: 'document' in global ? document : false
+      , document: document
       , resource: 'socket.io'
       , transports: io.transports
       , 'connect timeout': 10000
       , 'try multiple transports': true
       , 'reconnect': true
       , 'reconnection delay': 500
-      , 'reconnection limit': Infinity
       , 'reopen delay': 3000
       , 'max reconnection attempts': 10
       , 'sync disconnect on unload': true
       , 'auto connect': true
-      , 'flash policy port': 10843
     };
 
     io.util.merge(this.options, options);
@@ -1517,7 +1453,7 @@
         (!this.isXDomain() || io.util.ua.hasCORS)) {
       var self = this;
 
-      io.util.on(global, 'unload', function () {
+      io.util.on(window, 'beforeunload', function () {
         self.disconnectSync();
       }, false);
     }
@@ -1593,14 +1529,14 @@
     var url = [
           'http' + (options.secure ? 's' : '') + ':/'
         , options.host + ':' + options.port
-        , options.resource
+        , this.options.resource
         , io.protocol
-        , io.util.query(this.options.query, 't=' + +new Date)
+        , '?t=' + + new Date
       ].join('/');
 
-    if (this.isXDomain() && !io.util.ua.hasCORS) {
+    if (this.isXDomain()) {
       var insertAt = document.getElementsByTagName('script')[0]
-        , script = document.createElement('script');
+        , script = document.createElement('SCRIPT');
 
       script.src = url + '&jsonp=' + io.j.length;
       insertAt.parentNode.insertBefore(script, insertAt);
@@ -1612,8 +1548,7 @@
     } else {
       var xhr = io.util.request();
 
-      xhr.open('GET', url, true);
-      xhr.withCredentials = true;
+      xhr.open('GET', url);
       xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
           xhr.onreadystatechange = empty;
@@ -1668,53 +1603,46 @@
       self.sessionid = sid;
       self.closeTimeout = close * 1000;
       self.heartbeatTimeout = heartbeat * 1000;
-      self.transports = transports ? io.util.intersect(
+      self.transports = io.util.intersect(
           transports.split(',')
         , self.options.transports
-      ) : self.options.transports;
-
-      self.setHeartbeatTimeout();
+      );
 
       function connect (transports){
-        if (self.transport) self.transport.clearTimeouts();
-
         self.transport = self.getTransport(transports);
         if (!self.transport) return self.publish('connect_failed');
 
-        // once the transport is ready
-        self.transport.ready(self, function () {
-          self.connecting = true;
-          self.publish('connecting', self.transport.name);
-          self.transport.open();
+        self.connecting = true;
+        self.publish('connecting', self.transport.name);
+        self.transport.open();
 
-          if (self.options['connect timeout']) {
-            self.connectTimeoutTimer = setTimeout(function () {
-              if (!self.connected) {
-                self.connecting = false;
+        if (self.options['connect timeout']) {
+          self.connectTimeoutTimer = setTimeout(function () {
+            if (!self.connected) {
+              self.connecting = false;
 
-                if (self.options['try multiple transports']) {
-                  if (!self.remainingTransports) {
-                    self.remainingTransports = self.transports.slice(0);
-                  }
+              if (self.options['try multiple transports']) {
+                if (!self.remainingTransports) {
+                  self.remainingTransports = self.transports.slice(0);
+                }
 
-                  var remaining = self.remainingTransports;
+                var remaining = self.remainingTransports;
 
-                  while (remaining.length > 0 && remaining.splice(0,1)[0] !=
-                         self.transport.name) {}
+                while (remaining.length > 0 && remaining.splice(0,1)[0] !=
+                  self.transport.name) {}
 
-                    if (remaining.length){
-                      connect(remaining);
-                    } else {
-                      self.publish('connect_failed');
-                    }
+                if (remaining.length){
+                  connect(remaining);
+                } else {
+                  self.publish('connect_failed');
                 }
               }
-            }, self.options['connect timeout']);
-          }
-        });
+            }
+          }, self.options['connect timeout']);
+        }
       }
 
-      connect(self.transports);
+      connect();
 
       self.once('connect', function (){
         clearTimeout(self.connectTimeoutTimer);
@@ -1724,22 +1652,6 @@
     });
 
     return this;
-  };
-
-  /**
-   * Clears and sets a new heartbeat timeout using the value given by the
-   * server during the handshake.
-   *
-   * @api private
-   */
-
-  Socket.prototype.setHeartbeatTimeout = function () {
-    clearTimeout(this.heartbeatTimeoutTimer);
-
-    var self = this;
-    this.heartbeatTimeoutTimer = setTimeout(function () {
-      self.transport.onClose();
-    }, this.heartbeatTimeout);
   };
 
   /**
@@ -1783,7 +1695,7 @@
    */
 
   Socket.prototype.disconnect = function () {
-    if (this.connected || this.connecting) {
+    if (this.connected) {
       if (this.open) {
         this.of('').packet({ type: 'disconnect' });
       }
@@ -1821,12 +1733,8 @@
    */
 
   Socket.prototype.isXDomain = function () {
-
-    var port = global.location.port ||
-      ('https:' == global.location.protocol ? 443 : 80);
-
-    return this.options.host !== global.location.hostname 
-      || this.options.port != port;
+    var locPort = window.location.port || 80;
+    return this.options.host !== document.domain || this.options.port != locPort;
   };
 
   /**
@@ -1836,15 +1744,13 @@
    */
 
   Socket.prototype.onConnect = function () {
-    if (!this.connected) {
-      this.connected = true;
-      this.connecting = false;
-      if (!this.doBuffer) {
-        // make sure to flush the buffer
-        this.setBuffer(false);
-      }
-      this.emit('connect');
+    this.connected = true;
+    this.connecting = false;
+    if (!this.doBuffer) {
+      // make sure to flush the buffer
+      this.setBuffer(false);
     }
+    this.emit('connect');
   };
 
   /**
@@ -1865,7 +1771,6 @@
 
   Socket.prototype.onClose = function () {
     this.open = false;
-    clearTimeout(this.heartbeatTimeoutTimer);
   };
 
   /**
@@ -1886,11 +1791,9 @@
 
   Socket.prototype.onError = function (err) {
     if (err && err.advice) {
-      if (err.advice === 'reconnect' && (this.connected || this.connecting)) {
+      if (err.advice === 'reconnect' && this.connected) {
         this.disconnect();
-        if (this.options.reconnect) {
-          this.reconnect();
-        }
+        this.reconnect();
       }
     }
 
@@ -1904,22 +1807,19 @@
    */
 
   Socket.prototype.onDisconnect = function (reason) {
-    var wasConnected = this.connected
-      , wasConnecting = this.connecting;
+    var wasConnected = this.connected;
 
     this.connected = false;
     this.connecting = false;
     this.open = false;
 
-    if (wasConnected || wasConnecting) {
+    if (wasConnected) {
       this.transport.close();
       this.transport.clearTimeouts();
-      if (wasConnected) {
-        this.publish('disconnect', reason);
+      this.publish('disconnect', reason);
 
-        if ('booted' != reason && this.options.reconnect && !this.reconnecting) {
-          this.reconnect();
-        }
+      if ('booted' != reason && this.options.reconnect && !this.reconnecting) {
+        this.reconnect();
       }
     }
   };
@@ -1938,19 +1838,11 @@
     var self = this
       , maxAttempts = this.options['max reconnection attempts']
       , tryMultiple = this.options['try multiple transports']
-      , limit = this.options['reconnection limit'];
 
     function reset () {
       if (self.connected) {
-        for (var i in self.namespaces) {
-          if (self.namespaces.hasOwnProperty(i) && '' !== i) {
-              self.namespaces[i].packet({ type: 'connect' });
-          }
-        }
         self.publish('reconnect', self.transport.name, self.reconnectionAttempts);
       }
-
-      clearTimeout(self.reconnectionTimer);
 
       self.removeListener('connect_failed', maybeReconnect);
       self.removeListener('connect', maybeReconnect);
@@ -1990,10 +1882,7 @@
           reset();
         }
       } else {
-        if (self.reconnectionDelay < limit) {
-          self.reconnectionDelay *= 2; // exponential back off
-        }
-
+        self.reconnectionDelay *= 2; // exponential back off
         self.connect();
         self.publish('reconnecting', self.reconnectionDelay, self.reconnectionAttempts);
         self.reconnectionTimer = setTimeout(maybeReconnect, self.reconnectionDelay);
@@ -2009,7 +1898,6 @@
 })(
     'undefined' != typeof io ? io : module.exports
   , 'undefined' != typeof io ? io : module.parent.exports
-  , this
 );
 /**
  * socket.io
@@ -2260,7 +2148,7 @@
  * MIT Licensed
  */
 
-(function (exports, io, global) {
+(function (exports, io) {
 
   /**
    * Expose constructor.
@@ -2306,17 +2194,9 @@
    */
 
   WS.prototype.open = function () {
-    var query = io.util.query(this.socket.options.query)
-      , self = this
-      , Socket
+    this.websocket = new WebSocket(this.prepareUrl());
 
-
-    if (!Socket) {
-      Socket = global.MozWebSocket || global.WebSocket;
-    }
-
-    this.websocket = new Socket(this.prepareUrl() + query);
-
+    var self = this;
     this.websocket.onopen = function () {
       self.onOpen();
       self.socket.setBuffer(false);
@@ -2403,8 +2283,7 @@
    */
 
   WS.check = function () {
-    return ('WebSocket' in global && !('__addTask' in WebSocket))
-          || 'MozWebSocket' in global;
+    return 'WebSocket' in window && !('__addTask' in WebSocket);
   };
 
   /**
@@ -2429,7 +2308,6 @@
 })(
     'undefined' != typeof io ? io.Transport : module.exports
   , 'undefined' != typeof io ? io : module.parent.exports
-  , this
 );
 
 /**
@@ -2447,7 +2325,7 @@
   exports.flashsocket = Flashsocket;
 
   /**
-   * The FlashSocket transport. This is a API wrapper for the HTML5 WebSocket
+   * The Flashsocket transport. This is a API wrapper for the HTML5 WebSocket
    * specification. It uses a .swf file to communicate with the server. If you want
    * to serve the .swf file from a other server than where the Socket.IO script is
    * coming from you need to use the insecure version of the .swf. More information
@@ -2477,8 +2355,8 @@
   Flashsocket.prototype.name = 'flashsocket';
 
   /**
-   * Disconnect the established `FlashSocket` connection. This is done by adding a 
-   * new task to the FlashSocket. The rest will be handled off by the `WebSocket` 
+   *Disconnect the established `Flashsocket` connection. This is done by adding a 
+   * new task to the Flashsocket. The rest will be handled off by the `WebSocket` 
    * transport.
    *
    * @returns {Transport}
@@ -2486,9 +2364,7 @@
    */
 
   Flashsocket.prototype.open = function () {
-    var self = this
-      , args = arguments;
-
+    var self = this, args = arguments;
     WebSocket.__addTask(function () {
       io.Transport.websocket.prototype.open.apply(self, args);
     });
@@ -2497,7 +2373,7 @@
   
   /**
    * Sends a message to the Socket.IO server. This is done by adding a new
-   * task to the FlashSocket. The rest will be handled off by the `WebSocket` 
+   * task to the Flashsocket. The rest will be handled off by the `WebSocket` 
    * transport.
    *
    * @returns {Transport}
@@ -2513,7 +2389,7 @@
   };
 
   /**
-   * Disconnects the established `FlashSocket` connection.
+   * Disconnects the established `Flashsocket` connection.
    *
    * @returns {Transport}
    * @api public
@@ -2526,72 +2402,47 @@
   };
 
   /**
-   * The WebSocket fall back needs to append the flash container to the body
-   * element, so we need to make sure we have access to it. Or defer the call
-   * until we are sure there is a body element.
-   *
-   * @param {Socket} socket The socket instance that needs a transport
-   * @param {Function} fn The callback
-   * @api private
-   */
-
-  Flashsocket.prototype.ready = function (socket, fn) {
-    function init () {
-      var options = socket.options
-        , port = options['flash policy port']
-        , path = [
-              'http' + (options.secure ? 's' : '') + ':/'
-            , options.host + ':' + options.port
-            , options.resource
-            , 'static/flashsocket'
-            , 'WebSocketMain' + (socket.isXDomain() ? 'Insecure' : '') + '.swf'
-          ];
-
-      // Only start downloading the swf file when the checked that this browser
-      // actually supports it
-      if (!Flashsocket.loaded) {
-        if (typeof WEB_SOCKET_SWF_LOCATION === 'undefined') {
-          // Set the correct file based on the XDomain settings
-          WEB_SOCKET_SWF_LOCATION = path.join('/');
-        }
-
-        if (port !== 843) {
-          WebSocket.loadFlashPolicyFile('xmlsocket://' + options.host + ':' + port);
-        }
-
-        WebSocket.__initialize();
-        Flashsocket.loaded = true;
-      }
-
-      fn.call(self);
-    }
-
-    var self = this;
-    if (document.body) return init();
-
-    io.util.load(init);
-  };
-
-  /**
-   * Check if the FlashSocket transport is supported as it requires that the Adobe
-   * Flash Player plug-in version `10.0.0` or greater is installed. And also check if
+   * Check if the Flashsocket transport is supported as it requires that the Adobe
+   * Flash Player plugin version `10.0.0` or greater is installed. And also check if
    * the polyfill is correctly loaded.
    *
    * @returns {Boolean}
    * @api public
    */
 
-  Flashsocket.check = function () {
+  Flashsocket.check = function (socket) {
     if (
         typeof WebSocket == 'undefined'
       || !('__initialize' in WebSocket) || !swfobject
     ) return false;
 
-    return swfobject.getFlashPlayerVersion().major >= 10;
+    var supported = swfobject.getFlashPlayerVersion().major >= 10
+      , options = socket.options
+      , path = [
+          'http' + (options.secure ? 's' : '') + ':/'
+        , options.host + ':' + options.port
+        , options.resource
+        , 'static/flashsocket'
+        , 'WebSocketMain' + (socket.isXDomain() ? 'Insecure' : '') + '.swf'
+      ];
+
+    // Only start downloading the swf file when the checked that this browser
+    // actually supports it
+    if (supported && !Flashsocket.loaded) {
+      if (typeof WEB_SOCKET_SWF_LOCATION === 'undefined') {
+        // Set the correct file based on the XDomain settings
+        WEB_SOCKET_SWF_LOCATION = path.join('/');
+      }
+
+      WebSocket.__initialize();
+      Flashsocket.loaded = true;
+    }
+
+    return supported;
   };
 
   /**
-   * Check if the FlashSocket transport can be used as cross domain / cross origin 
+   * Check if the Flashsocket transport can be used as cross domain / cross origin 
    * transport. Because we can't see which type (secure or insecure) of .swf is used
    * we will just return true.
    *
@@ -2625,17 +2476,14 @@
 /*	SWFObject v2.2 <http://code.google.com/p/swfobject/> 
 	is released under the MIT License <http://www.opensource.org/licenses/mit-license.php> 
 */
-if ('undefined' != typeof window) {
-var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="ShockwaveFlash.ShockwaveFlash",q="application/x-shockwave-flash",R="SWFObjectExprInst",x="onreadystatechange",O=window,j=document,t=navigator,T=false,U=[h],o=[],N=[],I=[],l,Q,E,B,J=false,a=false,n,G,m=true,M=function(){var aa=typeof j.getElementById!=D&&typeof j.getElementsByTagName!=D&&typeof j.createElement!=D,ah=t.userAgent.toLowerCase(),Y=t.platform.toLowerCase(),ae=Y?/win/.test(Y):/win/.test(ah),ac=Y?/mac/.test(Y):/mac/.test(ah),af=/webkit/.test(ah)?parseFloat(ah.replace(/^.*webkit\/(\d+(\.\d+)?).*$/,"$1")):false,X=!+"\v1",ag=[0,0,0],ab=null;if(typeof t.plugins!=D&&typeof t.plugins[S]==r){ab=t.plugins[S].description;if(ab&&!(typeof t.mimeTypes!=D&&t.mimeTypes[q]&&!t.mimeTypes[q].enabledPlugin)){T=true;X=false;ab=ab.replace(/^.*\s+(\S+\s+\S+$)/,"$1");ag[0]=parseInt(ab.replace(/^(.*)\..*$/,"$1"),10);ag[1]=parseInt(ab.replace(/^.*\.(.*)\s.*$/,"$1"),10);ag[2]=/[a-zA-Z]/.test(ab)?parseInt(ab.replace(/^.*[a-zA-Z]+(.*)$/,"$1"),10):0}}else{if(typeof O[(['Active'].concat('Object').join('X'))]!=D){try{var ad=new window[(['Active'].concat('Object').join('X'))](W);if(ad){ab=ad.GetVariable("$version");if(ab){X=true;ab=ab.split(" ")[1].split(",");ag=[parseInt(ab[0],10),parseInt(ab[1],10),parseInt(ab[2],10)]}}}catch(Z){}}}return{w3:aa,pv:ag,wk:af,ie:X,win:ae,mac:ac}}(),k=function(){if(!M.w3){return}if((typeof j.readyState!=D&&j.readyState=="complete")||(typeof j.readyState==D&&(j.getElementsByTagName("body")[0]||j.body))){f()}if(!J){if(typeof j.addEventListener!=D){j.addEventListener("DOMContentLoaded",f,false)}if(M.ie&&M.win){j.attachEvent(x,function(){if(j.readyState=="complete"){j.detachEvent(x,arguments.callee);f()}});if(O==top){(function(){if(J){return}try{j.documentElement.doScroll("left")}catch(X){setTimeout(arguments.callee,0);return}f()})()}}if(M.wk){(function(){if(J){return}if(!/loaded|complete/.test(j.readyState)){setTimeout(arguments.callee,0);return}f()})()}s(f)}}();function f(){if(J){return}try{var Z=j.getElementsByTagName("body")[0].appendChild(C("span"));Z.parentNode.removeChild(Z)}catch(aa){return}J=true;var X=U.length;for(var Y=0;Y<X;Y++){U[Y]()}}function K(X){if(J){X()}else{U[U.length]=X}}function s(Y){if(typeof O.addEventListener!=D){O.addEventListener("load",Y,false)}else{if(typeof j.addEventListener!=D){j.addEventListener("load",Y,false)}else{if(typeof O.attachEvent!=D){i(O,"onload",Y)}else{if(typeof O.onload=="function"){var X=O.onload;O.onload=function(){X();Y()}}else{O.onload=Y}}}}}function h(){if(T){V()}else{H()}}function V(){var X=j.getElementsByTagName("body")[0];var aa=C(r);aa.setAttribute("type",q);var Z=X.appendChild(aa);if(Z){var Y=0;(function(){if(typeof Z.GetVariable!=D){var ab=Z.GetVariable("$version");if(ab){ab=ab.split(" ")[1].split(",");M.pv=[parseInt(ab[0],10),parseInt(ab[1],10),parseInt(ab[2],10)]}}else{if(Y<10){Y++;setTimeout(arguments.callee,10);return}}X.removeChild(aa);Z=null;H()})()}else{H()}}function H(){var ag=o.length;if(ag>0){for(var af=0;af<ag;af++){var Y=o[af].id;var ab=o[af].callbackFn;var aa={success:false,id:Y};if(M.pv[0]>0){var ae=c(Y);if(ae){if(F(o[af].swfVersion)&&!(M.wk&&M.wk<312)){w(Y,true);if(ab){aa.success=true;aa.ref=z(Y);ab(aa)}}else{if(o[af].expressInstall&&A()){var ai={};ai.data=o[af].expressInstall;ai.width=ae.getAttribute("width")||"0";ai.height=ae.getAttribute("height")||"0";if(ae.getAttribute("class")){ai.styleclass=ae.getAttribute("class")}if(ae.getAttribute("align")){ai.align=ae.getAttribute("align")}var ah={};var X=ae.getElementsByTagName("param");var ac=X.length;for(var ad=0;ad<ac;ad++){if(X[ad].getAttribute("name").toLowerCase()!="movie"){ah[X[ad].getAttribute("name")]=X[ad].getAttribute("value")}}P(ai,ah,Y,ab)}else{p(ae);if(ab){ab(aa)}}}}}else{w(Y,true);if(ab){var Z=z(Y);if(Z&&typeof Z.SetVariable!=D){aa.success=true;aa.ref=Z}ab(aa)}}}}}function z(aa){var X=null;var Y=c(aa);if(Y&&Y.nodeName=="OBJECT"){if(typeof Y.SetVariable!=D){X=Y}else{var Z=Y.getElementsByTagName(r)[0];if(Z){X=Z}}}return X}function A(){return !a&&F("6.0.65")&&(M.win||M.mac)&&!(M.wk&&M.wk<312)}function P(aa,ab,X,Z){a=true;E=Z||null;B={success:false,id:X};var ae=c(X);if(ae){if(ae.nodeName=="OBJECT"){l=g(ae);Q=null}else{l=ae;Q=X}aa.id=R;if(typeof aa.width==D||(!/%$/.test(aa.width)&&parseInt(aa.width,10)<310)){aa.width="310"}if(typeof aa.height==D||(!/%$/.test(aa.height)&&parseInt(aa.height,10)<137)){aa.height="137"}j.title=j.title.slice(0,47)+" - Flash Player Installation";var ad=M.ie&&M.win?(['Active'].concat('').join('X')):"PlugIn",ac="MMredirectURL="+O.location.toString().replace(/&/g,"%26")+"&MMplayerType="+ad+"&MMdoctitle="+j.title;if(typeof ab.flashvars!=D){ab.flashvars+="&"+ac}else{ab.flashvars=ac}if(M.ie&&M.win&&ae.readyState!=4){var Y=C("div");X+="SWFObjectNew";Y.setAttribute("id",X);ae.parentNode.insertBefore(Y,ae);ae.style.display="none";(function(){if(ae.readyState==4){ae.parentNode.removeChild(ae)}else{setTimeout(arguments.callee,10)}})()}u(aa,ab,X)}}function p(Y){if(M.ie&&M.win&&Y.readyState!=4){var X=C("div");Y.parentNode.insertBefore(X,Y);X.parentNode.replaceChild(g(Y),X);Y.style.display="none";(function(){if(Y.readyState==4){Y.parentNode.removeChild(Y)}else{setTimeout(arguments.callee,10)}})()}else{Y.parentNode.replaceChild(g(Y),Y)}}function g(ab){var aa=C("div");if(M.win&&M.ie){aa.innerHTML=ab.innerHTML}else{var Y=ab.getElementsByTagName(r)[0];if(Y){var ad=Y.childNodes;if(ad){var X=ad.length;for(var Z=0;Z<X;Z++){if(!(ad[Z].nodeType==1&&ad[Z].nodeName=="PARAM")&&!(ad[Z].nodeType==8)){aa.appendChild(ad[Z].cloneNode(true))}}}}}return aa}function u(ai,ag,Y){var X,aa=c(Y);if(M.wk&&M.wk<312){return X}if(aa){if(typeof ai.id==D){ai.id=Y}if(M.ie&&M.win){var ah="";for(var ae in ai){if(ai[ae]!=Object.prototype[ae]){if(ae.toLowerCase()=="data"){ag.movie=ai[ae]}else{if(ae.toLowerCase()=="styleclass"){ah+=' class="'+ai[ae]+'"'}else{if(ae.toLowerCase()!="classid"){ah+=" "+ae+'="'+ai[ae]+'"'}}}}}var af="";for(var ad in ag){if(ag[ad]!=Object.prototype[ad]){af+='<param name="'+ad+'" value="'+ag[ad]+'" />'}}aa.outerHTML='<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"'+ah+">"+af+"</object>";N[N.length]=ai.id;X=c(ai.id)}else{var Z=C(r);Z.setAttribute("type",q);for(var ac in ai){if(ai[ac]!=Object.prototype[ac]){if(ac.toLowerCase()=="styleclass"){Z.setAttribute("class",ai[ac])}else{if(ac.toLowerCase()!="classid"){Z.setAttribute(ac,ai[ac])}}}}for(var ab in ag){if(ag[ab]!=Object.prototype[ab]&&ab.toLowerCase()!="movie"){e(Z,ab,ag[ab])}}aa.parentNode.replaceChild(Z,aa);X=Z}}return X}function e(Z,X,Y){var aa=C("param");aa.setAttribute("name",X);aa.setAttribute("value",Y);Z.appendChild(aa)}function y(Y){var X=c(Y);if(X&&X.nodeName=="OBJECT"){if(M.ie&&M.win){X.style.display="none";(function(){if(X.readyState==4){b(Y)}else{setTimeout(arguments.callee,10)}})()}else{X.parentNode.removeChild(X)}}}function b(Z){var Y=c(Z);if(Y){for(var X in Y){if(typeof Y[X]=="function"){Y[X]=null}}Y.parentNode.removeChild(Y)}}function c(Z){var X=null;try{X=j.getElementById(Z)}catch(Y){}return X}function C(X){return j.createElement(X)}function i(Z,X,Y){Z.attachEvent(X,Y);I[I.length]=[Z,X,Y]}function F(Z){var Y=M.pv,X=Z.split(".");X[0]=parseInt(X[0],10);X[1]=parseInt(X[1],10)||0;X[2]=parseInt(X[2],10)||0;return(Y[0]>X[0]||(Y[0]==X[0]&&Y[1]>X[1])||(Y[0]==X[0]&&Y[1]==X[1]&&Y[2]>=X[2]))?true:false}function v(ac,Y,ad,ab){if(M.ie&&M.mac){return}var aa=j.getElementsByTagName("head")[0];if(!aa){return}var X=(ad&&typeof ad=="string")?ad:"screen";if(ab){n=null;G=null}if(!n||G!=X){var Z=C("style");Z.setAttribute("type","text/css");Z.setAttribute("media",X);n=aa.appendChild(Z);if(M.ie&&M.win&&typeof j.styleSheets!=D&&j.styleSheets.length>0){n=j.styleSheets[j.styleSheets.length-1]}G=X}if(M.ie&&M.win){if(n&&typeof n.addRule==r){n.addRule(ac,Y)}}else{if(n&&typeof j.createTextNode!=D){n.appendChild(j.createTextNode(ac+" {"+Y+"}"))}}}function w(Z,X){if(!m){return}var Y=X?"visible":"hidden";if(J&&c(Z)){c(Z).style.visibility=Y}else{v("#"+Z,"visibility:"+Y)}}function L(Y){var Z=/[\\\"<>\.;]/;var X=Z.exec(Y)!=null;return X&&typeof encodeURIComponent!=D?encodeURIComponent(Y):Y}var d=function(){if(M.ie&&M.win){window.attachEvent("onunload",function(){var ac=I.length;for(var ab=0;ab<ac;ab++){I[ab][0].detachEvent(I[ab][1],I[ab][2])}var Z=N.length;for(var aa=0;aa<Z;aa++){y(N[aa])}for(var Y in M){M[Y]=null}M=null;for(var X in swfobject){swfobject[X]=null}swfobject=null})}}();return{registerObject:function(ab,X,aa,Z){if(M.w3&&ab&&X){var Y={};Y.id=ab;Y.swfVersion=X;Y.expressInstall=aa;Y.callbackFn=Z;o[o.length]=Y;w(ab,false)}else{if(Z){Z({success:false,id:ab})}}},getObjectById:function(X){if(M.w3){return z(X)}},embedSWF:function(ab,ah,ae,ag,Y,aa,Z,ad,af,ac){var X={success:false,id:ah};if(M.w3&&!(M.wk&&M.wk<312)&&ab&&ah&&ae&&ag&&Y){w(ah,false);K(function(){ae+="";ag+="";var aj={};if(af&&typeof af===r){for(var al in af){aj[al]=af[al]}}aj.data=ab;aj.width=ae;aj.height=ag;var am={};if(ad&&typeof ad===r){for(var ak in ad){am[ak]=ad[ak]}}if(Z&&typeof Z===r){for(var ai in Z){if(typeof am.flashvars!=D){am.flashvars+="&"+ai+"="+Z[ai]}else{am.flashvars=ai+"="+Z[ai]}}}if(F(Y)){var an=u(aj,am,ah);if(aj.id==ah){w(ah,true)}X.success=true;X.ref=an}else{if(aa&&A()){aj.data=aa;P(aj,am,ah,ac);return}else{w(ah,true)}}if(ac){ac(X)}})}else{if(ac){ac(X)}}},switchOffAutoHideShow:function(){m=false},ua:M,getFlashPlayerVersion:function(){return{major:M.pv[0],minor:M.pv[1],release:M.pv[2]}},hasFlashPlayerVersion:F,createSWF:function(Z,Y,X){if(M.w3){return u(Z,Y,X)}else{return undefined}},showExpressInstall:function(Z,aa,X,Y){if(M.w3&&A()){P(Z,aa,X,Y)}},removeSWF:function(X){if(M.w3){y(X)}},createCSS:function(aa,Z,Y,X){if(M.w3){v(aa,Z,Y,X)}},addDomLoadEvent:K,addLoadEvent:s,getQueryParamValue:function(aa){var Z=j.location.search||j.location.hash;if(Z){if(/\?/.test(Z)){Z=Z.split("?")[1]}if(aa==null){return L(Z)}var Y=Z.split("&");for(var X=0;X<Y.length;X++){if(Y[X].substring(0,Y[X].indexOf("="))==aa){return L(Y[X].substring((Y[X].indexOf("=")+1)))}}}return""},expressInstallCallback:function(){if(a){var X=c(R);if(X&&l){X.parentNode.replaceChild(l,X);if(Q){w(Q,true);if(M.ie&&M.win){l.style.display="block"}}if(E){E(B)}}a=false}}}}();
-}
-// Copyright: Hiroshi Ichikawa <http://gimite.net/en/>
+var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="ShockwaveFlash.ShockwaveFlash",q="application/x-shockwave-flash",R="SWFObjectExprInst",x="onreadystatechange",O=window,j=document,t=navigator,T=false,U=[h],o=[],N=[],I=[],l,Q,E,B,J=false,a=false,n,G,m=true,M=function(){var aa=typeof j.getElementById!=D&&typeof j.getElementsByTagName!=D&&typeof j.createElement!=D,ah=t.userAgent.toLowerCase(),Y=t.platform.toLowerCase(),ae=Y?/win/.test(Y):/win/.test(ah),ac=Y?/mac/.test(Y):/mac/.test(ah),af=/webkit/.test(ah)?parseFloat(ah.replace(/^.*webkit\/(\d+(\.\d+)?).*$/,"$1")):false,X=!+"\v1",ag=[0,0,0],ab=null;if(typeof t.plugins!=D&&typeof t.plugins[S]==r){ab=t.plugins[S].description;if(ab&&!(typeof t.mimeTypes!=D&&t.mimeTypes[q]&&!t.mimeTypes[q].enabledPlugin)){T=true;X=false;ab=ab.replace(/^.*\s+(\S+\s+\S+$)/,"$1");ag[0]=parseInt(ab.replace(/^(.*)\..*$/,"$1"),10);ag[1]=parseInt(ab.replace(/^.*\.(.*)\s.*$/,"$1"),10);ag[2]=/[a-zA-Z]/.test(ab)?parseInt(ab.replace(/^.*[a-zA-Z]+(.*)$/,"$1"),10):0}}else{if(typeof O.ActiveXObject!=D){try{var ad=new ActiveXObject(W);if(ad){ab=ad.GetVariable("$version");if(ab){X=true;ab=ab.split(" ")[1].split(",");ag=[parseInt(ab[0],10),parseInt(ab[1],10),parseInt(ab[2],10)]}}}catch(Z){}}}return{w3:aa,pv:ag,wk:af,ie:X,win:ae,mac:ac}}(),k=function(){if(!M.w3){return}if((typeof j.readyState!=D&&j.readyState=="complete")||(typeof j.readyState==D&&(j.getElementsByTagName("body")[0]||j.body))){f()}if(!J){if(typeof j.addEventListener!=D){j.addEventListener("DOMContentLoaded",f,false)}if(M.ie&&M.win){j.attachEvent(x,function(){if(j.readyState=="complete"){j.detachEvent(x,arguments.callee);f()}});if(O==top){(function(){if(J){return}try{j.documentElement.doScroll("left")}catch(X){setTimeout(arguments.callee,0);return}f()})()}}if(M.wk){(function(){if(J){return}if(!/loaded|complete/.test(j.readyState)){setTimeout(arguments.callee,0);return}f()})()}s(f)}}();function f(){if(J){return}try{var Z=j.getElementsByTagName("body")[0].appendChild(C("span"));Z.parentNode.removeChild(Z)}catch(aa){return}J=true;var X=U.length;for(var Y=0;Y<X;Y++){U[Y]()}}function K(X){if(J){X()}else{U[U.length]=X}}function s(Y){if(typeof O.addEventListener!=D){O.addEventListener("load",Y,false)}else{if(typeof j.addEventListener!=D){j.addEventListener("load",Y,false)}else{if(typeof O.attachEvent!=D){i(O,"onload",Y)}else{if(typeof O.onload=="function"){var X=O.onload;O.onload=function(){X();Y()}}else{O.onload=Y}}}}}function h(){if(T){V()}else{H()}}function V(){var X=j.getElementsByTagName("body")[0];var aa=C(r);aa.setAttribute("type",q);var Z=X.appendChild(aa);if(Z){var Y=0;(function(){if(typeof Z.GetVariable!=D){var ab=Z.GetVariable("$version");if(ab){ab=ab.split(" ")[1].split(",");M.pv=[parseInt(ab[0],10),parseInt(ab[1],10),parseInt(ab[2],10)]}}else{if(Y<10){Y++;setTimeout(arguments.callee,10);return}}X.removeChild(aa);Z=null;H()})()}else{H()}}function H(){var ag=o.length;if(ag>0){for(var af=0;af<ag;af++){var Y=o[af].id;var ab=o[af].callbackFn;var aa={success:false,id:Y};if(M.pv[0]>0){var ae=c(Y);if(ae){if(F(o[af].swfVersion)&&!(M.wk&&M.wk<312)){w(Y,true);if(ab){aa.success=true;aa.ref=z(Y);ab(aa)}}else{if(o[af].expressInstall&&A()){var ai={};ai.data=o[af].expressInstall;ai.width=ae.getAttribute("width")||"0";ai.height=ae.getAttribute("height")||"0";if(ae.getAttribute("class")){ai.styleclass=ae.getAttribute("class")}if(ae.getAttribute("align")){ai.align=ae.getAttribute("align")}var ah={};var X=ae.getElementsByTagName("param");var ac=X.length;for(var ad=0;ad<ac;ad++){if(X[ad].getAttribute("name").toLowerCase()!="movie"){ah[X[ad].getAttribute("name")]=X[ad].getAttribute("value")}}P(ai,ah,Y,ab)}else{p(ae);if(ab){ab(aa)}}}}}else{w(Y,true);if(ab){var Z=z(Y);if(Z&&typeof Z.SetVariable!=D){aa.success=true;aa.ref=Z}ab(aa)}}}}}function z(aa){var X=null;var Y=c(aa);if(Y&&Y.nodeName=="OBJECT"){if(typeof Y.SetVariable!=D){X=Y}else{var Z=Y.getElementsByTagName(r)[0];if(Z){X=Z}}}return X}function A(){return !a&&F("6.0.65")&&(M.win||M.mac)&&!(M.wk&&M.wk<312)}function P(aa,ab,X,Z){a=true;E=Z||null;B={success:false,id:X};var ae=c(X);if(ae){if(ae.nodeName=="OBJECT"){l=g(ae);Q=null}else{l=ae;Q=X}aa.id=R;if(typeof aa.width==D||(!/%$/.test(aa.width)&&parseInt(aa.width,10)<310)){aa.width="310"}if(typeof aa.height==D||(!/%$/.test(aa.height)&&parseInt(aa.height,10)<137)){aa.height="137"}j.title=j.title.slice(0,47)+" - Flash Player Installation";var ad=M.ie&&M.win?"ActiveX":"PlugIn",ac="MMredirectURL="+O.location.toString().replace(/&/g,"%26")+"&MMplayerType="+ad+"&MMdoctitle="+j.title;if(typeof ab.flashvars!=D){ab.flashvars+="&"+ac}else{ab.flashvars=ac}if(M.ie&&M.win&&ae.readyState!=4){var Y=C("div");X+="SWFObjectNew";Y.setAttribute("id",X);ae.parentNode.insertBefore(Y,ae);ae.style.display="none";(function(){if(ae.readyState==4){ae.parentNode.removeChild(ae)}else{setTimeout(arguments.callee,10)}})()}u(aa,ab,X)}}function p(Y){if(M.ie&&M.win&&Y.readyState!=4){var X=C("div");Y.parentNode.insertBefore(X,Y);X.parentNode.replaceChild(g(Y),X);Y.style.display="none";(function(){if(Y.readyState==4){Y.parentNode.removeChild(Y)}else{setTimeout(arguments.callee,10)}})()}else{Y.parentNode.replaceChild(g(Y),Y)}}function g(ab){var aa=C("div");if(M.win&&M.ie){aa.innerHTML=ab.innerHTML}else{var Y=ab.getElementsByTagName(r)[0];if(Y){var ad=Y.childNodes;if(ad){var X=ad.length;for(var Z=0;Z<X;Z++){if(!(ad[Z].nodeType==1&&ad[Z].nodeName=="PARAM")&&!(ad[Z].nodeType==8)){aa.appendChild(ad[Z].cloneNode(true))}}}}}return aa}function u(ai,ag,Y){var X,aa=c(Y);if(M.wk&&M.wk<312){return X}if(aa){if(typeof ai.id==D){ai.id=Y}if(M.ie&&M.win){var ah="";for(var ae in ai){if(ai[ae]!=Object.prototype[ae]){if(ae.toLowerCase()=="data"){ag.movie=ai[ae]}else{if(ae.toLowerCase()=="styleclass"){ah+=' class="'+ai[ae]+'"'}else{if(ae.toLowerCase()!="classid"){ah+=" "+ae+'="'+ai[ae]+'"'}}}}}var af="";for(var ad in ag){if(ag[ad]!=Object.prototype[ad]){af+='<param name="'+ad+'" value="'+ag[ad]+'" />'}}aa.outerHTML='<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"'+ah+">"+af+"</object>";N[N.length]=ai.id;X=c(ai.id)}else{var Z=C(r);Z.setAttribute("type",q);for(var ac in ai){if(ai[ac]!=Object.prototype[ac]){if(ac.toLowerCase()=="styleclass"){Z.setAttribute("class",ai[ac])}else{if(ac.toLowerCase()!="classid"){Z.setAttribute(ac,ai[ac])}}}}for(var ab in ag){if(ag[ab]!=Object.prototype[ab]&&ab.toLowerCase()!="movie"){e(Z,ab,ag[ab])}}aa.parentNode.replaceChild(Z,aa);X=Z}}return X}function e(Z,X,Y){var aa=C("param");aa.setAttribute("name",X);aa.setAttribute("value",Y);Z.appendChild(aa)}function y(Y){var X=c(Y);if(X&&X.nodeName=="OBJECT"){if(M.ie&&M.win){X.style.display="none";(function(){if(X.readyState==4){b(Y)}else{setTimeout(arguments.callee,10)}})()}else{X.parentNode.removeChild(X)}}}function b(Z){var Y=c(Z);if(Y){for(var X in Y){if(typeof Y[X]=="function"){Y[X]=null}}Y.parentNode.removeChild(Y)}}function c(Z){var X=null;try{X=j.getElementById(Z)}catch(Y){}return X}function C(X){return j.createElement(X)}function i(Z,X,Y){Z.attachEvent(X,Y);I[I.length]=[Z,X,Y]}function F(Z){var Y=M.pv,X=Z.split(".");X[0]=parseInt(X[0],10);X[1]=parseInt(X[1],10)||0;X[2]=parseInt(X[2],10)||0;return(Y[0]>X[0]||(Y[0]==X[0]&&Y[1]>X[1])||(Y[0]==X[0]&&Y[1]==X[1]&&Y[2]>=X[2]))?true:false}function v(ac,Y,ad,ab){if(M.ie&&M.mac){return}var aa=j.getElementsByTagName("head")[0];if(!aa){return}var X=(ad&&typeof ad=="string")?ad:"screen";if(ab){n=null;G=null}if(!n||G!=X){var Z=C("style");Z.setAttribute("type","text/css");Z.setAttribute("media",X);n=aa.appendChild(Z);if(M.ie&&M.win&&typeof j.styleSheets!=D&&j.styleSheets.length>0){n=j.styleSheets[j.styleSheets.length-1]}G=X}if(M.ie&&M.win){if(n&&typeof n.addRule==r){n.addRule(ac,Y)}}else{if(n&&typeof j.createTextNode!=D){n.appendChild(j.createTextNode(ac+" {"+Y+"}"))}}}function w(Z,X){if(!m){return}var Y=X?"visible":"hidden";if(J&&c(Z)){c(Z).style.visibility=Y}else{v("#"+Z,"visibility:"+Y)}}function L(Y){var Z=/[\\\"<>\.;]/;var X=Z.exec(Y)!=null;return X&&typeof encodeURIComponent!=D?encodeURIComponent(Y):Y}var d=function(){if(M.ie&&M.win){window.attachEvent("onunload",function(){var ac=I.length;for(var ab=0;ab<ac;ab++){I[ab][0].detachEvent(I[ab][1],I[ab][2])}var Z=N.length;for(var aa=0;aa<Z;aa++){y(N[aa])}for(var Y in M){M[Y]=null}M=null;for(var X in swfobject){swfobject[X]=null}swfobject=null})}}();return{registerObject:function(ab,X,aa,Z){if(M.w3&&ab&&X){var Y={};Y.id=ab;Y.swfVersion=X;Y.expressInstall=aa;Y.callbackFn=Z;o[o.length]=Y;w(ab,false)}else{if(Z){Z({success:false,id:ab})}}},getObjectById:function(X){if(M.w3){return z(X)}},embedSWF:function(ab,ah,ae,ag,Y,aa,Z,ad,af,ac){var X={success:false,id:ah};if(M.w3&&!(M.wk&&M.wk<312)&&ab&&ah&&ae&&ag&&Y){w(ah,false);K(function(){ae+="";ag+="";var aj={};if(af&&typeof af===r){for(var al in af){aj[al]=af[al]}}aj.data=ab;aj.width=ae;aj.height=ag;var am={};if(ad&&typeof ad===r){for(var ak in ad){am[ak]=ad[ak]}}if(Z&&typeof Z===r){for(var ai in Z){if(typeof am.flashvars!=D){am.flashvars+="&"+ai+"="+Z[ai]}else{am.flashvars=ai+"="+Z[ai]}}}if(F(Y)){var an=u(aj,am,ah);if(aj.id==ah){w(ah,true)}X.success=true;X.ref=an}else{if(aa&&A()){aj.data=aa;P(aj,am,ah,ac);return}else{w(ah,true)}}if(ac){ac(X)}})}else{if(ac){ac(X)}}},switchOffAutoHideShow:function(){m=false},ua:M,getFlashPlayerVersion:function(){return{major:M.pv[0],minor:M.pv[1],release:M.pv[2]}},hasFlashPlayerVersion:F,createSWF:function(Z,Y,X){if(M.w3){return u(Z,Y,X)}else{return undefined}},showExpressInstall:function(Z,aa,X,Y){if(M.w3&&A()){P(Z,aa,X,Y)}},removeSWF:function(X){if(M.w3){y(X)}},createCSS:function(aa,Z,Y,X){if(M.w3){v(aa,Z,Y,X)}},addDomLoadEvent:K,addLoadEvent:s,getQueryParamValue:function(aa){var Z=j.location.search||j.location.hash;if(Z){if(/\?/.test(Z)){Z=Z.split("?")[1]}if(aa==null){return L(Z)}var Y=Z.split("&");for(var X=0;X<Y.length;X++){if(Y[X].substring(0,Y[X].indexOf("="))==aa){return L(Y[X].substring((Y[X].indexOf("=")+1)))}}}return""},expressInstallCallback:function(){if(a){var X=c(R);if(X&&l){X.parentNode.replaceChild(l,X);if(Q){w(Q,true);if(M.ie&&M.win){l.style.display="block"}}if(E){E(B)}}a=false}}}}();// Copyright: Hiroshi Ichikawa <http://gimite.net/en/>
 // License: New BSD License
 // Reference: http://dev.w3.org/html5/websockets/
 // Reference: http://tools.ietf.org/html/draft-hixie-thewebsocketprotocol
 
 (function() {
   
-  if ('undefined' == typeof window || window.WebSocket) return;
+  if (window.WebSocket) return;
 
   var console = window.console;
   if (!console || !console.log || !console.error) {
@@ -2984,14 +2832,14 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
  * MIT Licensed
  */
 
-(function (exports, io, global) {
+(function (exports, io) {
 
   /**
    * Expose constructor.
    *
    * @api public
    */
-
+  
   exports.XHR = XHR;
 
   /**
@@ -3096,7 +2944,7 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 
     this.sendXHR = this.request('POST');
 
-    if (global.XDomainRequest && this.sendXHR instanceof XDomainRequest) {
+    if (window.XDomainRequest && this.sendXHR instanceof XDomainRequest) {
       this.sendXHR.onload = this.sendXHR.onerror = onload;
     } else {
       this.sendXHR.onreadystatechange = stateChange;
@@ -3108,7 +2956,7 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
   /**
    * Disconnects the established `XHR` connection.
    *
-   * @returns {Transport}
+   * @returns {Transport} 
    * @api public
    */
 
@@ -3127,10 +2975,8 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
    */
 
   XHR.prototype.request = function (method) {
-    var req = io.util.request(this.socket.isXDomain())
-      , query = io.util.query(this.socket.options.query, 't=' + +new Date);
-
-    req.open(method || 'GET', this.prepareUrl() + query, true);
+    var req = io.util.request(this.socket.isXDomain());
+    req.open(method || 'GET', this.prepareUrl() + '?t' + (+ new Date));
 
     if (method == 'POST') {
       try {
@@ -3166,21 +3012,17 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 
   XHR.check = function (socket, xdomain) {
     try {
-      var request = io.util.request(xdomain),
-          usesXDomReq = (global.XDomainRequest && request instanceof XDomainRequest),
-          socketProtocol = (socket && socket.options && socket.options.secure ? 'https:' : 'http:'),
-          isXProtocol = (socketProtocol != global.location.protocol);
-      if (request && !(usesXDomReq && isXProtocol)) {
+      if (io.util.request(xdomain)) {
         return true;
       }
     } catch(e) {}
 
     return false;
   };
-
+  
   /**
-   * Check if the XHR transport supports cross domain requests.
-   *
+   * Check if the XHR transport supports corss domain requests.
+   * 
    * @returns {Boolean}
    * @api public
    */
@@ -3192,8 +3034,8 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 })(
     'undefined' != typeof io ? io.Transport : module.exports
   , 'undefined' != typeof io ? io : module.parent.exports
-  , this
 );
+
 /**
  * socket.io
  * Copyright(c) 2011 LearnBoost <dev@learnboost.com>
@@ -3238,7 +3080,7 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
   HTMLFile.prototype.name = 'htmlfile';
 
   /**
-   * Creates a new Ac...eX `htmlfile` with a forever loading iframe
+   * Creates a new ActiveX `htmlfile` with a forever loading iframe
    * that can be used to listen to messages. Inside the generated
    * `htmlfile` a reference will be made to the HTMLFile transport.
    *
@@ -3246,7 +3088,7 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
    */
 
   HTMLFile.prototype.get = function () {
-    this.doc = new window[(['Active'].concat('Object').join('X'))]('htmlfile');
+    this.doc = new ActiveXObject('htmlfile');
     this.doc.open();
     this.doc.write('<html></html>');
     this.doc.close();
@@ -3260,10 +3102,9 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 
     iframeC.appendChild(this.iframe);
 
-    var self = this
-      , query = io.util.query(this.socket.options.query, 't='+ +new Date);
+    this.iframe.src = this.prepareUrl() + '/?t=' + (+ new Date);
 
-    this.iframe.src = this.prepareUrl() + query;
+    var self = this;
 
     io.util.on(window, 'unload', function () {
       self.destroy();
@@ -3324,16 +3165,16 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 
   /**
    * Checks if the browser supports this transport. The browser
-   * must have an `Ac...eXObject` implementation.
+   * must have an `ActiveXObject` implementation.
    *
    * @return {Boolean}
    * @api public
    */
 
   HTMLFile.check = function () {
-    if (typeof window != "undefined" && (['Active'].concat('Object').join('X')) in window){
+    if ('ActiveXObject' in window){
       try {
-        var a = new window[(['Active'].concat('Object').join('X'))]('htmlfile');
+        var a = new ActiveXObject('htmlfile');
         return a && io.Transport.XHR.check();
       } catch(e){}
     }
@@ -3372,7 +3213,7 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
  * MIT Licensed
  */
 
-(function (exports, io, global) {
+(function (exports, io) {
 
   /**
    * Expose constructor.
@@ -3399,12 +3240,6 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
   io.util.inherit(XHRPolling, io.Transport.XHR);
 
   /**
-   * Merge the properties from XHR transport
-   */
-
-  io.util.merge(XHRPolling, io.Transport.XHR);
-
-  /**
    * Transport name
    *
    * @api public
@@ -3423,7 +3258,10 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
   XHRPolling.prototype.open = function () {
     var self = this;
 
-    io.Transport.XHR.prototype.open.call(self);
+    io.util.defer(function () {
+      io.Transport.XHR.prototype.open.call(self);
+    });
+
     return false;
   };
 
@@ -3455,20 +3293,14 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 
     function onload () {
       this.onload = empty;
-      this.onerror = empty;
       self.onData(this.responseText);
       self.get();
     };
 
-    function onerror () {
-      self.onClose();
-    };
-
     this.xhr = this.request();
 
-    if (global.XDomainRequest && this.xhr instanceof XDomainRequest) {
-      this.xhr.onload = onload;
-      this.xhr.onerror = onerror;
+    if (window.XDomainRequest && this.xhr instanceof XDomainRequest) {
+      this.xhr.onload = this.xhr.onerror = onload;
     } else {
       this.xhr.onreadystatechange = stateChange;
     }
@@ -3486,31 +3318,12 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
     io.Transport.XHR.prototype.onClose.call(this);
 
     if (this.xhr) {
-      this.xhr.onreadystatechange = this.xhr.onload = this.xhr.onerror = empty;
+      this.xhr.onreadystatechange = this.xhr.onload = empty;
       try {
         this.xhr.abort();
       } catch(e){}
       this.xhr = null;
     }
-  };
-
-  /**
-   * Webkit based browsers show a infinit spinner when you start a XHR request
-   * before the browsers onload event is called so we need to defer opening of
-   * the transport until the onload event is called. Wrapping the cb in our
-   * defer method solve this.
-   *
-   * @param {Socket} socket The socket instance that needs a transport
-   * @param {Function} fn The callback
-   * @api private
-   */
-
-  XHRPolling.prototype.ready = function (socket, fn) {
-    var self = this;
-
-    io.util.defer(function () {
-      fn.call(self);
-    });
   };
 
   /**
@@ -3524,7 +3337,6 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 })(
     'undefined' != typeof io ? io.Transport : module.exports
   , 'undefined' != typeof io ? io : module.parent.exports
-  , this
 );
 
 /**
@@ -3533,17 +3345,7 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
  * MIT Licensed
  */
 
-(function (exports, io, global) {
-  /**
-   * There is a way to hide the loading indicator in Firefox. If you create and
-   * remove a iframe it will stop showing the current loading indicator.
-   * Unfortunately we can't feature detect that and UA sniffing is evil.
-   *
-   * @api private
-   */
-
-  var indicator = global.document && "MozAppearance" in
-    global.document.documentElement.style;
+(function (exports, io) {
 
   /**
    * Expose constructor.
@@ -3599,15 +3401,11 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
    */
 
   JSONPPolling.prototype.post = function (data) {
-    var self = this
-      , query = io.util.query(
-             this.socket.options.query
-          , 't='+ (+new Date) + '&i=' + this.index
-        );
+    var self = this;
 
     if (!this.form) {
-      var form = document.createElement('form')
-        , area = document.createElement('textarea')
+      var form = document.createElement('FORM')
+        , area = document.createElement('TEXTAREA')
         , id = this.iframeId = 'socketio_iframe_' + this.index
         , iframe;
 
@@ -3617,7 +3415,6 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
       form.style.left = '-1000px';
       form.target = id;
       form.method = 'POST';
-      form.setAttribute('accept-charset', 'utf-8');
       area.name = 'd';
       form.appendChild(area);
       document.body.appendChild(form);
@@ -3626,7 +3423,7 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
       this.area = area;
     }
 
-    this.form.action = this.prepareUrl() + query;
+    this.form.action = this.prepareUrl() + '?t=' + (+new Date) + '&i=' + this.index;
 
     function complete () {
       initIframe();
@@ -3654,9 +3451,7 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 
     initIframe();
 
-    // we temporarily stringify until we figure out how to prevent
-    // browsers from turning `\n` into `\r\n` in form inputs
-    this.area.value = io.JSON.stringify(data);
+    this.area.value = data;
 
     try {
       this.form.submit();
@@ -3671,8 +3466,6 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
     } else {
       this.iframe.onload = complete;
     }
-
-    this.socket.setBuffer(true);
   };
   
   /**
@@ -3684,11 +3477,7 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 
   JSONPPolling.prototype.get = function () {
     var self = this
-      , script = document.createElement('script')
-      , query = io.util.query(
-             this.socket.options.query
-          , 't='+ (+new Date) + '&i=' + this.index
-        );
+      , script = document.createElement('SCRIPT');
 
     if (this.script) {
       this.script.parentNode.removeChild(this.script);
@@ -3696,7 +3485,7 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
     }
 
     script.async = true;
-    script.src = this.prepareUrl() + query;
+    script.src = this.prepareUrl() + '/?t=' + (+new Date) + '&i=' + this.index;
     script.onerror = function () {
       self.onClose();
     };
@@ -3704,14 +3493,6 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
     var insertAt = document.getElementsByTagName('script')[0]
     insertAt.parentNode.insertBefore(script, insertAt);
     this.script = script;
-
-    if (indicator) {
-      setTimeout(function () {
-        var iframe = document.createElement('iframe');
-        document.body.appendChild(iframe);
-        document.body.removeChild(iframe);
-      }, 100);
-    }
   };
 
   /**
@@ -3730,23 +3511,6 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
   };
 
   /**
-   * The indicator hack only works after onload
-   *
-   * @param {Socket} socket The socket instance that needs a transport
-   * @param {Function} fn The callback
-   * @api private
-   */
-
-  JSONPPolling.prototype.ready = function (socket, fn) {
-    var self = this;
-    if (!indicator) return fn.call(this);
-
-    io.util.load(function () {
-      fn.call(self);
-    });
-  };
-
-  /**
    * Checks if browser supports this transport.
    *
    * @return {Boolean}
@@ -3754,7 +3518,7 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
    */
 
   JSONPPolling.check = function () {
-    return 'document' in global;
+    return true;
   };
 
   /**
@@ -3779,5 +3543,4 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 })(
     'undefined' != typeof io ? io.Transport : module.exports
   , 'undefined' != typeof io ? io : module.parent.exports
-  , this
 );
