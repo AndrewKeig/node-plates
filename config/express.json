@@ -2,7 +2,7 @@
     "view_engine": "hbs",
     "mobile": "/node.jquery.mobile/",
     "www": "/node.html5.boilerplate/",
-    "view_path": "/node.jquery.mobile/views",
+    "view_path": "/node.jquery.mobile/public/views",
     "public_path": "/node.jquery.mobile/public",
     "port": "3000"
 }

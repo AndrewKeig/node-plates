@@ -11,7 +11,6 @@ var http = require('http')
     , session = require('session-konphyg')
     , connect_session = session.createSession();
 
-
 app.engine('html', consolidate.handlebars);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, express_cfg.view_path));

@@ -1,6 +1,12 @@
-var konphyg = require('konphyg')('./config');
-var content_cfg = konphyg('content');
+var lib = require('../lib');
 
 exports.index = function(req, res){
-    res.render('account', {title: content_cfg.title });
+    res.format({
+        json: function(){
+            res.json(lib.api.get());
+        },
+        html: function(){
+            res.render('account', lib.api.get());
+        }
+    })
 };
