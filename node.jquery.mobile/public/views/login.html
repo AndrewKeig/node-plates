@@ -11,8 +11,17 @@
     <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
     <script src="/javascripts/socket.io.js"></script>
     <script src="/javascripts/node.plates.js"></script>
+    <script src="/javascripts/handlebars.js"></script>
+
     <script>
         $(document).ready(function(){
+            $.getJSON('about', function(data) {
+                var source = $("#node-plate-template").html();
+                var template = Handlebars.compile(source);
+                $("#index").html(template(data));
+            });
+
+
             var socket = io.connect('127.0.0.1',{ port: 3000 });
 
             socket.on('hello', function( ){
@@ -24,6 +33,7 @@
     </script>
 </head>
 <body class="ui-mobile-viewport">
+<script id='node-plate-template' type='text/x-handlebars'>
 <div data-role="page" id="index" login="ui-page ui-body-c ui-page-active">
     <div data-role="header" class="ui-bar-a ui-header" role="banner">
         <a href="/"  data-ajax="false" class="ui-btn-left ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-a" data-icon="arrow-l" data-theme="a">
@@ -33,21 +43,22 @@
     <div data-role="content" class="ui-content" role="main">
         <h2>{{title}} - login</h2>
         <p>complete the below to login/register</p>
-        <form method="POST" action="/login" data-ajax="false"  enctype="application/x-www-form-urlencoded">
+        <form method="{{login.method}}" action="{{login.url}}" data-ajax="false"  enctype="application/x-www-form-urlencoded">
             <div data-role="fieldcontain">
-                <label for="name">username:</label>
-                <input type="text" name="user[username]" id="user[username]" size="25" class="username textbox" placeholder="enter a username"  required/>
+                <label for="name">{{login.username.label}}:</label>
+                <input type="text" name="{{login.username.name}}" id="{{login.username.name}}" size="25" class="username textbox" placeholder="{{login.username.placeholder}}"  required/>
             </div>
             <div data-role="fieldcontain">
-                <label for="name">password:</label>
-                <input type="password" name="user[password]" id="user[password]" size="25" class="password textbox" placeholder="enter a password" required/>
+                <label for="name">{{login.password.label}}:</label>
+                <input type="password" name="{{login.password.name}}" id="{{login.password.name}}" size="25" class="password textbox" placeholder="{{login.password.placeholder}}" required/>
             </div>
-            <input type="submit" data-role="button" data-icon="star" value="login">
+            <input type="submit" data-role="button" data-icon="star" value="{{login.button.name}}">
         </form>
     </div>
     <div data-role="footer" class="ui-bar-a ui-footer" role="contentinfo">
         <h4 class="ui-title" tabindex="0" role="heading" aria-level="1">@2012 {{title}}</h4>
     </div>
 </div>
+</script>
 </body>
 </html>
