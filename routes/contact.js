@@ -1,12 +1,12 @@
-var lib = require('../lib');
+var api = require('../api');
 
 exports.index = function(req, res){
     res.format({
         json: function(){
-            res.json(lib.api.get());
+            res.json(api.contact.get());
         },
         html: function(){
-            res.render('contact', lib.api.get());
+            res.render('contact', api.contact.get());
         }
     })
 };

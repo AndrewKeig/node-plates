@@ -1,12 +1,12 @@
-var lib = require('../lib');
+var api = require('../api');
 
 exports.index = function(req, res){
     res.format({
         json: function(){
-            res.json(lib.api.get());
+            res.json(api.github.get());
         },
         html: function(){
-            res.render('github', lib.api.get());
+            res.render('github', api.github.get());
         }
     })
 };

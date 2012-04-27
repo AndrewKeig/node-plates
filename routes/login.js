@@ -1,12 +1,12 @@
-var lib = require('../lib');
+var api = require('../api');
 
 exports.get_login = function(req, res){
     res.format({
         json: function(){
-            res.json(lib.api.get());
+            res.json(api.login.get());
         },
         html: function(){
-            res.render('login', lib.api.get());
+            res.render('login', api.login.get());
         }
     })
 };
