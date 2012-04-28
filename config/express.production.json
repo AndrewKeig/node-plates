@@ -1,5 +1,5 @@
 {
-    "view_engine": "ejs",
+    "view_engine": "dust",
     "view_path": "/node.jquery.mobile/views",
     "public_path": "/node.jquery.mobile/public",
     "port": "8000"

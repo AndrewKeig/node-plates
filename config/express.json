@@ -1,5 +1,5 @@
 {
-    "view_engine": "hbs",
+    "view_engine": "dust",
     "mobile": "/node.jquery.mobile/",
     "www": "/node.html5.boilerplate/",
     "view_path": "/node.jquery.mobile/public/views",

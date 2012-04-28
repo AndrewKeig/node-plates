@@ -2,7 +2,6 @@ var http = require('http')
     , path = require('path')
     , konphyg = require('konphyg')(path.join(__dirname, '/config'))
     , express_cfg = konphyg('express')
-    , content_cfg = konphyg('content')
     , lib = require(path.join(__dirname, '/lib'))
     , routes = require(path.join(__dirname, '/routes'))
     , consolidate = require('consolidate')
@@ -11,11 +10,9 @@ var http = require('http')
     , session = require('session-konphyg')
     , connect_session = session.createSession();
 
-app.engine('html', consolidate.handlebars);
+app.engine('html', consolidate.dust);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, express_cfg.view_path));
-
-//app.set('view options',{layout:true});
 app.use(express.favicon());
 app.use(express.bodyParser());
 app.use(express.cookieParser('10001010101, this is top secret'));
@@ -57,8 +54,6 @@ app.get('/login', routes.login.get_login);
 app.post('/login', routes.login.post_login);
 app.get('/account', lib.middleware.is_user_authenticated, routes.account.index);
 app.get('/logout', lib.middleware.is_user_authenticated, routes.login.logout);
-
-//errors
 app.get('/404', lib.errors.page_not_found_handler);
 app.get('/500', lib.errors.internal_error_handler);
 //app.get('/*', lib.errors.page_not_found_handler);
@@ -72,4 +67,4 @@ var server = app.listen(express_cfg.port);
 //socket.io setup
 var socketIo = new require(path.join(__dirname, '/lib/socket_handler'))(server, session.store(), session.options().sessionkey);
 
-console.log(content_cfg.welcome + ' - express on port %d in %s mode using session', express_cfg.port, app.settings.env, session.options().session_type);
+console.log('node plates - express on port %d in %s mode using session', express_cfg.port, app.settings.env, session.options().session_type);
