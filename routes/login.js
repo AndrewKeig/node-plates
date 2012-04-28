@@ -1,4 +1,5 @@
 var api = require('../api');
+var lib = require('../lib');
 
 exports.get_login = function(req, res){
     res.format({
