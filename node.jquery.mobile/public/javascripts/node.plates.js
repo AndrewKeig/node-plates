@@ -1,27 +1,40 @@
-var nodeplates = {
+var node_plates = {
     socket: null,
     dust: null,
     initialise: function (socket, dust) {
         this.socket = socket;
         this.dust = dust;
         this.reset();
-        this.render();
     },
     reset: function () {
-       $('#index').hide();
+        //$('#about').hide();
     },
-    render: function () {
-        $.getJSON('/login/', null, function (data) {
-            var compiled = dust.compile($("#index").html(), "index");
-            dust.loadSource(compiled);
+    compile_template: function () {
+        var compiled = dust.compile($("#about").html(), "about");
+        dust.loadSource(compiled);
 
-            dust.render("index", data, function(err, out) {
-                if(err != null)
-                    alert("bollocks");
-                document.title = data.title;
-                $("#index").html(out);
-                $('#index').show();
+        $.getJSON('/about/', null, function (data) {
+            dust.render("about", data, function(err, out) {
+                if(err != null) alert("bollocks");
+                //document.title = data.title;
+                $("#about").html(out);
+                $('#about').show();
             });
         });
+    },
+    pre_compile_template: function (compiled) {
+        dust.loadSource(dust.cache.about, "about");
+
+        $.getJSON('/about/', null, function (data) {
+            dust.render("about", data, function(err, out) {
+                if(err != null) alert("bollocks");
+                document.title = data.title;
+                $("#about").html(out);
+                $('#about').show();
+            });
+        });
+    },
+    server_template: function () {
+        $('#about').show();
     }
 };
