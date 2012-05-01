@@ -1,3 +1,9 @@
+0.0.9 / 2012-05-01
+==================
+
+  * added client/server side templating; with client side pre-compilation
+  * content negotiation
+
 0.0.6 / 2012-03-27
 ==================
 

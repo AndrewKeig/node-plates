@@ -36,6 +36,13 @@ http://airasoul.blogspot.co.uk/search/label/node.plates
 </ul>
 
 <li>Supporting multiple view engines using consolidate.js</li>
+
+<li>Templating using dust.js</li>
+<ul>
+<li>Server side templating using dust.js</li>
+<li>Client side templating using dust.js; with pre-compilation or client side compilation</li>
+</ul>
+
 <li>JQuery.Mobile support</li>
 </ul>
 
