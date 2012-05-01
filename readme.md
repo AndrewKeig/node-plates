@@ -43,6 +43,8 @@ http://airasoul.blogspot.co.uk/search/label/node.plates
 <li>Client side templating using dust.js; with pre-compilation or client side compilation</li>
 </ul>
 
+<li>Content Negotiation</li>
+
 <li>JQuery.Mobile support</li>
 </ul>
 
