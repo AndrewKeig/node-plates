@@ -10,11 +10,34 @@
     <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
     <script src="/javascripts/socket.io.js"></script>
-    <script src="/javascripts/dust-full-0.3.0.min.js"></script>
     <script src="/javascripts/node.plates.js"></script>
+
+    <!--server
+    <script>
+        var page = 'about';
+        $.mobile.autoInitializePage = false
+    </script>
+    <script src="/javascripts/bootstrap_server_templating.js"></script>
+    -->
+
+    <!--compile
+     <script>
+        var page = 'about';
+        $.mobile.autoInitializePage = false
+    </script>
+    <script src="/javascripts/dust-full-0.3.0.min.js"></script>
+    <script src="/javascripts/bootstrap_client_compile_templating.js"></script>-->
+
+    <!--precompile-->
+    <script>
+        var page = 'account';
+        $.mobile.autoInitializePage = false
+    </script>
+    <script src="/javascripts/dust-core-0.3.0.js"></script>
+    <script src="/views/partials/compiled_0_0_1/contact_0_0_1.js"></script>
+    <script src="/javascripts/bootstrap_client_precompile_templating.js"></script>
 </head>
-<body class="ui-mobile-viewport">
-<!-- contact page -->
+<body class="ui-mobile-viewport" id="contact">
 <div data-role="page" id="contact" class="ui-page ui-body-c " data-dom-cache="true">
     <div data-role="header" class="ui-bar-a ui-header" role="banner">
         <a href="/" class="ui-btn-left ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-a" data-icon="arrow-l" data-theme="a">
@@ -32,17 +55,5 @@
         <h4 class="ui-title" tabindex="0" role="heading" aria-level="1">@2012 {title}</h4>
     </div>
 </div>
-<script>
-    $(document).ready(function(){
-        var socket = io.connect('127.0.0.1',{ port: 3000 });
-        nodeplates.initialise(socket, dust);
-
-        socket.on('hello', function( ){
-            alert('socket.io is at you service');
-        });
-
-        socket.emit('ready', { true:true });
-    });
-</script>
 </body>
 </html>

@@ -1,40 +1,54 @@
 var node_plates = {
     socket: null,
     dust: null,
-    initialise: function (socket, dust) {
+    page: null,
+    id: null,
+    url: null,
+    initialise: function (socket, page) {
+        this.socket = socket;
+        this.page = page;
+        this.id = '#' + page;
+        this.url = '/' + page + '/';
+        $(this.id).hide();
+    },
+    initialise: function (socket, dust, page) {
         this.socket = socket;
         this.dust = dust;
-        this.reset();
-    },
-    reset: function () {
-        //$('#about').hide();
+        this.page = page;
+        this.id = '#' + page;
+        this.url = '/' + page + '/';
+        $(this.id).hide();
     },
     compile_template: function () {
-        var compiled = dust.compile($("#about").html(), "about");
+        var current = this;
+        var compiled = dust.compile($(this.page).html(), current.page);
         dust.loadSource(compiled);
 
-        $.getJSON('/about/', null, function (data) {
-            dust.render("about", data, function(err, out) {
+        $.getJSON(this.url, null, function (data) {
+            dust.render(current.page, data, function(err, out) {
                 if(err != null) alert("bollocks");
-                //document.title = data.title;
-                $("#about").html(out);
-                $('#about').show();
+                document.title = data.title;
+                $(current.id).html(out);
+                $(current.id).show();
+                $.mobile.initializePage();
             });
         });
     },
     pre_compile_template: function (compiled) {
-        dust.loadSource(dust.cache.about, "about");
+        var current = this;
+        dust.loadSource(dust.cache, current.page);
 
-        $.getJSON('/about/', null, function (data) {
-            dust.render("about", data, function(err, out) {
+        $.getJSON(this.url, function (data) {
+            dust.render(current.page, data, function(err, out) {
                 if(err != null) alert("bollocks");
                 document.title = data.title;
-                $("#about").html(out);
-                $('#about').show();
+                $(current.id).html(out);
+                $(current.id).show();
+                $.mobile.initializePage();
             });
         });
     },
     server_template: function () {
-        $('#about').show();
+        $(this.id).show();
     }
 };

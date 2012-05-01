@@ -1,43 +1,3 @@
-<!DOCTYPE html>
-<html class="ui-mobile min-width-320px min-width-480px min-width-768px min-width-1024px landscape">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <base href=".">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
-    <meta charset="utf-8">
-    <title>{title}</title>
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
-    <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
-    <script src="/javascripts/socket.io.js"></script>
-    <script src="/javascripts/node.plates.js"></script>
-
-    <!--server
-    <script>
-        var page = 'about';
-        $.mobile.autoInitializePage = false
-    </script>
-    <script src="/javascripts/bootstrap_server_templating.js"></script>
-    -->
-
-    <!--compile
-     <script>
-        var page = 'about';
-        $.mobile.autoInitializePage = false
-    </script>
-    <script src="/javascripts/dust-full-0.3.0.min.js"></script>
-    <script src="/javascripts/bootstrap_client_compile_templating.js"></script>-->
-
-    <!--precompile-->
-    <script>
-        var page = 'account';
-        $.mobile.autoInitializePage = false
-    </script>
-    <script src="/javascripts/dust-core-0.3.0.js"></script>
-    <script src="/views/partials/compiled_0_0_1/login_0_0_1.js"></script>
-    <script src="/javascripts/bootstrap_client_precompile_templating.js"></script>
-</head>
-<body class="ui-mobile-viewport" id="login">
 <div data-role="page" id="index" login="ui-page ui-body-c ui-page-active">
     <div data-role="header" class="ui-bar-a ui-header" role="banner">
         <a href="/"  data-ajax="false" class="ui-btn-left ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-a" data-icon="arrow-l" data-theme="a">
@@ -63,5 +23,3 @@
         <h4 class="ui-title" tabindex="0" role="heading" aria-level="1">@2012 {title}</h4>
     </div>
 </div>
-</body>
-</html>

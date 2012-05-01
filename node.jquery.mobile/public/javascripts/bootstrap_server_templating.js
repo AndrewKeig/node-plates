@@ -1,6 +1,6 @@
 $(document).ready(function(){
     var socket = io.connect('127.0.0.1',{ port: 3000 });
-    node_plates.initialise(socket, dust);
+    node_plates.initialise(socket, page);
     node_plates.server_template();
 
     socket.on('hello', function( ){
