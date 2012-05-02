@@ -32,6 +32,7 @@ app.configure('production', function() {
 
 //routes
 app.get('/', routes.home.index);
+app.get('/home', routes.home.index);
 app.get('/about', routes.about.index);
 app.get('/contact', routes.contact.index);
 app.get('/github', routes.github.index);

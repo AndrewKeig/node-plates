@@ -3,34 +3,46 @@ exports.get = function(req, res){
         title : "node plates - about",
         actions : [
             {
-                url : "/login",
+                rel: "Start",
+                href : "/home",
+                method : "GET",
+                text : "home"
+            },
+            {
+                rel: "Me",
+                href : "/about",
+                method : "GET",
+                text : "about"
+            },
+            {
+                rel: "Next",
+                href : "/contact",
+                method : "GET",
+                text : "contact"
+            },
+            {
+                rel: "Section",
+                href : "/github",
+                method : "GET",
+                text : "github"
+            },
+            {
+                rel: "Section",
+                href : "/account",
+                method : "GET",
+                text : "account"
+            },
+            {
+                rel: "Section",
+                href : "/login",
                 method : "POST",
-                label : "login"
+                text : "login"
             },
             {
-                url : "/",
-                method : "GET",
-                label : "home"
-            },
-            {
-                url : "/about",
-                method : "GET",
-                label : "about"
-            },
-            {
-                url : "/github",
-                method : "GET",
-                label : "github"
-            },
-            {
-                url : "/contact",
-                method : "GET",
-                label : "contact"
-            },
-            {
-                url : "/account",
-                method : "GET",
-                label : "account"
+                rel: "Section",
+                href : "/logout",
+                method : "POST",
+                text : "logout"
             }
         ]
     }

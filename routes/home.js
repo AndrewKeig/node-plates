@@ -6,7 +6,7 @@ exports.index = function(req, res){
             res.json(api.home.get());
         },
         html: function(){
-            res.render('index', api.home.get());
+            res.render('home', api.home.get());
         }
     })
 };

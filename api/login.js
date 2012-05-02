@@ -2,43 +2,49 @@ exports.get = function(req, res){
     return  {
         title : "node plates - login",
         login : {
-            url : "/login",
+            href : "/login",
             method : "POST",
-            username : { label : "username", name : "user[username]", placeholder: "Please enter a username"},
-            password : { label : "password", name : "user[password]", placeholder: "Please enter a password"},
+            username : { text : "username", name : "user[username]", placeholder: "Please enter a username"},
+            password : { text : "password", name : "user[password]", placeholder: "Please enter a password"},
             button : { name: "login"}
         },
         actions : [
             {
-                url : "/login",
+                rel: "Start",
+                href : "/home",
+                method : "GET",
+                text : "home"
+            },
+            {
+                rel: "Section",
+                href : "/about",
+                method : "GET",
+                text : "about"
+            },
+            {
+                rel: "Section",
+                href : "/contact",
+                method : "GET",
+                text : "contact"
+            },
+            {
+                rel: "Section",
+                href : "/github",
+                method : "GET",
+                text : "github"
+            },
+            {
+                rel: "Section",
+                href : "/account",
+                method : "GET",
+                text : "account"
+            },
+            {
+                rel: "Me",
+                href : "/login",
                 method : "POST",
-                label : "login"
+                text : "login"
             },
-            {
-                url : "/",
-                method : "GET",
-                label : "home"
-            },
-            {
-                url : "/about",
-                method : "GET",
-                label : "about"
-            },
-            {
-                url : "/github",
-                method : "GET",
-                label : "github"
-            },
-            {
-                url : "/contact",
-                method : "GET",
-                label : "contact"
-            },
-            {
-                url : "/account",
-                method : "GET",
-                label : "account"
-            }
         ]
     }
 };

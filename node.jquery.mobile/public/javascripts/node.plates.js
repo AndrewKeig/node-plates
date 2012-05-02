@@ -19,12 +19,21 @@ var node_plates = {
         this.url = '/' + page + '/';
         $(this.id).hide();
     },
+    fix_links_client_side_template: function (data) {
+        for(item in data.actions){
+            if (data.actions[item].href === '/') data.actions[item].href = "/home";
+            var href = "/views" + data.actions[item].href + ".html";
+            data.actions[item].href = href;
+        }
+    },
     compile_template: function () {
         var current = this;
         var compiled = dust.compile($(this.page).html(), current.page);
         dust.loadSource(compiled);
 
         $.getJSON(this.url, null, function (data) {
+            current.fix_links_client_side_template(data);
+
             dust.render(current.page, data, function(err, out) {
                 if(err != null) alert("bollocks");
                 document.title = data.title;
@@ -39,6 +48,8 @@ var node_plates = {
         dust.loadSource(dust.cache, current.page);
 
         $.getJSON(this.url, function (data) {
+            current.fix_links_client_side_template(data);
+
             dust.render(current.page, data, function(err, out) {
                 if(err != null) alert("bollocks");
                 document.title = data.title;
@@ -49,6 +60,7 @@ var node_plates = {
         });
     },
     server_template: function () {
-        $(this.id).show();
+        var current = this;
+        $(current.id).show();
     }
 };

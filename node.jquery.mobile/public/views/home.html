@@ -15,7 +15,7 @@
     <!--server
     <script>
         var page = 'about';
-        $.mobile.autoInitializePage = false
+        $.mobile.autoInitializePage = true;
     </script>
     <script src="/javascripts/bootstrap_server_templating.js"></script>
     -->
@@ -23,35 +23,34 @@
     <!--compile
      <script>
         var page = 'about';
-        $.mobile.autoInitializePage = false
+        $.mobile.autoInitializePage = false;
     </script>
     <script src="/javascripts/dust-full-0.3.0.min.js"></script>
     <script src="/javascripts/bootstrap_client_compile_templating.js"></script>-->
 
     <!--precompile-->
     <script>
-        var page = 'account';
-        $.mobile.autoInitializePage = false
+        var page = 'home';
+        $.mobile.autoInitializePage = false;
     </script>
     <script src="/javascripts/dust-core-0.3.0.js"></script>
-    <script src="/views/partials/compiled_0_0_1/index_0_0_1.js"></script>
+    <script src="/views/partials/compiled_0_0_1/home_0_0_1.js"></script>
     <script src="/javascripts/bootstrap_client_precompile_templating.js"></script>
 </head>
 <body class="ui-mobile-viewport" id="home">
-<div data-role="page" id="index" class="ui-page ui-body-c ui-page-active" data-dom-cache="true">
+<div data-role="page" class="ui-page ui-body-c ">
     <div data-role="header" class="ui-bar-a ui-header" role="banner">
         <a href="/" class="ui-btn-left ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-a" data-icon="arrow-l" data-theme="a">
             <span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Back</span><span class="ui-icon ui-icon-arrow-l ui-icon-shadow"></span></span></a>
         <h1 class="ui-title" tabindex="0" role="heading" aria-level="1">{title} - home</h1>
     </div>
     <div data-role="content" class="ui-content" role="main">
-        <h2>{title} - home</h2>
+        <h2>{title}</h2>
         <p>node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5</p>
         <ul  data-role="listview" data-inset="true">
-            {#actions}<li><a href="{url}" data-ajax="false">{label}</a></li>{/actions}
+            {#actions}<li><a href="{href}" data-ajax="false" rel="{rel}">{text}</a></li>{/actions}
         </ul>
     </div>
-
     <div data-role="footer" class="ui-bar-a ui-footer" role="contentinfo">
         <h4 class="ui-title" tabindex="0" role="heading" aria-level="1">@2012 {title}</h4>
     </div>
