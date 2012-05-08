@@ -5,6 +5,17 @@ node-plates a node.js boilerplate
 
 node-plates is a node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5 mobile/web application.
 
+
+# Install
+
+    $ npm install node-plates
+
+
+## Usage
+
+    Usage: node server.js
+
+
 ### More here
 
 http://airasoul.blogspot.co.uk/search/label/node.plates
@@ -12,15 +23,15 @@ http://airasoul.blogspot.co.uk/search/label/node.plates
 ### Current setup includes
 
 <ul>
-<li>Environment cascading configuration files using konphyg</li>
+<li><a href="http://airasoul.blogspot.co.uk/2012/03/nodeplates-cascading-configuration.html">Environment cascading configuration files using konphyg</a></li>
 <li>Express; with some best practices in place such as: </li>
 <ul>
-<li>Error handling with error middleware</li>
-<li>Routes seperated into modules and exported</li>
+<li><a href="http://airasoul.blogspot.co.uk/2012/03/nodeplates-configuring-error-handlers.html">Error handling with error middleware</a></li>
+<li><a href="http://airasoul.blogspot.co.uk/2012/03/nodeplates-seperate-routes-into-modules.html">Routes seperated into modules and exported</a></li>
 <li>Route middleware</li>
 <li>Express production configuration</li>
 </ul>
-<li>Configuring session stores using konphyg; configured for:
+<li><a href="http://airasoul.blogspot.co.uk/2012/03/nodejs-boilerplate-configuring-session.html">Configuring session stores using konphyg</a>; configured for:
 <ul>
   <li>In memory configuration</li>
   <li>Mongo</li>
@@ -29,22 +40,23 @@ http://airasoul.blogspot.co.uk/search/label/node.plates
   <li>Memcache</li>
 </ul>
 
+<li><a href="http://airasoul.blogspot.co.uk/2012/05/nodejs-boilerplate-client-side.html">Supporting multiple view engines using consolidate.js</a></li>
+
+<li><a href="http://airasoul.blogspot.co.uk/2012/05/nodejs-boilerplate-client-side.html">Templating using dust.js</a></li>
+<ul>
+<li>Server side templating using dust.js</li>
+<li>Client side templating using dust.js; with pre-compilation or client side compilation</li>
+</ul>
+
+<li><a href="<a href="http://airasoul.blogspot.co.uk/2012/05/nodejs-boilerplate-client-side.html">">Content Negotiation</a></li>
+
+<li>JQuery.Mobile support</li>
+
 <li>Socket.io</li>
 <ul>
 <li>Socket.io handshake with express using configurable sessions</li>
 <li>Socket.io production configuration</li>
 </ul>
 
-<li>Supporting multiple view engines using consolidate.js</li>
-
-<li>Templating using dust.js</li>
-<ul>
-<li>Server side templating using dust.js</li>
-<li>Client side templating using dust.js; with pre-compilation or client side compilation</li>
-</ul>
-
-<li>Content Negotiation</li>
-
-<li>JQuery.Mobile support</li>
 </ul>
 
