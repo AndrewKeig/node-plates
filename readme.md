@@ -1,13 +1,10 @@
 # node-plates a node.js boilerplate
 
-
-## Introduction
-
 node-plates is a node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5 mobile/web application.
 
 
 
-## Install
+## Installation
 
     $ npm install node-plates
 
