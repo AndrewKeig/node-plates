@@ -6,14 +6,17 @@ node-plates a node.js boilerplate
 node-plates is a node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5 mobile/web application.
 
 
+
 # Install
 
     $ npm install node-plates
 
 
+
 # Usage
 
-    Usage: node server.js
+    $ node server.js
+
 
 
 # More here
@@ -21,7 +24,8 @@ node-plates is a node.js boilerplate using express, socket.io, mongooose, jquery
 http://airasoul.blogspot.co.uk/search/label/node.plates
 
 
-## Current setup includes
+
+# Current setup includes
 
 <ul>
 <li><a href="http://airasoul.blogspot.co.uk/2012/03/nodeplates-cascading-configuration.html">Environment cascading configuration files using konphyg</a></li>
@@ -49,7 +53,7 @@ http://airasoul.blogspot.co.uk/search/label/node.plates
 <li>Client side templating using dust.js; with pre-compilation or client side compilation</li>
 </ul>
 
-<li><a href="<a href="http://airasoul.blogspot.co.uk/2012/05/nodejs-boilerplate-client-side.html">">Content Negotiation</a></li>
+<li><a href="<a href="http://airasoul.blogspot.co.uk/2012/05/nodejs-boilerplate-client-side.html">Content Negotiation</a></li>
 
 <li>JQuery.Mobile support</li>
 
