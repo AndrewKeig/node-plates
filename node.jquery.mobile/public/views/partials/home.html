@@ -6,6 +6,11 @@
     </div>
     <div data-role="content" class="ui-content" role="main">
         <h2>{title}</h2>
+
+        <ul data-role="listview" data-theme="g"  data-inset="true">
+            {#posts} <li>{title}{date}{body}</li>{/posts}
+        </ul>
+
         <p>node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5</p>
         <ul  data-role="listview" data-inset="true">
             {#actions}<li><a href="{href}" data-ajax="false" rel="{rel}">{text}</a></li>{/actions}

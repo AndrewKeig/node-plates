@@ -12,30 +12,30 @@
     <script src="/javascripts/socket.io.js"></script>
     <script src="/javascripts/node.plates.js"></script>
 
-    <!--server
+    <!--server-->
     <script>
-        var page = 'about';
+        var page = 'home';
         $.mobile.autoInitializePage = true;
     </script>
     <script src="/javascripts/bootstrap_server_templating.js"></script>
-    -->
+
 
     <!--compile
      <script>
-        var page = 'about';
+        var page = 'home';
         $.mobile.autoInitializePage = false;
     </script>
     <script src="/javascripts/dust-full-0.3.0.min.js"></script>
     <script src="/javascripts/bootstrap_client_compile_templating.js"></script>-->
 
-    <!--precompile-->
+    <!--precompile
     <script>
         var page = 'home';
         $.mobile.autoInitializePage = false;
     </script>
     <script src="/javascripts/dust-core-0.3.0.js"></script>
     <script src="/views/partials/compiled_0_0_1/home_0_0_1.js"></script>
-    <script src="/javascripts/bootstrap_client_precompile_templating.js"></script>
+    <script src="/javascripts/bootstrap_client_precompile_templating.js"></script>-->
 </head>
 <body class="ui-mobile-viewport" id="home">
 <div data-role="page" class="ui-page ui-body-c ">
@@ -46,8 +46,11 @@
     </div>
     <div data-role="content" class="ui-content" role="main">
         <h2>{title}</h2>
+        <ul data-role="listview" data-theme="g" data-inset="true" style="padding:10px;">
+            {#posts}<h1>{title}</h1><br/>{date}<br/>{body}</li>{/posts}
+        </ul>
         <p>node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5</p>
-        <ul  data-role="listview" data-inset="true">
+        <ul data-role="listview" data-inset="true">
             {#actions}<li><a href="{href}" data-ajax="false" rel="{rel}">{text}</a></li>{/actions}
         </ul>
     </div>

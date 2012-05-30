@@ -1,10 +1,13 @@
-var http = require('http')
+var   http = require('http')
     , path = require('path')
     , konphyg = require('konphyg')(path.join(__dirname, '/config'))
     , express_cfg = konphyg('express')
     , lib = require(path.join(__dirname, '/lib'))
     , routes = require(path.join(__dirname, '/routes'))
     , consolidate = require('consolidate')
+    , mongo_cfg = konphyg('mongo')
+    , mongoose = require('mongoose')
+    , db = mongoose.connect(mongo_cfg.db)
     , express = require('express')
     , app = express.createServer()
     , session = require('session-konphyg')
@@ -13,6 +16,7 @@ var http = require('http')
 app.engine('html', consolidate.dust);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, express_cfg.view_path));
+app.set('db-uri', mongo_cfg.db);
 app.use(express.favicon());
 app.use(express.bodyParser());
 app.use(express.cookieParser('10001010101, this is top secret'));
@@ -42,6 +46,8 @@ app.get('/account', lib.middleware.is_user_authenticated, routes.account.index);
 app.get('/logout', lib.middleware.is_user_authenticated, routes.login.logout);
 app.get('/404', lib.errors.page_not_found_handler);
 app.get('/500', lib.errors.internal_error_handler);
+
+app.post('/article', routes.article.save);
 
 //handle uncaught exceptions
 process.addListener('uncaughtException', lib.errors.uncaught_exception);

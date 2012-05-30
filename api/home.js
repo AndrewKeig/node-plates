@@ -1,6 +1,7 @@
 exports.get = function(req, res){
     return  {
         title : "node plates - home",
+        posts : [],
         actions : [
             {
                 rel: "Me",
