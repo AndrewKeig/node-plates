@@ -65,6 +65,7 @@ http://airasoul.blogspot.co.uk/search/label/node.plates
 
 <li>Article content via mongoDb and mongoose</li>
 
+A working example of articles can be seen on the node-plates homepage; articles added here will be displayed as a list on the home page.
 Our schema is very simple:
 
     var article = new Schema({
@@ -75,5 +76,4 @@ Our schema is very simple:
         , article_type  : String
     });
 
-A working example of articles can be seen on the node-plates homepage; articles added here will be displayed as a list on the home page
 </ul>
