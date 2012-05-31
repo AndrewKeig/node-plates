@@ -1,6 +1,9 @@
 exports.get = function(req, res){
     return  {
         title : "node plates - contact",
+        contact : {
+            email : "andrew.keig@gmail.com"
+        },
         actions : [
             {
                 rel: "Start",

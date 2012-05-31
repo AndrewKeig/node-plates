@@ -15,6 +15,9 @@ node-plates is a node.js boilerplate using express, socket.io, mongooose, jquery
     $ node server.js
 
 
+## Dependencies
+
+    Requires mongoDb/mongoose in order to support article content.
 
 ## More here
 
@@ -60,4 +63,17 @@ http://airasoul.blogspot.co.uk/search/label/node.plates
 <li>Socket.io production configuration</li>
 </ul>
 
+<li>Article content via mongoDb and mongoose</li>
+
+Our schema is very simple:
+
+    var article = new Schema({
+        author          : ObjectId
+        , title         : String
+        , body          : String
+        , date          : Date
+        , article_type  : String
+    });
+
+A working example of articles can be seen on the node-plates homepage; articles added here will be displayed as a list on the home page
 </ul>

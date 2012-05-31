@@ -1,3 +1,8 @@
+0.1.0 / 2012-05-31
+==================
+
+  * added mongodb support for adding aricles/posts to the homepage
+
 0.0.9 / 2012-05-01
 ==================
 
