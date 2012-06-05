@@ -6,13 +6,19 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title></title>
+  <title>{title}</title>
   <meta name="description" content="">
-
   <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="css/style.css">
-
-  <script src="js/libs/modernizr-2.5.3.min.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="/javascripts/socket.io.js"></script>
+  <script src="/javascripts/node.plates.js"></script>
+  <script src="/javascripts/modernizr-2.5.3.min.js"></script>
+    <!--server-->
+    <script>
+        var page = 'home';
+        $.mobile.autoInitializePage = true;
+    </script>
+    <script src="/javascripts/bootstrap_server_templating.js"></script>
 </head>
 <body>
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
@@ -20,7 +26,10 @@
 
   </header>
   <div role="main">
-
+      {#articles}<h1>{title}</h1><br/>{date}<br/>{body}</li>{/articles}
+      <ul>
+          {#actions}<li><a href="{href}" rel="{rel}">{text}</a></li>{/actions}
+      </ul>
   </div>
   <footer>
 
@@ -28,10 +37,9 @@
 
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="/javascripts/jquery-1.7.1.min.js"><\/script>')</script>
 
-  <script src="js/plugins.js"></script>
-  <script src="js/script.js"></script>
+  <script src="/javascripts/plugins.js"></script>
 
   <script>
     var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];

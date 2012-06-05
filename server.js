@@ -22,7 +22,8 @@ app.use(express.bodyParser());
 app.use(express.cookieParser('10001010101, this is top secret'));
 app.use(express.session(connect_session));
 app.use(express.methodOverride());
-app.use(express.static(path.join(__dirname, express_cfg.public_path)));
+app.use(express.static(path.join(__dirname, express_cfg.public_path_01)));
+app.use(express.static(path.join(__dirname, express_cfg.public_path_02)));
 app.use(app.router);
 app.use(lib.errors.invalid_password_handler);
 app.use(lib.errors.user_not_found_handler);
@@ -48,6 +49,7 @@ app.get('/404', lib.errors.page_not_found_handler);
 app.get('/500', lib.errors.internal_error_handler);
 
 app.post('/article', routes.article.save);
+app.get('/populate', routes.article.populate);
 
 //handle uncaught exceptions
 process.addListener('uncaughtException', lib.errors.uncaught_exception);
