@@ -11,7 +11,8 @@ var   http = require('http')
     , express = require('express')
     , app = express.createServer()
     , session = require('session-konphyg')
-    , connect_session = session.createSession();
+    , connect_session = session.createSession()
+    , fs = require('fs');
 
 app.engine('html', consolidate.dust);
 app.set('view engine', 'html');
@@ -35,6 +36,7 @@ app.configure('production', function() {
     app.use(express.errorHandler());
 });
 
+
 //routes
 app.get('/', routes.home.index);
 app.get('/home', routes.home.index);
@@ -50,6 +52,26 @@ app.get('/500', lib.errors.internal_error_handler);
 
 app.post('/article', routes.article.save);
 app.get('/populate', routes.article.populate);
+
+//https
+//var options = {
+//    key: fs.readFileSync('Authentication/server.key'),
+//    cert: fs.readFileSync('Authentication/server.crt'),
+//    ca: fs.readFileSync('Authentication/ca.crt'),
+//    requestCert: true,
+//    rejectUnauthorized: false
+//};
+
+//var https = express.createServer(options);
+//https.post('/login', routes.login.post_login);
+//https.get('/help', function(req, res){
+//            res.json("HELP");
+//    });
+
+//https.listen(403);
+
+
+
 
 //handle uncaught exceptions
 process.addListener('uncaughtException', lib.errors.uncaught_exception);

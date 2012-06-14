@@ -1,0 +1,3 @@
+http://www.akadia.com/services/ssh_test_certificate.html
+
+http://www.gettingcirrius.com/2012/06/automating-creation-of-certificate.html
