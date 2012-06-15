@@ -74,7 +74,9 @@ Our schema is very simple:
         , article_type  : String
     });
 
-<li>Https support for secure login pages</li>
-
-
+<li>Forms authentication via SSL/TLS for secure login/my account pages</li>
+<ul>
+<li>express.js enabled</li>
+<li>socket.io enabled</li>
+</ul>
 </ul>
