@@ -13,8 +13,10 @@ var   http = require('http')
     , app = express.createServer()
     , session = require('session-konphyg')
     , connect_session = session.createSession()
-    , fs = require('fs');
+    , fs = require('fs')
+    , socketIo = require(path.join(__dirname, '/lib/socket_handler'));
 
+//configure
 app.engine('html', consolidate.dust);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, express_cfg.view_path));
@@ -57,10 +59,10 @@ process.addListener('uncaughtException', lib.errors.uncaught_exception);
 
 //http listen
 var httpServer = http.createServer(app.handle.bind(app)).listen(express_cfg.http_port);
-var httpSocketIo = new require(path.join(__dirname, '/lib/socket_handler'))(httpServer, session.store(), session.options().sessionkey);
+var httpSocketIo = new socketIo(httpServer, session.store(), session.options().sessionkey);
 
 //https listen
 var httpsServer = https.createServer(lib.authentication.options(), app.handle.bind(app)).listen(express_cfg.https_port);
-var httpsSocketIo = new require(path.join(__dirname, '/lib/socket_handler'))(httpsServer, session.store(), session.options().sessionkey);
+var httpsSocketIo =new socketIo(httpsServer, session.store(), session.options().sessionkey);
 
 console.log('node plates - express on port %d in %s mode using session', express_cfg.http_port, app.settings.env, session.options().session_type);

@@ -4,43 +4,43 @@ exports.get = function(req, res){
         actions : [
             {
                 rel: "Start",
-                href : "/home",
+                href : "http://127.0.0.1:8080/home",
                 method : "GET",
                 text : "home"
             },
             {
                 rel: "Me",
-                href : "/about",
+                href : "http://127.0.0.1:8080/about",
                 method : "GET",
                 text : "about"
             },
             {
                 rel: "Next",
-                href : "/contact",
+                href : "http://127.0.0.1:8080/contact",
                 method : "GET",
                 text : "contact"
             },
             {
                 rel: "Section",
-                href : "/github",
+                href : "http://127.0.0.1:8080/github",
                 method : "GET",
                 text : "github"
             },
             {
                 rel: "Section",
-                href : "/account",
+                href : "https://127.0.0.1:8443/account",
                 method : "GET",
                 text : "account"
             },
             {
                 rel: "Section",
-                href : "/login",
+                href : "https://127.0.0.1:8443/login",
                 method : "POST",
                 text : "login"
             },
             {
                 rel: "Section",
-                href : "/logout",
+                href : "https://127.0.0.1:8443/logout",
                 method : "POST",
                 text : "logout"
             }
