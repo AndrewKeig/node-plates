@@ -5,5 +5,6 @@
     "view_path": "/node.jquery.mobile/public/views",
     "public_path_01": "/node.jquery.mobile/public",
     "public_path_02": "/public",
-    "port": "3000"
+    "http_port": "8080",
+    "https_port": "8443"
 }

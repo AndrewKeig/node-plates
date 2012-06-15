@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var socket = io.connect('127.0.0.1',{ port: 3000 });
+    var socket = io.connect('127.0.0.1',{ port: 8080 });
     node_plates.initialise(socket, dust, page);
     node_plates.pre_compile_template();
 

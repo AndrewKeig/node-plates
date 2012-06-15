@@ -1,7 +1,7 @@
 0.1.1 / 2012-06-14
 ==================
 
-  * aded secure login
+  * added secure login over https
   
 0.1.0 / 2012-05-31
 ==================

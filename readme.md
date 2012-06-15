@@ -2,8 +2,6 @@
 
 node-plates is a node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5 mobile/web application.
 
-
-
 ## Installation
 
     $ npm install node-plates
@@ -75,5 +73,8 @@ Our schema is very simple:
         , date          : Date
         , article_type  : String
     });
+
+<li>Https support for secure login pages</li>
+
 
 </ul>

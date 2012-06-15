@@ -2,7 +2,7 @@ exports.get = function(req, res){
     return  {
         title : "node plates - login",
         login : {
-            href : "/login",
+            href : "https://127.0.0.1:8443/login",
             method : "POST",
             username : { text : "username", name : "user[username]", placeholder: "Please enter a username"},
             password : { text : "password", name : "user[password]", placeholder: "Please enter a password"},
