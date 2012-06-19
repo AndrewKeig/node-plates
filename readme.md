@@ -25,7 +25,7 @@ http://airasoul.blogspot.co.uk/search/label/node.plates
 
 ## Current setup includes
 
-
+<ul>
 <li><a href="http://airasoul.blogspot.co.uk/2012/03/nodeplates-cascading-configuration.html">Environment cascading configuration files using konphyg</a></li>
 <li>Express; with some best practices in place such as: </li>
 <ul>
@@ -74,8 +74,9 @@ Our schema is very simple:
         , article_type  : String
     });
 
-<li><a href="http://airasoul.blogspot.co.uk/2012/06/nodejs-boilerplate-ssltls-with-express.html">Forms authentication via SSL/TLS for secure login/my account pages</a></li>
+<li><a href="http://airasoul.blogspot.co.uk/2012/06/nodejs-boilerplate-ssltls-with-express.html">Forms authentication via SSL TLS for secure login/my account pages</a></li>
 <ul>
 <li>express.js enabled</li>
 <li>socket.io enabled</li>
+</ul>
 </ul>
