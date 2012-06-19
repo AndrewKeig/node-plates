@@ -74,7 +74,7 @@ Our schema is very simple:
         , article_type  : String
     });
 
-<li>Forms authentication via SSL/TLS for secure login/my account pages</li>
+<li><a href="http://airasoul.blogspot.co.uk/2012/06/nodejs-boilerplate-ssltls-with-express.html">Forms authentication via SSL/TLS for secure login/my account pages</a></li>
 <ul>
 <li>express.js enabled</li>
 <li>socket.io enabled</li>
