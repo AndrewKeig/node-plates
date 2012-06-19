@@ -61,11 +61,17 @@ http://airasoul.blogspot.co.uk/search/label/node.plates
 <li>Socket.io production configuration</li>
 </ul>
 
+<li><a href="http://airasoul.blogspot.co.uk/2012/06/nodejs-boilerplate-ssltls-with-express.html">Forms authentication via SSL TLS for secure login/my account pages</a></li>
+<ul>
+<li>express.js enabled</li>
+<li>socket.io enabled</li>
+</ul>
+
 <li>Article content via mongoDb and mongoose</li>
 
 A working example of articles can be seen on the node-plates homepage; articles added here will be displayed as a list on the home page.
 Our schema is very simple:
-<pre>
+
     var article = new Schema({
         author          : ObjectId
         , title         : String
@@ -73,10 +79,5 @@ Our schema is very simple:
         , date          : Date
         , article_type  : String
     });
-</pre>
-<li><a href="http://airasoul.blogspot.co.uk/2012/06/nodejs-boilerplate-ssltls-with-express.html">Forms authentication via SSL TLS for secure login/my account pages</a></li>
-<ul>
-<li>express.js enabled</li>
-<li>socket.io enabled</li>
-</ul>
+
 </ul>
