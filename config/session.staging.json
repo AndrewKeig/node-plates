@@ -5,7 +5,7 @@
     "maxAge" : 3600000,
     "db": {
         "db": "nodeplates",
-        "host": "127.0.0.1",
+        "host": "192.168.0.1",
         "port": 27017,
         "collection": "sessions",
         "clear_interval": 1000,

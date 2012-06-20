@@ -1,6 +1,10 @@
 {
     "view_engine": "dust",
-    "view_path": "/node.jquery.mobile/views",
-    "public_path": "/node.jquery.mobile/public",
-    "port": "8000"
+    "mobile": "/node.jquery.mobile/",
+    "www": "/node.html5.boilerplate/",
+    "view_path": "/node.html5.boilerplate/public/views",
+    "public_path_01": "/node.html5.boilerplate/public",
+    "public_path_02": "/public",
+    "http_port": "8080",
+    "https_port": "8443"
 }
