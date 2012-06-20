@@ -5,6 +5,6 @@
     "view_path": "/node.html5.boilerplate/public/views",
     "public_path_01": "/node.html5.boilerplate/public",
     "public_path_02": "/public",
-    "http_port": "8080",
+    "http_port": "8081",
     "https_port": "8443"
 }

@@ -11,25 +11,25 @@ exports.get = function(req, res){
         actions : [
             {
                 rel: "Start",
-                href : "http://127.0.0.1:8080/home",
+                href : "http://127.0.0.1:8081/home",
                 method : "GET",
                 text : "home"
             },
             {
                 rel: "Section",
-                href : "http://127.0.0.1:8080/about",
+                href : "http://127.0.0.1:8081/about",
                 method : "GET",
                 text : "about"
             },
             {
                 rel: "Section",
-                href : "http://127.0.0.1:8080/contact",
+                href : "http://127.0.0.1:8081/contact",
                 method : "GET",
                 text : "contact"
             },
             {
                 rel: "Section",
-                href : "http://127.0.0.1:8080/github",
+                href : "http://127.0.0.1:8081/github",
                 method : "GET",
                 text : "github"
             },
