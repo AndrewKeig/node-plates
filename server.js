@@ -32,6 +32,7 @@ app.use(app.router);
 app.use(lib.errors.invalid_password_handler);
 app.use(lib.errors.user_not_found_handler);
 app.use(lib.errors.user_not_authenticated_handler);
+//app.use(lib.errors.page_not_found_handler);
 
 //production settings
 app.configure('production', function() {
@@ -49,10 +50,11 @@ app.get('/login', routes.login.get_login);
 app.post('/login', routes.login.post_login);
 app.get('/account', lib.middleware.is_user_authenticated, routes.account.index);
 app.get('/logout', lib.middleware.is_user_authenticated, routes.login.logout);
-app.get('/404', lib.errors.page_not_found_handler);
-app.get('/500', lib.errors.internal_error_handler);
+//app.get('/404', lib.errors.page_not_found_handler);
+//app.get('/500', lib.errors.internal_error_handler);
 app.post('/article', routes.article.save);
 app.get('/populate', routes.article.populate);
+//app.get('/*', routes.fourohfour.index);
 
 //handle uncaught exceptions
 process.addListener('uncaughtException', lib.errors.uncaught_exception);

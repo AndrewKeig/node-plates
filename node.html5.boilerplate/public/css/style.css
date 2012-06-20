@@ -6,7 +6,7 @@ audio:not([controls]) { display: none; }
 [hidden] { display: none; }
 
 html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-html, button, input, select, textarea { font-family: sans-serif; color: #222; }
+html, button, input, select, textarea { font-family: arial; color: #222; }
 body { margin: 0; font-size: 1em; line-height: 1.4; }
 
 ::-moz-selection { background: #fe57a1; color: #fff; text-shadow: none; }
@@ -101,4 +101,57 @@ td { vertical-align: top; }
   @page { margin: 0.5cm; }
   p, h2, h3 { orphans: 3; widows: 3; }
   h2, h3 { page-break-after: avoid; }
+}
+
+
+
+header {
+    padding:20px;
+}
+
+nav {
+     padding:2px;
+     font-size:42px;
+ }
+
+nav ul li {
+    display: inline;
+    padding-right:30px;
+}
+
+article {
+    padding:2px;
+}
+
+article h1 {
+    font-size:42px;
+}
+
+
+section {
+    padding:20px;
+}
+
+section p {
+    font-size: 22px;
+    padding:2px;
+}
+
+form label {
+    padding-right:10px;
+}
+
+form div {
+    padding-bottom:20px;
+    padding-left:2px;
+}
+
+button {
+    padding:4px;
+    width:100px;
+    color: #000;
+}
+
+button:hover {
+    background: #DDD;
 }

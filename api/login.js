@@ -4,8 +4,8 @@ exports.get = function(req, res){
         login : {
             href : "https://127.0.0.1:8443/login",
             method : "POST",
-            username : { text : "username", name : "user[username]", placeholder: "Please enter a username"},
-            password : { text : "password", name : "user[password]", placeholder: "Please enter a password"},
+            username : { label : "username", name : "user[username]", placeholder: "Please enter a username"},
+            password : { label : "password", name : "user[password]", placeholder: "Please enter a password"},
             button : { name: "login"}
         },
         actions : [
