@@ -1,5 +1,7 @@
-var api = require('../api');
-var lib = require('../lib');
+var konphyg = require('konphyg')('./config')
+    ,express_cfg = konphyg('express')
+    ,api = require(express_cfg.api)
+    ,lib = require('../lib');
 
 exports.get_login = function(req, res){
     res.format({

@@ -1,5 +1,7 @@
-var api = require('../api');
-var article = require('../data/query.js');
+var konphyg = require('konphyg')('./config')
+    ,express_cfg = konphyg('express')
+    ,api = require(express_cfg.api)
+    ,article = require('../data/query.js');
 
 exports.index = function(req, res){
     var data = api.home.get();
