@@ -1,6 +1,6 @@
-exports.home = require('.../api/production/home');
-exports.about = require('.../api/production/about');
-exports.contact = require('.../api/production/contact');
-exports.github = require('.../api/production/github');
-exports.login = require('.../api/production/login');
-exports.account = require('.../api/production/account');
+exports.home = require('../production/home');
+exports.about = require('../production/about');
+exports.contact = require('../production/contact');
+exports.github = require('../production/github');
+exports.login = require('../production/login');
+exports.account = require('../production/account');
