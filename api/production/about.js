@@ -4,43 +4,43 @@ exports.get = function(req, res){
         actions : [
             {
                 rel: "Start",
-                href : "http://nodeplates.airasoul.net//home",
+                href : "http://nodeplates.airasoul.net/home",
                 method : "GET",
                 text : "home"
             },
             {
                 rel: "Me",
-                href : "http://nodeplates.airasoul.net//about",
+                href : "http://nodeplates.airasoul.net/about",
                 method : "GET",
                 text : "about"
             },
             {
                 rel: "Next",
-                href : "http://nodeplates.airasoul.net//contact",
+                href : "http://nodeplates.airasoul.net/contact",
                 method : "GET",
                 text : "contact"
             },
             {
                 rel: "Section",
-                href : "http://nodeplates.airasoul.net//github",
+                href : "http://nodeplates.airasoul.net/github",
                 method : "GET",
                 text : "github"
             },
             {
                 rel: "Section",
-                href : "https://nodeplates.airasoul.net//account",
+                href : "https://nodeplates.airasoul.net/account",
                 method : "GET",
                 text : "account"
             },
             {
                 rel: "Section",
-                href : "https://nodeplates.airasoul.net//login",
+                href : "https://nodeplates.airasoul.net/login",
                 method : "POST",
                 text : "login"
             },
             {
                 rel: "Section",
-                href : "https://nodeplates.airasoul.net//logout",
+                href : "https://nodeplates.airasoul.net/logout",
                 method : "POST",
                 text : "logout"
             }
