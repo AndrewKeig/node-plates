@@ -1,7 +1,8 @@
 var   http = require('http')
     , https = require('https')
     , path = require('path')
-    , konphyg = require('konphyg')(path.join(__dirname, '/config'))
+    , config = path.join(__dirname, '/config')
+    , konphyg = require('konphyg')(config)
     , express_cfg = konphyg('express')
     , lib = require(path.join(__dirname, '/lib'))
     , routes = require(path.join(__dirname, '/routes'))
@@ -12,7 +13,7 @@ var   http = require('http')
     , express = require('express')
     , app = express.createServer()
     , session = require('session-konphyg')
-    , connect_session = session.createSession(__dirname)
+    , connect_session = session.createSession(config)
     , fs = require('fs')
     , socketIo = require(path.join(__dirname, '/lib/socket_handler'));
 
@@ -61,10 +62,10 @@ process.addListener('uncaughtException', lib.errors.uncaught_exception);
 
 //http listen
 var httpServer = http.createServer(app.handle.bind(app)).listen(express_cfg.http_port);
-var httpSocketIo = new socketIo(httpServer, session.store(), session.options(__dirname).sessionkey);
+var httpSocketIo = new socketIo(httpServer, session.store(), session.options(config).sessionkey);
 
 //https listen
 var httpsServer = https.createServer(lib.authentication.options(), app.handle.bind(app)).listen(express_cfg.https_port);
-var httpsSocketIo =new socketIo(httpsServer, session.store(), session.options(__dirname).sessionkey);
+var httpsSocketIo =new socketIo(httpsServer, session.store(), session.options(config).sessionkey);
 
-console.log('node plates - express on port %d in %s mode using session', express_cfg.http_port, app.settings.env, session.options(__dirname).session_type);
+console.log('node plates - express on port %d in %s mode using session', express_cfg.http_port, app.settings.env, session.options(config).session_type);
