@@ -1,4 +1,5 @@
-var konphyg = require('konphyg')('./config')
+var path = require('path')
+    ,konphyg = require('konphyg')(path.join(__dirname, '../config'))
     ,express_cfg = konphyg('express')
     ,api = require(express_cfg.api)
     ,article = require('../data/query.js');
