@@ -11,7 +11,6 @@ var   http = require('http')
     , mongoose = require('mongoose')
     , db = mongoose.connect(mongo_cfg.db)
     , express = require('express')
-    , expose = require('express-expose')
     , app = express.createServer()
     , session = require('session-konphyg')
     , connect_session = session.createSession(config)
@@ -35,9 +34,6 @@ app.use(lib.errors.invalid_password_handler);
 app.use(lib.errors.user_not_found_handler);
 app.use(lib.errors.user_not_authenticated_handler);
 //app.use(lib.errors.page_not_found_handler);
-app.set('shared', 'aaaaaaaaaaaaa');
-app.expose(app.settings.shared);
-
 
 
 //production settings
