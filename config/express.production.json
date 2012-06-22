@@ -7,5 +7,6 @@
     "public_path_02": "/public",
     "http_port": "8081",
     "https_port": "8443",
-    "api": "../api/production"
+    "api": "../api/production",
+    "cert": "./auth/production/"
 }
