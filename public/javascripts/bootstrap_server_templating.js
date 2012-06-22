@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var socket = io.connect(uri,{ port: 8081 });
+    var socket = io.connect(uri,{ port: uri_port });
     node_plates.initialise(socket, page);
     node_plates.server_template();
 

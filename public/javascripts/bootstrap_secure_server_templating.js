@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var socket = io.connect('https://127.0.0.1:8443/', {secure: false, port: '8443'});
+    var socket = io.connect(suri, {secure: false, port: suri_port});
     node_plates.initialise(socket, page);
     node_plates.server_template();
 
