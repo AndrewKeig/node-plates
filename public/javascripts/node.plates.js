@@ -28,7 +28,7 @@ var node_plates = {
     },
     compile_template: function () {
         var current = this;
-        var compiled = dust.compile($(this.page).html(), current.page);
+        var compiled = dust.compile($(current.id).html(), current.page);
         dust.loadSource(compiled);
 
         $.getJSON(this.url, null, function (data) {
