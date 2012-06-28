@@ -8,5 +8,7 @@
     "http_port": "8081",
     "https_port": "8443",
     "api": "../api",
-    "cert": "./auth/"
+    "cert": "./auth/server.crt",
+    "key": "./auth/server.key",
+    "ca": "./auth/ca.crt"
 }
