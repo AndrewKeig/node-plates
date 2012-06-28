@@ -10,15 +10,16 @@
     <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
     <script src="/javascripts/uri.js"></script>
+    <script src="/javascripts/underscore-min.js"></script>
+    <script src="/javascripts/backbone-min.js"></script>
     <script src="/javascripts/socket.io.js"></script>
-    <script src="/javascripts/node.plates.js"></script>
 
-    <!--server-->
+    <!--server
     <script>
         var page = 'about';
         $.mobile.autoInitializePage = true;
     </script>
-    <script src="/javascripts/bootstrap_server_templating.js"></script>
+    <script src="/javascripts/bootstrap_server_templating.js"></script>-->
 
 
     <!--compile
@@ -29,14 +30,14 @@
     <script src="/javascripts/dust-full-0.3.0.min.js"></script>
     <script src="/javascripts/bootstrap_client_compile_templating.js"></script>-->
 
-    <!--precompile
+    <!--precompile-->
      <script>
         var page = 'about';
         $.mobile.autoInitializePage = false;
     </script>
     <script src="/javascripts/dust-core-0.3.0.js"></script>
     <script src="/views/partials/compiled_0_0_1/about_0_0_1.js"></script>
-    <script src="/javascripts/bootstrap_client_precompile_templating.js"></script>-->
+    <script src="/javascripts/bootstrap_client_precompile_templating.js"></script>
 </head>
 <body class="ui-mobile-viewport" id="about">
     <div data-role="page" class="ui-page ui-body-c ">
@@ -47,9 +48,10 @@
         </div>
         <div data-role="content" class="ui-content" role="main">
             <h2>{title}</h2>
+            <ul id="options" type="square"></ul>
             <p>node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5</p>
             <ul  data-role="listview" data-inset="true">
-                {#actions}<li><a href="{href}" data-ajax="false" rel="{rel}">{text}</a></li>{/actions}
+                {#actions}<li><a href="{domain}:{port}/{path}" data-ajax="false" rel="{rel}">{text}</a></li>{/actions}
             </ul>
         </div>
         <div data-role="footer" class="ui-bar-a ui-footer" role="contentinfo">

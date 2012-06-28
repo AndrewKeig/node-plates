@@ -53,7 +53,9 @@ http://airasoul.blogspot.co.uk/search/label/node.plates
 
 <li><a href="http://airasoul.blogspot.co.uk/2012/05/nodejs-boilerplate-client-side.html">Content Negotiation</a></li>
 
-<li>JQuery.Mobile support</li>
+<li>JQuery Mobile template</li>
+<li>Html5 boilerplate template</li>
+<li>Backbone.js enabled</li>
 
 <li>Socket.io</li>
 <ul>
@@ -66,6 +68,7 @@ http://airasoul.blogspot.co.uk/search/label/node.plates
 <li>express.js enabled</li>
 <li>socket.io enabled</li>
 </ul>
+
 
 <li>Article content via mongoDb and mongoose</li>
 

@@ -4,43 +4,57 @@ exports.get = function(req, res){
         actions : [
             {
                 rel: "Start",
-                href : "http://nodeplates.airasoul.net/home",
+                domain: "http://nodeplates.airasoul.net",
+                port: "8081",
+                path: "home",
                 method : "GET",
                 text : "home"
             },
             {
                 rel: "Section",
-                href : "http://nodeplates.airasoul.net/about",
+                domain: "http://nodeplates.airasoul.net",
+                port: "8081",
+                path: "about",
                 method : "GET",
                 text : "about"
             },
             {
                 rel: "Section",
-                href : "http://nodeplates.airasoul.net/contact",
+                domain: "http://nodeplates.airasoul.net",
+                port: "8081",
+                path: "contact",
                 method : "GET",
                 text : "contact"
             },
             {
                 rel: "Prev",
-                href : "http://nodeplates.airasoul.net/github",
+                domain: "http://nodeplates.airasoul.net",
+                port: "8081",
+                path: "github",
                 method : "GET",
                 text : "github"
             },
             {
                 rel: "Section",
-                href : "https://nodeplates.airasoul.net/account",
+                domain: "https//nodeplates.airasoul.net",
+                port: "8443",
+                path: "account",
                 method : "GET",
                 text : "account"
             },
             {
                 rel: "Section",
-                href : "https://nodeplates.airasoul.net/login",
+                domain: "https//nodeplates.airasoul.net",
+                port: "8443",
+                path: "login",
                 method : "POST",
                 text : "login"
             },
             {
                 rel: "Section",
-                href : "https://nodeplates.airasoul.net/logout",
+                domain: "https//nodeplates.airasoul.net",
+                port: "8443",
+                path: "about",
                 method : "POST",
                 text : "logout"
             }

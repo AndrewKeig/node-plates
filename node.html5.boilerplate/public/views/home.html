@@ -4,17 +4,18 @@
 <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>{title}</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="../css/style.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{title}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../css/style.css">
     <script src="/javascripts/modernizr-2.5.3.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-    <script src="/javascripts/socket.io.js"></script>
     <script src="/javascripts/uri.js"></script>
-    <script src="/javascripts/node.plates.js"></script>
+    <script src="/javascripts/underscore-min.js"></script>
+    <script src="/javascripts/backbone-min.js"></script>
+    <script src="/javascripts/socket.io.js"></script>
     <!--server-->
     <script>
         var page = 'home';
@@ -28,9 +29,10 @@
         <img src="/images/logo.png"/>
   </header>
   <section>
+      <ul id="options" type="square"></ul>
       <nav>
         <ul>
-              {#actions}<li><a href="{href}" rel="{rel}">{text}</a></li>{/actions}
+              {#actions}<li><a href="{domain}:{port}/{path}" rel="{rel}">{text}</a></li>{/actions}
         </ul>
       </nav>
       <p>node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5</p>

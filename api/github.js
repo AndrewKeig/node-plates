@@ -4,43 +4,57 @@ exports.get = function(req, res){
         actions : [
             {
                 rel: "Start",
-                href : "http://127.0.0.1:8081/home",
+                domain: "http://127.0.0.1",
+                port: "8081",
+                path: "home",
                 method : "GET",
                 text : "home"
             },
             {
                 rel: "Section",
-                href : "http://127.0.0.1:8081/about",
+                domain: "http://127.0.0.1",
+                port: "8081",
+                path: "about",
                 method : "GET",
                 text : "about"
             },
             {
                 rel: "Section",
-                href : "http://127.0.0.1:8081/contact",
+                domain: "http://127.0.0.1",
+                port: "8081",
+                path: "contact",
                 method : "GET",
                 text : "contact"
             },
             {
                 rel: "Prev",
-                href : "http://127.0.0.1:8081/github",
+                domain: "http://127.0.0.1",
+                port: "8081",
+                path: "github",
                 method : "GET",
                 text : "github"
             },
             {
                 rel: "Section",
-                href : "https://127.0.0.1:8443/account",
+                domain: "https://127.0.0.1",
+                port: "8443",
+                path: "account",
                 method : "GET",
                 text : "account"
             },
             {
                 rel: "Section",
-                href : "https://127.0.0.1:8443/login",
+                domain: "https://127.0.0.1",
+                port: "8443",
+                path: "login",
                 method : "POST",
                 text : "login"
             },
             {
                 rel: "Section",
-                href : "https://127.0.0.1:8443/logout",
+                domain: "https://127.0.0.1",
+                port: "8443",
+                path: "about",
                 method : "POST",
                 text : "logout"
             }

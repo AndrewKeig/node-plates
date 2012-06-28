@@ -6,9 +6,10 @@
     </div>
     <div data-role="content" class="ui-content" role="main">
         <h2>{title}</h2>
+        <ul id="options" type="square"></ul>
         <p><a href="andrew.keig@gmail.com">download {title} here</a></p>
         <ul  data-role="listview" data-inset="true">
-            {#actions}<li><a href="{href}" data-ajax="false" rel="{rel}">{text}</a></li>{/actions}
+            {#actions}<li><a href="{domain}:{port}/{path}" data-ajax="false" rel="{rel}">{text}</a></li>{/actions}
         </ul>
     </div>
     <div data-role="footer" class="ui-bar-a ui-footer" role="contentinfo">
