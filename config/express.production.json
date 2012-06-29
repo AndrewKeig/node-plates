@@ -8,7 +8,7 @@
     "http_port": "8081",
     "https_port": "8443",
     "api": "../api/production",
-    "cert": "/home/ec2-user/certs/nodeplates.airasoul.net.crt",
+    "cert": "/home/ec2-user/certs/nodeplates.airasoul.net.bundle.crt",
     "key": "/home/ec2-user/certs/nodeplates.airasoul.key",
-    "ca": "/home/ec2-user/certs/gd_bundle.crt"
+    "ca": ""
 }
