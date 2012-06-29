@@ -36,7 +36,7 @@ exports.get = function(req, res){
             },
             {
                 rel: "Section",
-                domain: "https//nodeplates.airasoul.net",
+                domain: "https://nodeplates.airasoul.net",
                 port: "",
                 path: "account",
                 method : "GET",
@@ -44,7 +44,7 @@ exports.get = function(req, res){
             },
             {
                 rel: "Section",
-                domain: "https//nodeplates.airasoul.net",
+                domain: "https://nodeplates.airasoul.net",
                 port: "",
                 path: "login",
                 method : "POST",
@@ -52,7 +52,7 @@ exports.get = function(req, res){
             },
             {
                 rel: "Section",
-                domain: "https//nodeplates.airasoul.net",
+                domain: "https://nodeplates.airasoul.net",
                 port: "",
                 path: "about",
                 method : "POST",

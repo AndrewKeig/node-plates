@@ -10,5 +10,5 @@
     "api": "../api/production",
     "cert": "/home/ec2-user/certs/nodeplates.airasoul.net.bundle.crt",
     "key": "/home/ec2-user/certs/nodeplates.airasoul.key",
-    "ca": ""
+    "ca": "/home/ec2-user/certs/ca.crt"
 }
