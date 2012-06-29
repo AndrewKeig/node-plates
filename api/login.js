@@ -3,7 +3,7 @@ exports.get = function(req, res){
         title : "node plates - login",
         login : {
             domain: "https://127.0.0.1",
-            port: "8443",
+            port: ":8443",
             path: "login",
             method : "POST",
             username : { label : "username", name : "user[username]", placeholder: "Please enter a username"},
@@ -14,7 +14,7 @@ exports.get = function(req, res){
             {
                 rel: "Start",
                 domain: "http://127.0.0.1",
-                port: "8081",
+                port: ":8081",
                 path: "home",
                 method : "GET",
                 text : "home"
@@ -22,7 +22,7 @@ exports.get = function(req, res){
             {
                 rel: "Section",
                 domain: "http://127.0.0.1",
-                port: "8081",
+                port: ":8081",
                 path: "about",
                 method : "GET",
                 text : "about"
@@ -30,7 +30,7 @@ exports.get = function(req, res){
             {
                 rel: "Section",
                 domain: "http://127.0.0.1",
-                port: "8081",
+                port: ":8081",
                 path: "contact",
                 method : "GET",
                 text : "contact"
@@ -38,7 +38,7 @@ exports.get = function(req, res){
             {
                 rel: "Section",
                 domain: "http://127.0.0.1",
-                port: "8081",
+                port: ":8081",
                 path: "github",
                 method : "GET",
                 text : "github"
@@ -46,7 +46,7 @@ exports.get = function(req, res){
             {
                 rel: "Section",
                 domain: "https://127.0.0.1",
-                port: "8443",
+                port: ":8443",
                 path: "account",
                 method : "GET",
                 text : "account"

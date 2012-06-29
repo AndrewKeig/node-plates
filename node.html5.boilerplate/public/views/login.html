@@ -32,11 +32,11 @@
       <ul id="options" type="square"></ul>
       <nav>
         <ul>
-              {#actions}<li><a href="{href}" rel="{rel}">{text}</a></li>{/actions}
+              {#actions}<li><a href="{domain}{port}/{path}" rel="{rel}">{text}</a></li>{/actions}
         </ul>
       </nav>
       <p>complete the below to login/register</p>
-      <form method="{login.method}" action="{login.domain}:{login.port}/{login.path}" enctype="application/x-www-form-urlencoded">
+      <form method="{login.method}" action="{login.domain}{login.port}/{login.path}" enctype="application/x-www-form-urlencoded">
           <div>
               <label for="name">{login.username.label}:</label>
               <input type="text" name="{login.username.name}" id="{login.username.name}" size="25" class="username textbox" placeholder="{login.username.placeholder}"  required/>

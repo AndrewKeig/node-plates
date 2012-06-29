@@ -6,7 +6,7 @@ exports.get = function(req, res){
             {
                 rel: "Me",
                 domain: "http://127.0.0.1",
-                port: "8081",
+                port: ":8081",
                 path: "home",
                 method : "GET",
                 text : "home"
@@ -14,7 +14,7 @@ exports.get = function(req, res){
             {
                 rel: "Next",
                 domain: "http://127.0.0.1",
-                port: "8081",
+                port: ":8081",
                 path: "about",
                 method : "GET",
                 text : "about"
@@ -22,7 +22,7 @@ exports.get = function(req, res){
             {
                 rel: "Section",
                 domain: "http://127.0.0.1",
-                port: "8081",
+                port: ":8081",
                 path: "contact",
                 method : "GET",
                 text : "contact"
@@ -30,7 +30,7 @@ exports.get = function(req, res){
             {
                 rel: "Section",
                 domain: "http://127.0.0.1",
-                port: "8081",
+                port: ":8081",
                 path: "github",
                 method : "GET",
                 text : "github"
@@ -38,7 +38,7 @@ exports.get = function(req, res){
             {
                 rel: "Section",
                 domain: "https://127.0.0.1",
-                port: "8443",
+                port: ":8443",
                 path: "account",
                 method : "GET",
                 text : "account"
@@ -46,7 +46,7 @@ exports.get = function(req, res){
             {
                 rel: "Section",
                 domain: "https://127.0.0.1",
-                port: "8443",
+                port: ":8443",
                 path: "login",
                 method : "POST",
                 text : "login"
@@ -54,7 +54,7 @@ exports.get = function(req, res){
             {
                 rel: "Section",
                 domain: "https://127.0.0.1",
-                port: "8443",
+                port: ":8443",
                 path: "logout",
                 method : "POST",
                 text : "logout"

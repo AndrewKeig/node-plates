@@ -5,7 +5,7 @@ exports.get = function(req, res){
             {
                 rel: "Start",
                 domain: "http://nodeplates.airasoul.net",
-                port: "8081",
+                port: "",
                 path: "home",
                 method : "GET",
                 text : "home"
@@ -13,7 +13,7 @@ exports.get = function(req, res){
             {
                 rel: "Me",
                 domain: "http://nodeplates.airasoul.net",
-                port: "8081",
+                port: "",
                 path: "about",
                 method : "GET",
                 text : "about"
@@ -21,7 +21,7 @@ exports.get = function(req, res){
             {
                 rel: "Next",
                 domain: "http://nodeplates.airasoul.net",
-                port: "8081",
+                port: "",
                 path: "contact",
                 method : "GET",
                 text : "contact"
@@ -29,7 +29,7 @@ exports.get = function(req, res){
             {
                 rel: "Section",
                 domain: "http://nodeplates.airasoul.net",
-                port: "8081",
+                port: "",
                 path: "github",
                 method : "GET",
                 text : "github"
@@ -37,7 +37,7 @@ exports.get = function(req, res){
             {
                 rel: "Section",
                 domain: "https://nodeplates.airasoul.net",
-                port: "8443",
+                port: "",
                 path: "account",
                 method : "GET",
                 text : "account"
@@ -45,7 +45,7 @@ exports.get = function(req, res){
             {
                 rel: "Section",
                 domain: "https://nodeplates.airasoul.net",
-                port: "8443",
+                port: "",
                 path: "login",
                 method : "POST",
                 text : "login"
@@ -53,7 +53,7 @@ exports.get = function(req, res){
             {
                 rel: "Section",
                 domain: "https://nodeplates.airasoul.net",
-                port: "8443",
+                port: "",
                 path: "logout",
                 method : "POST",
                 text : "logout"

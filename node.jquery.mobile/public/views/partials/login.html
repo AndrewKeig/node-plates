@@ -8,7 +8,7 @@
         <h2>{title}</h2>
         <ul id="options" type="square"></ul>
         <p>complete the below to login/register</p>
-        <form method="{login.method}" action="{login.domain}:{login.port}/{login.path}" data-ajax="false"  enctype="application/x-www-form-urlencoded">
+        <form method="{login.method}" action="{login.domain}{login.port}/{login.path}" data-ajax="false"  enctype="application/x-www-form-urlencoded">
             <div data-role="fieldcontain">
                 <label for="name">{login.username.label}:</label>
                 <input type="text" name="{login.username.name}" id="{login.username.name}" size="25" class="username textbox" placeholder="{login.username.placeholder}"  required/>
