@@ -66,7 +66,7 @@ var httpServer = http.createServer(app.handle.bind(app)).listen(express_cfg.http
 var httpSocketIo = new socketIo(httpServer, session.store(), session.options(config).sessionkey);
 
 //https listen
-//var httpsServer = https.createServer(lib.authentication.options(), app.handle.bind(app)).listen(express_cfg.https_port);
-//var httpsSocketIo =new socketIo(httpsServer, session.store(), session.options(config).sessionkey);
+var httpsServer = https.createServer(lib.authentication.options(), app.handle.bind(app)).listen(express_cfg.https_port);
+var httpsSocketIo =new socketIo(httpsServer, session.store(), session.options(config).sessionkey);
 
 console.log('node plates - express on port %d in %s mode using session', express_cfg.http_port, app.settings.env, session.options(config).session_type);
