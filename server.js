@@ -33,7 +33,7 @@ app.use(app.router);
 app.use(lib.errors.invalid_password_handler);
 app.use(lib.errors.user_not_found_handler);
 app.use(lib.errors.user_not_authenticated_handler);
-//app.use(lib.errors.page_not_found_handler);
+app.use(lib.errors.page_not_found_handler);
 
 
 //production settings

@@ -6,9 +6,5 @@ var path = require('path')
 
 
 exports.index = function(req, res){
-    res.format({
-        html: function(){
-            res.render('404');
-        }
-    })
+    res.writeHeader(404);
 };
