@@ -33,7 +33,7 @@ app.use(app.router);
 app.use(lib.errors.invalid_password_handler);
 app.use(lib.errors.user_not_found_handler);
 app.use(lib.errors.user_not_authenticated_handler);
-app.use(lib.errors.page_not_found_handler);
+//app.use(lib.errors.page_not_found_handler);
 
 
 //production settings
@@ -52,11 +52,9 @@ app.get('/login', routes.login.get_login);
 app.post('/login', routes.login.post_login);
 app.get('/account', lib.middleware.is_user_authenticated, routes.account.index);
 app.get('/logout', lib.middleware.is_user_authenticated, routes.login.logout);
-//app.get('/404', lib.errors.page_not_found_handler);
-//app.get('/500', lib.errors.internal_error_handler);
 app.post('/article', routes.article.save);
 app.get('/populate', routes.article.populate);
-//app.get('/*', routes.fourohfour.index);
+app.get('*', routes.errors.page_not_found);
 
 //handle uncaught exceptions
 process.addListener('uncaughtException', lib.errors.uncaught_exception);
@@ -66,7 +64,7 @@ var httpServer = http.createServer(app.handle.bind(app)).listen(express_cfg.http
 var httpSocketIo = new socketIo(httpServer, session.store(), session.options(config).sessionkey);
 
 //https listen
-var httpsServer = https.createServer(lib.authentication.options(), app.handle.bind(app)).listen(express_cfg.https_port);
-var httpsSocketIo =new socketIo(httpsServer, session.store(), session.options(config).sessionkey);
+//var httpsServer = https.createServer(lib.authentication.options(), app.handle.bind(app)).listen(express_cfg.https_port);
+//var httpsSocketIo =new socketIo(httpsServer, session.store(), session.options(config).sessionkey);
 
 console.log('node plates - express on port %d in %s mode using session', express_cfg.http_port, app.settings.env, session.options(config).session_type);
