@@ -7,12 +7,12 @@ var path = require('path')
 exports.index = function(req, res){
     var data = api.home.get();
 
-    article.find_article_by_type("News", function(err, articles){
-        if (err) {
-            console.log('- fatal error getting articles');
-        }
+    //article.find_article_by_type("News", function(err, articles){
+    //    if (err) {
+    //        console.log('- fatal error getting articles');
+    //    }
 
-        data.articles = articles;
+    //    data.articles = articles;
 
         res.format({
             json: function(){
@@ -22,5 +22,5 @@ exports.index = function(req, res){
                 res.render('home', data);
             }
         })
-    });
+    //});
 };
