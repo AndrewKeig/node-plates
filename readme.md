@@ -1,81 +1,59 @@
-# node-plates a node.js boilerplate
+# node-plates 
 
-node-plates is a node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5 mobile/web application.
+ a node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5 mobile/web application.
 
 ## Installation
 
     $ npm install node-plates
 
-
-
 ## Usage
 
     $ node server.js
-
+    $ node server.js -m  use jquery mobile
+    $ node server.js -w, use website html 5 boilerplate
+    $ node server.js -c, use client side templating
+    $ node server.js -s, use server side templating
+    $ node server.js -x, use external storage for sessions
+    $ node server.js -a, use mongo for articles
 
 ## Dependencies
 
-    Requires mongoDb/mongoose in order to support article content.
+Requires mongoDb via mongoose in order to support article content; switched off by default.
 
-## More here
+## More information provided in the below series of posts
 
-http://airasoul.blogspot.co.uk/search/label/node.plates
-
-
+[http://airasoul.blogspot.co.uk/search/label/node.plates](http://airasoul.blogspot.co.uk/search/label/node.plates)
 
 ## Current setup includes
 
-<ul>
-<li><a href="http://airasoul.blogspot.co.uk/2012/03/nodeplates-cascading-configuration.html">Environment cascading configuration files using konphyg</a></li>
-<li>Express; with some best practices in place such as: </li>
-<ul>
-<li><a href="http://airasoul.blogspot.co.uk/2012/03/nodeplates-configuring-error-handlers.html">Error handling with error middleware</a></li>
-<li><a href="http://airasoul.blogspot.co.uk/2012/03/nodeplates-seperate-routes-into-modules.html">Routes seperated into modules and exported</a></li>
-<li>Route middleware</li>
-<li>Express production configuration</li>
-</ul>
-<li><a href="http://airasoul.blogspot.co.uk/2012/03/nodejs-boilerplate-configuring-session.html">Configuring session stores using konphyg</a>; configured for:
-<ul>
-  <li>In memory configuration</li>
-  <li>Mongo</li>
-  <li>Redis</li>
-  <li>Couch</li>
-  <li>Memcache</li>
-</ul>
+- [Environment cascading configuration files using konphyg](http://airasoul.blogspot.co.uk/2012/03/nodeplates-cascading-configuration.html)
+- Express; with some best practices in place such as:
+ - [Error handling with error middleware](http://airasoul.blogspot.co.uk/2012/03/nodeplates-configuring-error-handlers.html)
+ - [Routes seperated into modules and exported](http://airasoul.blogspot.co.uk/2012/03/nodeplates-seperate-routes-into-modules.html)
+ - [Content Negotiation](http://airasoul.blogspot.co.uk/2012/05/nodejs-boilerplate-client-side.html)
+ - Route middleware
+ - Express production configuration
+- [Configuring session stores using konphyg for: ](http://airasoul.blogspot.co.uk/2012/03/nodejs-boilerplate-configuring-session.html)
+ - In memory
+ - Mongo
+ - Redis
+ - Couch
+ - Memcache
+- [Supporting multiple view engines using consolidate.js](http://airasoul.blogspot.co.uk/2012/05/nodejs-boilerplate-client-side.html)
+- [Templating using dust.js](http://airasoul.blogspot.co.uk/2012/05/nodejs-boilerplate-client-side.html)
+ - Server side templating using dust.js
+ - Client side templating using dust.js; with pre-compilation or client side compilation
+- JQuery Mobile template
+- Html5 boilerplate template
+- Using Backbone.js for javascript
+- Socket.io
+ - Socket.io handshake with express using configurable sessions
+ - Socket.io production configuration
+- <a href="http://airasoul.blogspot.co.uk/2012/06/nodejs-boilerplate-ssltls-with-express.html">Forms authentication via SSL TLS for secure login/my account pages</a>
+- Article content via mongoDb and mongoose
+- A working example of articles added be displayed as a list on the home page; the schema for articles:
 
-<li><a href="http://airasoul.blogspot.co.uk/2012/05/nodejs-boilerplate-client-side.html">Supporting multiple view engines using consolidate.js</a></li>
-
-<li><a href="http://airasoul.blogspot.co.uk/2012/05/nodejs-boilerplate-client-side.html">Templating using dust.js</a></li>
-<ul>
-<li>Server side templating using dust.js</li>
-<li>Client side templating using dust.js; with pre-compilation or client side compilation</li>
-</ul>
-
-<li><a href="http://airasoul.blogspot.co.uk/2012/05/nodejs-boilerplate-client-side.html">Content Negotiation</a></li>
-
-<li>JQuery Mobile template</li>
-<li>Html5 boilerplate template</li>
-<li>Backbone.js enabled</li>
-
-<li>Socket.io</li>
-<ul>
-<li>Socket.io handshake with express using configurable sessions</li>
-<li>Socket.io production configuration</li>
-</ul>
-
-<li><a href="http://airasoul.blogspot.co.uk/2012/06/nodejs-boilerplate-ssltls-with-express.html">Forms authentication via SSL TLS for secure login/my account pages</a></li>
-<ul>
-<li>express.js enabled</li>
-<li>socket.io enabled</li>
-</ul>
-
-
-<li>Article content via mongoDb and mongoose</li>
-
-A working example of articles can be seen on the node-plates homepage; articles added here will be displayed as a list on the home page.
-Our schema is very simple:
-
-    var article = new Schema({
+>     var article = new Schema({
         author          : ObjectId
         , title         : String
         , body          : String
@@ -83,4 +61,5 @@ Our schema is very simple:
         , article_type  : String
     });
 
-</ul>
+
+

@@ -1,3 +1,8 @@
+0.1.5 / 2012-08-08
+==================
+
+  * added command line configuration of node-plates
+
 0.1.4 / 2012-08-01
 ==================
 

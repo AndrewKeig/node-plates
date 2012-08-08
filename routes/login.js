@@ -5,18 +5,24 @@ var path = require('path')
     ,lib = require('../lib');
 
 exports.get_login = function(req, res){
+    console.log(' - get_login');
+    var data = api.login.get();
+    lib.templating.amend_json(data);
     res.format({
         json: function(){
-            res.json(api.login.get());
+            res.json(data);
         },
         html: function(){
-            res.render('login', api.login.get());
+            res.render('login', data);
         }
     })
 };
 
 exports.post_login = function(req, res){
-    console.log('post_login: ' + req.body.user.username + '/' + req.body.user.password);
+    console.log(' - post_login: ' + req.body.user.username + '/' + req.body.user.password);
+
+    var data = api.login.get();
+
     lib.user.authenticate_user(req.body.user.username, req.body.user.password, function(err, user){
         if (user) {
             req.session.regenerate(function(){
@@ -25,7 +31,8 @@ exports.post_login = function(req, res){
             });
         } else {
             req.session.error = 'Authentication failed';
-            res.redirect('/login');
+            //res.redirect('/login');
+            res.redirect(data.actions.where(text = login).path);
         }
     })
 };

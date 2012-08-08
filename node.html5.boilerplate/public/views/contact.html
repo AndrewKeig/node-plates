@@ -4,6 +4,10 @@
 <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
+    <script>
+        var page = 'contact';
+        var rendered = '{rendered}';
+    </script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>{title}</title>
@@ -17,18 +21,15 @@
     <script src="/javascripts/underscore-min.js"></script>
     <script src="/javascripts/backbone-min.js"></script>
     <script src="/javascripts/socket.io.js"></script>
-    <!--server-->
-    <script>
-        var page = 'contact';
-    </script>
-    <script src="/javascripts/bootstrap_server_templating.js"></script>
+    <script src="/javascripts/dust-full-0.3.0.min.js"></script>
+    <script src="/javascripts/node-plates.js"></script>
 </head>
 <body>
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="//browsehappy.com/">Upgrade to a different browser</a> or <a href="//www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
   <header>
         <img src="/images/logo.png"/>
   </header>
-  <section>
+  <section id="contact">
       <ul id="options" type="square"></ul>
       <nav>
         <ul>

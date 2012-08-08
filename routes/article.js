@@ -14,11 +14,11 @@ exports.save = function(req, res){
 
     data.save_article(article, function(err){
         if (err) {
-            console.log('- fatal error saving article');
+            console.log(' - fatal error saving article');
         }
 
-        console.log('- saved article');
-        res.send("Done");
+        console.log(' - saved article');
+        res.send("Article saved");
     });
 };
 
@@ -36,11 +36,11 @@ exports.populate = function(req, res){
 
         data.save_article(article, function(err){
             if (err) {
-                console.log('- fatal error saving article');
+                console.log(' - fatal error saving article');
             }
 
-            console.log('- saved article');
-            res.send("Done");
+            console.log(' - populated articles');
+            res.send("articles populated");
         });
     }
 };
