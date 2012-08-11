@@ -4,7 +4,8 @@ var   http = require('http')
     , config = path.join(__dirname, '/config')
     , konphyg = require('konphyg')(config)
     , express_cfg = konphyg('express')
-    , program = require('commander');
+    , program = require('commander')
+    , lib = require(path.join(__dirname, '/lib'));
 
 program
     .version('0.1.4')
@@ -30,13 +31,15 @@ if (program.scale)
     process.env.NODE_ENV = 'uat';
 
 if (program.articles)
+{
+    lib.article.populate();
     show_articles = true;
+}
 
 process.env['template_delivery'] = template_delivery;
 process.env['show_articles'] = show_articles;
 
-var   lib = require(path.join(__dirname, '/lib'))
-    , routes = require(path.join(__dirname, '/routes'))
+var   routes = require(path.join(__dirname, '/routes'))
     , consolidate = require('consolidate')
     , mongo_cfg = konphyg('mongo')
     , mongoose = require('mongoose')
@@ -84,8 +87,6 @@ app.get('/login', routes.login.get_login);
 app.post('/login', routes.login.post_login);
 app.get('/account', lib.middleware.is_user_authenticated, routes.account.index);
 app.get('/logout', lib.middleware.is_user_authenticated, routes.login.logout);
-app.post('/article', routes.article.save);
-app.get('/populate', routes.article.populate);
 app.get('*', routes.errors.page_not_found);
 
 //handle uncaught exceptions

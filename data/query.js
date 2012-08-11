@@ -14,12 +14,10 @@ exports.find_article_by_type = function (article_type, callback) {
             return;
         }
         console.log(' - articles have %s found ', article == null ? 'not been' : 'been');
-        //console.log(article);
 
         callback(null, article);
         return;
     });
 
-    callback(null, null);
     return;
 };

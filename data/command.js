@@ -9,7 +9,7 @@ exports.save_article = function (article, callback) {
 
     new_article.save(function (err) {
         if (err) {
-            console.log('- fatal error saving article');
+            console.log(' - fatal error saving article');
         }
         callback();
         return;

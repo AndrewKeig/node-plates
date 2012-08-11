@@ -5,5 +5,3 @@ exports.github = require('../routes/github');
 exports.login = require('../routes/login');
 exports.account = require('../routes/account');
 exports.errors = require('../routes/errors');
-exports.article = require('../routes/article');
-exports.fourohfour = require('../routes/article');
