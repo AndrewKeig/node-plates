@@ -10,13 +10,11 @@ var article = new Schema({
     , article_type  : String
 });
 
-
 var user = new Schema({
     sessionId: { type: String, required: true },
     username: { type: String, required: true },
     password: { type: String, required: true }
 });
-
 
 mongoose.model('User', user);
 mongoose.model('Article', article);

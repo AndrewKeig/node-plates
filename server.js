@@ -9,17 +9,18 @@ var   http = require('http')
 
 program
     .version('0.1.4')
-    .option('-m, --mobile', 'using jquery mobile')
-    .option('-w, --www', 'using website html 5 boilerplate')
-    .option('-c, --client', 'using client side templating')
-    .option('-s, --server', 'using server side templating')
-    .option('-x, --scale', 'using external storage for sessions')
-    .option('-a, --articles', 'using mongo for articles')
+    .option('-m, --mobile', 'use jquery mobile')
+    .option('-w, --www', 'use website html 5 boilerplate')
+    .option('-c, --client', 'use client side templating')
+    .option('-s, --server', 'use server side templating')
+    .option('-x, --scale', 'use external storage for sessions/registrations using mongoDb')
+    .option('-c, --content', 'use mongoDb for article content; auto populates a mongoDb instance with temp data')
     .parse(process.argv);
 
 var template_delivery = express_cfg.template_delivery;
 var public_path = express_cfg.www_path;
-var show_articles = false;
+var show_content = false;
+var scale = false;
 
 if (program.mobile)
     public_path = express_cfg.mobile_path;
@@ -27,17 +28,19 @@ if (program.mobile)
 if (program.client)
     template_delivery = "client";
 
-if (program.scale)
+if (program.scale) {
+    scale = true;
     process.env.NODE_ENV = 'uat';
+}
 
-if (program.articles)
-{
+if (program.content) {
     lib.article.populate();
-    show_articles = true;
+    show_content = true;
 }
 
 process.env['template_delivery'] = template_delivery;
-process.env['show_articles'] = show_articles;
+process.env['show_content'] = show_content;
+process.env['scale'] = scale;
 
 var   routes = require(path.join(__dirname, '/routes'))
     , consolidate = require('consolidate')
@@ -55,8 +58,6 @@ var   routes = require(path.join(__dirname, '/routes'))
 //configure
 app.engine('html', consolidate.dust);
 app.set('view engine', 'html');
-app.set('template delivery', template_delivery);
-app.set('show_articles', show_articles);
 app.set('views', path.join(__dirname, public_path + "views"));
 app.set('db-uri', mongo_cfg.db);
 app.use(express.favicon());
@@ -85,12 +86,14 @@ app.get('/contact', routes.contact.index);
 app.get('/github', routes.github.index);
 app.get('/login', routes.login.get_login);
 app.post('/login', routes.login.post_login);
+app.get('/register', routes.register.get_register);
+app.post('/register', routes.register.post_register);
 app.get('/account', lib.middleware.is_user_authenticated, routes.account.index);
 app.get('/logout', lib.middleware.is_user_authenticated, routes.login.logout);
 app.get('*', routes.errors.page_not_found);
 
 //handle uncaught exceptions
-process.addListener('uncaughtException', lib.errors.uncaught_exception);
+process.addListener('uncaughtException', lib.errors.uncaught_exception_handler);
 
 //http listen
 var httpServer = http.createServer(app.handle.bind(app)).listen(express_cfg.http_port);
@@ -100,18 +103,38 @@ var httpSocketIo = new socketIo(httpServer, session.store(), session.options(con
 var httpsServer = https.createServer(lib.authentication.options(), app.handle.bind(app)).listen(express_cfg.https_port);
 var httpsSocketIo =new socketIo(httpsServer, session.store(), session.options(config).sessionkey);
 
-console.log(' - node plates');
-console.log(' - %s mode', app.settings.env);
-console.log(' - running express on port %d ',express_cfg.http_port);
-console.log(' - https on port %d ',express_cfg.https_port);
-console.log(' - using %s session ', session.options(config).session_type);
-console.log(' - view engine %s ', express_cfg.view_engine);
-console.log(' - public path %s ', public_path);
-console.log(' - %s side templating', (program.client) ? 'client' : 'server');
-console.log(' - site is %s', (program.mobile) ? 'mobile' : 'www' );
+
+//--------------------------------------------------
+
+console.log(' ');
+console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -');
+console.log(' - node plates is running');
+console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -');
+console.log(' - in %s mode', app.settings.env);
+console.log(' - using express on port %d ',express_cfg.http_port);
+console.log(' - with https on port %d ',express_cfg.https_port);
+console.log(' - using %s for storing sessions', session.options(config).session_type);
+console.log(' - to a cookie with key %s', session.options(config).sessionkey);
+console.log(' - this is a %s site', (program.mobile) ? 'mobile' : 'www' );
+console.log(' - using the %s view engine ', express_cfg.view_engine);
+console.log(' - with %s side templating for views', (program.client) ? 'client' : 'server');
+console.log(' - the public path is %s ', public_path);
 console.log(' - certificate %s', express_cfg.cert);
 console.log(' - certificate key %s', express_cfg.key);
 console.log(' - certificate ca %s', express_cfg.ca);
-console.log(' - %s articles', (process.env['show_articles'] === 'true') ? 'display' : 'hide');
-console.log(' - view site with %s side templating on http://127.0.0.1:%s%s ',
-    (program.client) ? 'client' : 'server', express_cfg.http_port, (program.client) ? '/views/home.html' : '');
+
+if (process.env['show_content'] === 'true') {
+  console.log(' - article content displayed on home page auto-populated to a mongo store');
+  console.log(' - please make sure mongo is running here ' + mongo_cfg.db);
+} else {
+  console.log(' - we are not displaying articles');
+}
+
+console.log(' - you can view the site in your browser by visiting http://127.0.0.1:%s%s ',
+     express_cfg.http_port, (program.client) ? '/views/home.html' : '');
+
+console.log(' ');
+console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -');
+console.log(' - airasoul.net');
+console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -');
+console.log(' ');

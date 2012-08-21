@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html class="ui-mobile min-width-320px min-width-480px min-width-768px min-width-1024px landscape">
+<head>
+    <script>
+        var page = 'register';
+        var rendered = '{rendered}';
+    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <base href=".">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+    <meta charset="utf-8">
+    <title>{title}</title>
+    <link rel="stylesheet" href="/css/jquery.mobile-1.1.1.min.css" />
+    <script src="/javascripts/jquery-1.7.1.min.js"></script>
+    <script src="/javascripts/jquery.mobile-1.1.1.min.js"></script>
+    <script src="/javascripts/uri.js"></script>
+    <script src="/javascripts/underscore-min.js"></script>
+    <script src="/javascripts/backbone-min.js"></script>
+    <script src="/javascripts/socket.io.js"></script>
+    <script src="/javascripts/dust-full-0.3.0.min.js"></script>
+    <script src="/javascripts/node-plates.js"></script>
+    <!--precompile
+    <script src="/javascripts/dust-core-0.3.0.js"></script>
+    <script src="/views/partials/compiled_0_0_1/login_0_0_1.js"></script>-->
+</head>
+<body class="ui-mobile-viewport" >
+<div data-role="page" id="login" login="ui-page ui-body-c ui-page-active">
+    <div data-role="header" class="ui-bar-a ui-header" role="banner">
+        <a href="/"  data-ajax="false" class="ui-btn-left ui-btn ui-btn-icon-left ui-btn-corner-all ui-shadow ui-btn-up-a" data-icon="arrow-l" data-theme="a">
+        <span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Back</span><span class="ui-icon ui-icon-arrow-l ui-icon-shadow"></span></span></a>
+        <h1 class="ui-title" tabindex="0" role="heading" aria-level="1">{title}</h1>
+    </div>
+    <div data-role="content" class="ui-content" role="main">
+        <h2>{title}</h2>
+        <ul id="options" type="square"></ul>
+        <p>complete the below to register</p>
+        <form method="{register.method}" action="{register.domain}{register.port}/{register.path}" data-ajax="false"  enctype="application/x-www-form-urlencoded">
+            <div data-role="fieldcontain">
+                <label for="name">{register.username.label}:</label>
+                <input type="text" name="{register.username.name}" id="{register.username.name}" size="25" class="username textbox" placeholder="{register.username.placeholder}"  required/>
+            </div>
+            <div data-role="fieldcontain">
+                <label for="name">{register.password.label}:</label>
+                <input type="password" name="{register.password.name}" id="{register.password.name}" size="25" class="password textbox" placeholder="{register.password.placeholder}" required/>
+            </div>
+            <input type="submit" data-role="button" data-icon="star" value="{register.button.name}">
+        </form>
+    </div>
+    <div data-role="footer" class="ui-bar-a ui-footer" role="contentinfo">
+        <h4 class="ui-title" tabindex="0" role="heading" aria-level="1">@2012 {title}</h4>
+    </div>
+</div>
+</body>
+</html>

@@ -44,18 +44,26 @@ exports.get = function(req, res){
             },
             {
                 rel: "Section",
-                domain: "https://127.0.0.1",
-                port: ":8443",
+                domain: "http://127.0.0.1",
+                port: ":8081",
                 path: "login",
-                method : "POST",
+                method : "GET",
                 text : "login"
+            },
+            {
+                rel: "Section",
+                domain: "http://127.0.0.1",
+                port: ":8081",
+                path: "register",
+                method : "GET",
+                text : "register"
             },
             {
                 rel: "Section",
                 domain: "https://127.0.0.1",
                 port: ":8443",
-                path: "about",
-                method : "POST",
+                path: "logout",
+                method : "GET",
                 text : "logout"
             }
         ]

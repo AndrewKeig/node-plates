@@ -37,7 +37,7 @@ exports.get = function(req, res){
             {
                 rel: "Me",
                 domain: "https://127.0.0.1",
-                port: ":8443",
+                port: ":8443;",
                 path: "account",
                 method : "GET",
                 text : "account"
@@ -47,7 +47,7 @@ exports.get = function(req, res){
                 domain: "https://127.0.0.1",
                 port: ":8443",
                 path: "logout",
-                method : "POST",
+                method : "GET",
                 text : "logout"
             }
         ]

@@ -1,10 +1,18 @@
 exports.get = function(req, res){
     return  {
-        title : "node plates - home",
-        articles : [],
+        title : "node plates - register",
+        register : {
+            domain: "https://127.0.0.1",
+            port: ":8443",
+            path: "register",
+            method : "POST",
+            username : { label : "username", name : "user[username]", placeholder: "Please enter a username"},
+            password : { label : "password", name : "user[password]", placeholder: "Please enter a password"},
+            button : { name: "register"}
+        },
         actions : [
             {
-                rel: "Me",
+                rel: "Start",
                 domain: "http://127.0.0.1",
                 port: ":8081",
                 path: "home",
@@ -12,7 +20,7 @@ exports.get = function(req, res){
                 text : "home"
             },
             {
-                rel: "Next",
+                rel: "Section",
                 domain: "http://127.0.0.1",
                 port: ":8081",
                 path: "about",
@@ -36,23 +44,7 @@ exports.get = function(req, res){
                 text : "github"
             },
             {
-                rel: "Section",
-                domain: "https://127.0.0.1",
-                port: ":8443",
-                path: "account",
-                method : "GET",
-                text : "account"
-            },
-            {
-                rel: "Section",
-                domain: "http://127.0.0.1",
-                port: ":8081",
-                path: "login",
-                method : "GET",
-                text : "login"
-            },
-            {
-                rel: "Section",
+                rel: "Me",
                 domain: "http://127.0.0.1",
                 port: ":8081",
                 path: "register",
@@ -63,9 +55,9 @@ exports.get = function(req, res){
                 rel: "Section",
                 domain: "https://127.0.0.1",
                 port: ":8443",
-                path: "logout",
+                path: "account",
                 method : "GET",
-                text : "logout"
+                text : "account"
             }
         ]
     }

@@ -2,14 +2,13 @@ var path = require('path')
     ,konphyg = require('konphyg')(path.join(__dirname, '../config'))
     ,express_cfg = konphyg('express')
     ,api = require(express_cfg.api)
-    ,article = require('../data/query.js')
-    ,lib = require('../lib');
+    ,Lib = require(path.join(__dirname, '../lib'));
 
 exports.index = function(req, res){
     var data = api.home.get();
-    lib.templating.amend_json(data);
+    Lib.templating.amend_json(data);
 
-    article.find_article_by_type("News", function(err, articles){
+    Lib.article.get_articles("News", function(err, articles){
         if (err) console.log('- fatal error getting articles');
         data.articles = articles;
 

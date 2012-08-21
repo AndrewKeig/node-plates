@@ -4,3 +4,4 @@ exports.contact = require('../api/contact');
 exports.github = require('../api/github');
 exports.login = require('../api/login');
 exports.account = require('../api/account');
+exports.register = require('../api/register');

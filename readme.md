@@ -14,11 +14,16 @@
     $ node server.js -c, use client side templating
     $ node server.js -s, use server side templating
     $ node server.js -x, use external storage for sessions
-    $ node server.js -a, use mongo for articles
+    $ node server.js -a, use mongo for articles; auto populates a mongo instance
 
 ## Dependencies
 
 Requires mongoDb via mongoose in order to support article content; switched off by default.
+
+Run mongodb before starting node-plates using the following; where some_data_path is your path to
+a mongoDb instance data folder.   Will throw an 'error connecting to database' if not running..
+
+    $ mongod --dbpath some_data_path
 
 ## More information provided in the below series of posts
 
@@ -51,7 +56,7 @@ Requires mongoDb via mongoose in order to support article content; switched off 
  - Socket.io production configuration
 - <a href="http://airasoul.blogspot.co.uk/2012/06/nodejs-boilerplate-ssltls-with-express.html">Forms authentication via SSL TLS for secure login/my account pages</a>
 - Article content via mongoDb and mongoose
-- A working example of articles added be displayed as a list on the home page; the schema for articles:
+- A working example of articles pulled from a mongo instance and displayed as a list on the home page; the schema for articles:
 
 >     var article = new Schema({
         author          : ObjectId

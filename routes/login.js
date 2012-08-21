@@ -1,8 +1,9 @@
-var path = require('path')
-    ,konphyg = require('konphyg')(path.join(__dirname, '../config'))
-    ,express_cfg = konphyg('express')
-    ,api = require(express_cfg.api)
-    ,lib = require('../lib');
+var   path = require('path')
+    , konphyg = require('konphyg')(path.join(__dirname, '../config'))
+    , express_cfg = konphyg('express')
+    , api = require(express_cfg.api)
+    , lib = require('../lib')
+    , _ = require('underscore');
 
 exports.get_login = function(req, res){
     console.log(' - get_login');
@@ -21,18 +22,19 @@ exports.get_login = function(req, res){
 exports.post_login = function(req, res){
     console.log(' - post_login: ' + req.body.user.username + '/' + req.body.user.password);
 
-    var data = api.login.get();
-
     lib.user.authenticate_user(req.body.user.username, req.body.user.password, function(err, user){
         if (user) {
             req.session.regenerate(function(){
+                var data = api.login.get();
+                lib.templating.amend_json(data);
                 req.session.user = user;
-                res.redirect('/account');
+                req.session.id = user.sessionId;
+                res.redirect(lib.uri.getRedirect(data,"account"));
             });
         } else {
+            var data = api.home.get();
             req.session.error = 'Authentication failed';
-            //res.redirect('/login');
-            res.redirect(data.actions.where(text = login).path);
+            res.redirect(lib.uri.getRedirect(data,"login"));
         }
     })
 };

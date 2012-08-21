@@ -5,7 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
     <script>
-        var page = 'login';
+        var page = 'register';
         var rendered = '{rendered}';
     </script>
     <meta charset="utf-8">
@@ -35,17 +35,17 @@
               {#actions}<li><a href="{domain}{port}/{path}" rel="{rel}">{text}</a></li>{/actions}
         </ul>
       </nav>
-      <p>complete the below to login</p>
-      <form method="{login.method}" action="{login.domain}{login.port}/{login.path}" enctype="application/x-www-form-urlencoded">
+      <p>complete the below to register</p>
+      <form method="{register.method}" action="{register.domain}{register.port}/{register.path}" enctype="application/x-www-form-urlencoded">
           <div>
-              <label for="name">{login.username.label}:</label>
-              <input type="text" name="{login.username.name}" id="{login.username.name}" size="25" class="username textbox" placeholder="{login.username.placeholder}"  required/>
+              <label for="name">{register.username.label}:</label>
+              <input type="text" name="{register.username.name}" id="{register.username.name}" size="25" class="username textbox" placeholder="{register.username.placeholder}"  required/>
           </div>
           <div>
-              <label for="name">{login.password.label}:</label>
-              <input type="password" name="{login.password.name}" id="{login.password.name}" size="25" class="password textbox" placeholder="{login.password.placeholder}" required/>
+              <label for="name">{register.password.label}:</label>
+              <input type="password" name="{register.password.name}" id="{register.password.name}" size="25" class="password textbox" placeholder="{register.password.placeholder}" required/>
           </div>
-          <button type="submit" >{login.button.name}</button>
+          <button type="submit" >{register.button.name}</button>
       </form>
       <article>{#articles}<h1>{title}</h1><br/>{date}<br/>{body}</li>{/articles}</article>
   </section>

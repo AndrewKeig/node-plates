@@ -1,3 +1,9 @@
+0.1.6 / 2012-08-19
+==================
+
+  * added registration and login page connected to a mongoDb store
+  * fixed bug related to session timeout
+
 0.1.5 / 2012-08-08
 ==================
 
@@ -26,7 +32,7 @@
 0.1.0 / 2012-05-31
 ==================
 
-  * added mongodb support for adding aricles/posts to the homepage
+  * added mongodb support for adding aricles/posts to a list on the homepage
 
 0.0.9 / 2012-05-01
 ==================
