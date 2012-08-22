@@ -110,6 +110,7 @@ console.log(' ');
 console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -');
 console.log(' - node plates is running');
 console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -');
+console.log(' ');
 console.log(' - in %s mode', app.settings.env);
 console.log(' - using express on port %d ',express_cfg.http_port);
 console.log(' - with https on port %d ',express_cfg.https_port);
