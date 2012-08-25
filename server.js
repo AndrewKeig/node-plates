@@ -4,8 +4,7 @@ var   http = require('http')
     , config = path.join(__dirname, '/config')
     , konphyg = require('konphyg')(config)
     , express_cfg = konphyg('express')
-    , program = require('commander')
-    , lib = require(path.join(__dirname, '/lib'));
+    , program = require('commander');
 
 program
     .version('0.1.4')
@@ -13,11 +12,11 @@ program
     .option('-w, --www', 'use website html 5 boilerplate')
     .option('-c, --client', 'use client side templating')
     .option('-s, --server', 'use server side templating')
-    .option('-x, --scale', 'use external storage for sessions/registrations using mongoDb')
-    .option('-c, --content', 'use mongoDb for article content; auto populates a mongoDb instance with temp data')
+    .option('-a, --articles', 'display article content')
+    .option('-x, --scale', 'use external storage for sessions/registrations/articles using mongoDb')
     .parse(process.argv);
 
-var template_delivery = express_cfg.template_delivery;
+process.env['template_delivery'] = express_cfg.template_delivery;
 var public_path = express_cfg.www_path;
 var show_content = false;
 var scale = false;
@@ -26,21 +25,20 @@ if (program.mobile)
     public_path = express_cfg.mobile_path;
 
 if (program.client)
-    template_delivery = "client";
+    process.env['template_delivery'] = "client";
 
 if (program.scale) {
     scale = true;
     process.env.NODE_ENV = 'uat';
+    process.env['scale'] = scale;
 }
 
-if (program.content) {
+var lib = require(path.join(__dirname, '/lib'));
+
+if (program.articles) {
     lib.article.populate();
-    show_content = true;
+    process.env['show_content'] = true;
 }
-
-process.env['template_delivery'] = template_delivery;
-process.env['show_content'] = show_content;
-process.env['scale'] = scale;
 
 var   routes = require(path.join(__dirname, '/routes'))
     , consolidate = require('consolidate')

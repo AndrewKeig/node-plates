@@ -1,7 +1,10 @@
 0.1.6 / 2012-08-19
 ==================
 
-  * added registration and login page connected to a mongoDb store
+  * added registration and login page by which by default is connected
+    to an in process key/value store called nstore;
+  * scale sessions, registrations and article content to a mongoDb store via
+    command line switch
   * fixed bug related to session timeout
 
 0.1.5 / 2012-08-08

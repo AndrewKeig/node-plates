@@ -3,6 +3,7 @@ var path = require('path')
     ,express_cfg = konphyg('express')
     ,api = require(express_cfg.api)
     ,lib = require('../lib')
+    ,util = require('util')
     , _ = require('underscore');
 
 exports.get_register = function(req, res){
@@ -28,20 +29,16 @@ exports.post_register = function(req, res){
     lib.templating.amend_json(data);
 
     lib.user.register_user(reg_user, function(err, user){
-        if (user) {
+        console.log(' - user details %s', util.inspect(user));
+        if (!err) {
             req.session.regenerate(function(){
                 req.session.user = user;
                 res.redirect(lib.uri.getRedirect(data,"account"));
             });
         } else {
+            console.log(' - error during registration ' + util.inspect(err));
             req.session.error = 'registration failed';
             res.redirect(lib.uri.getRedirect(data,"register"));
         }
     })
-};
-
-exports.logout = function(req, res){
-    req.session.destroy(function(){
-        res.redirect('/');
-    });
 };

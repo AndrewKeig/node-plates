@@ -13,12 +13,13 @@
     $ node server.js -w, use website html 5 boilerplate
     $ node server.js -c, use client side templating
     $ node server.js -s, use server side templating
-    $ node server.js -x, use external storage for sessions
-    $ node server.js -a, use mongo for articles; auto populates a mongo instance
+    $ node server.js -a, display article content
+    $ node server.js -x, use external storage for sessions/registrations/articles using mongoDb
+
 
 ## Dependencies
 
-Requires mongoDb via mongoose in order to support article content; switched off by default.
+Requires mongoDb via mongoose in order to use the scale option -x
 
 Run mongodb before starting node-plates using the following; where some_data_path is your path to
 a mongoDb instance data folder.   Will throw an 'error connecting to database' if not running..
@@ -32,6 +33,7 @@ a mongoDb instance data folder.   Will throw an 'error connecting to database' i
 ## Current setup includes
 
 - [Environment cascading configuration files using konphyg](http://airasoul.blogspot.co.uk/2012/03/nodeplates-cascading-configuration.html)
+- Environment based module load
 - Express; with some best practices in place such as:
  - [Error handling with error middleware](http://airasoul.blogspot.co.uk/2012/03/nodeplates-configuring-error-handlers.html)
  - [Routes seperated into modules and exported](http://airasoul.blogspot.co.uk/2012/03/nodeplates-seperate-routes-into-modules.html)
@@ -50,21 +52,14 @@ a mongoDb instance data folder.   Will throw an 'error connecting to database' i
  - Client side templating using dust.js; with pre-compilation or client side compilation
 - JQuery Mobile template
 - Html5 boilerplate template
-- Using Backbone.js for javascript
+- Using Backbone.js for cleaner javascript
 - Socket.io
  - Socket.io handshake with express using configurable sessions
  - Socket.io production configuration
 - <a href="http://airasoul.blogspot.co.uk/2012/06/nodejs-boilerplate-ssltls-with-express.html">Forms authentication via SSL TLS for secure login/my account pages</a>
-- Article content via mongoDb and mongoose
-- A working example of articles pulled from a mongo instance and displayed as a list on the home page; the schema for articles:
-
->     var article = new Schema({
-        author          : ObjectId
-        , title         : String
-        , body          : String
-        , date          : Date
-        , article_type  : String
-    });
+-  In/out of process storage
+ - scale article content, registrations and sessions using mongoDb
+ - will default to using NStore; an in process key/value store for article content, registrations and sessions
 
 
 
