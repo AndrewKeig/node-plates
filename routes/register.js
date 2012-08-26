@@ -39,7 +39,9 @@ exports.post_register = function(req, res){
             console.log(' - error during registration ' + util.inspect(err));
             var data = api.register.get();
             lib.templating.amend_json(data);
-            req.session.error = 'registration failed';
+            req.session.error = err.description;
+            data.errors.push({error: req.session.error});
+            console.log(' - error: ' + req.session.error);
             res.render('register', data);
         }
     })

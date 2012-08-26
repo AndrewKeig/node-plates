@@ -32,13 +32,11 @@ exports.post_login = function(req, res){
                 res.redirect(lib.uri.getRedirect(data,"account"));
             });
         } else {
-            var data = api.home.get();
-            req.session.error = 'User details entered are not registered..';
-            //res.redirect(lib.uri.getRedirect(data,"login"));
-            console.log(' - get_login');
             var data = api.login.get();
+            req.session.error = err.description;
             lib.templating.amend_json(data);
             data.errors.push({error: req.session.error});
+            console.log(' - error: ' + req.session.error);
             res.render('login', data);
         }
     })
