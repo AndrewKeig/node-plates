@@ -37,8 +37,10 @@ exports.post_register = function(req, res){
             });
         } else {
             console.log(' - error during registration ' + util.inspect(err));
+            var data = api.register.get();
+            lib.templating.amend_json(data);
             req.session.error = 'registration failed';
-            res.redirect(lib.uri.getRedirect(data,"register"));
+            res.render('register', data);
         }
     })
 };

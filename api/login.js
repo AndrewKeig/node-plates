@@ -1,6 +1,7 @@
 exports.get = function(req, res){
     return  {
         title : "node plates - login",
+        errors : [],
         login : {
             domain: "https://127.0.0.1",
             port: ":8443",

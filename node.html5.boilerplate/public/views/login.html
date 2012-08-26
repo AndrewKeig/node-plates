@@ -22,6 +22,7 @@
     <script src="/javascripts/socket.io.js"></script>
     <script src="/javascripts/dust-full-0.3.0.min.js"></script>
     <script src="/javascripts/node-plates.js"></script>
+    <script src="/javascripts/node-plates-www.js"></script>
 </head>
 <body>
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="//browsehappy.com/">Upgrade to a different browser</a> or <a href="//www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
@@ -36,6 +37,11 @@
         </ul>
       </nav>
       <p>complete the below to login</p>
+      <section id="errors">
+          <ul>
+              {#errors}<li>{error}</li>{/errors}
+          </ul>
+      </section>
       <form method="{login.method}" action="{login.domain}{login.port}/{login.path}" enctype="application/x-www-form-urlencoded">
           <div>
               <label for="name">{login.username.label}:</label>

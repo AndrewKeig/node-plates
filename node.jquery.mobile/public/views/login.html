@@ -19,6 +19,7 @@
     <script src="/javascripts/socket.io.js"></script>
     <script src="/javascripts/dust-full-0.3.0.min.js"></script>
     <script src="/javascripts/node-plates.js"></script>
+    <script src="/javascripts/node-plates-mobile.js"></script>
     <!--precompile
     <script src="/javascripts/dust-core-0.3.0.js"></script>
     <script src="/views/partials/compiled_0_0_1/login_0_0_1.js"></script>-->
@@ -34,6 +35,11 @@
         <h2>{title}</h2>
         <ul id="options" type="square"></ul>
         <p>complete the below to login/register</p>
+        <section id="errors">
+            <ul>
+                {#errors}<li>{error}</li>{/errors}
+            </ul>
+        </section>
         <form method="{login.method}" action="{login.domain}{login.port}/{login.path}" data-ajax="false"  enctype="application/x-www-form-urlencoded">
             <div data-role="fieldcontain">
                 <label for="name">{login.username.label}:</label>

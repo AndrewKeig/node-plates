@@ -33,8 +33,13 @@ exports.post_login = function(req, res){
             });
         } else {
             var data = api.home.get();
-            req.session.error = 'Authentication failed';
-            res.redirect(lib.uri.getRedirect(data,"login"));
+            req.session.error = 'User details entered are not registered..';
+            //res.redirect(lib.uri.getRedirect(data,"login"));
+            console.log(' - get_login');
+            var data = api.login.get();
+            lib.templating.amend_json(data);
+            data.errors.push({error: req.session.error});
+            res.render('login', data);
         }
     })
 };

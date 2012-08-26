@@ -35,7 +35,7 @@ sup { top: -0.5em; }
 sub { bottom: -0.25em; }
 
 ul, ol { margin: 1em 0; padding: 0 0 0 40px; }
-li { list-style-type: none}
+li { list-style-type: square;}
 dd { margin: 0 0 0 40px; }
 nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0; }
 
@@ -117,6 +117,16 @@ nav {
 nav ul li {
     display: inline;
     padding-right:30px;
+}
+
+#errors {
+    padding:2px;
+    font-size:16px;
+}
+
+#errors ul li {
+    padding-right:10px;
+    color: red;
 }
 
 article {
