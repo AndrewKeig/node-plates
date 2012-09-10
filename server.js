@@ -7,7 +7,7 @@ var   http = require('http')
     , program = require('commander');
 
 program
-    .version('0.1.7')
+    .version('0.1.8')
     .option('-m, --mobile', 'use jquery mobile')
     .option('-w, --www', 'use website html 5 boilerplate')
     .option('-c, --client', 'use client side templating')
