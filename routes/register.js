@@ -33,6 +33,7 @@ exports.post_register = function(req, res){
         if (!err) {
             req.session.regenerate(function(){
                 req.session.user = user;
+				var data = api.login.get();
                 res.redirect(lib.uri.getRedirect(data,"account"));
             });
         } else {
