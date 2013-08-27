@@ -1,6 +1,8 @@
 # node-plates 
 
  a node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5 mobile/web application.
+ 
+ [![NPM](https://nodei.co/npm/node-plates.png?downloads=true&stars=true)](https://nodei.co/npm/node-plates/)
 
 ## Installation
 
