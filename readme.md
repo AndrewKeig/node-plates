@@ -2,8 +2,6 @@
 
  a node.js boilerplate using express, socket.io, mongooose, jquery.mobile & html 5 mobile/web application.
  
- [![NPM](https://nodei.co/npm/node-plates.png?downloads=true&stars=true)](https://nodei.co/npm/node-plates/)
-
 ## Installation
 
     $ npm install node-plates
@@ -30,7 +28,7 @@ a mongoDb instance data folder.   Will throw an 'error connecting to database' i
 
 ## Current setup includes
 
-- [Environment cascading configuration files using konphyg]
+- Environment cascading configuration files using konphyg
 - Environment based module load
 - Express; with some best practices in place such as:
  - [Error handling with error middleware]
@@ -38,14 +36,14 @@ a mongoDb instance data folder.   Will throw an 'error connecting to database' i
  - [Content Negotiation]
  - Route middleware
  - Express production configuration
-- [Configuring session stores using konphyg for: ]
+- Configuring session stores using konphyg for: 
  - In memory
  - Mongo
  - Redis
  - Couch
  - Memcache
-- [Supporting multiple view engines using consolidate.js]
-- [Templating using dust.js]
+- Supporting multiple view engines using consolidate.js
+- Templating using dust.js
  - Server side templating using dust.js
  - Client side templating using dust.js; with pre-compilation or client side compilation
 - JQuery Mobile template
@@ -54,7 +52,7 @@ a mongoDb instance data folder.   Will throw an 'error connecting to database' i
 - Socket.io
  - Socket.io handshake with express using configurable sessions
  - Socket.io production configuration
-- <a href="http://airasoul.blogspot.co.uk/2012/06/nodejs-boilerplate-ssltls-with-express.html">Forms authentication via SSL TLS for secure login/my account pages</a>
+- Forms authentication via SSL TLS for secure login/my account pages
 -  In/out of process storage
  - scale article content, registrations and sessions using mongoDb
  - will default to using NStore; an in process key/value store for article content, registrations and sessions
